@@ -1,3 +1,3 @@
 # SerenyPals-Frontend
 ---
-Backend Repo: 
+Backend Repo: https://github.com/Gibekkk/SerenyPals-Backend
