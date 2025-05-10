@@ -7,8 +7,13 @@ environment:
   sdk: ^3.7.2
 
 dependencies:
+  carousel_slider: ^5.0.0
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
+  google_fonts: ^6.2.1
+  http: ^1.4.0
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +22,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/img/gambarlogin1.png
+    - assets/img/gambarlogin2.png
+    - assets/img/gambarlogin3.png
+    

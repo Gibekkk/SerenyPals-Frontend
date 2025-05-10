@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:serenypals_frontend/screen/loginscreen.dart';
+import 'package:serenypals_frontend/screen/registerscreen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,12 +11,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      title: 'SerenyPals',
+      initialRoute: '/login', // Rute awal
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+      },
     );
   }
 }
