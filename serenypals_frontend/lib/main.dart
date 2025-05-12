@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:serenypals_frontend/screen/navbarlayout.dart';
 import 'package:serenypals_frontend/screen/loginscreen.dart';
+import 'package:serenypals_frontend/screen/otpscreen.dart';
 import 'package:serenypals_frontend/screen/registerscreen.dart';
-import 'package:serenypals_frontend/screen/profile_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -14,28 +15,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SerenyPals',
-      initialRoute: '/login', // Rute awal
+      initialRoute: '/', // Rute awal
       routes: {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
+        '/otp': (context) => OtpForm(),
+        '/': (context) => const MainTabScaffold(),
       },
-    );
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Profile Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      
-
-      home: const ProfilePage(),
     );
   }
 }
