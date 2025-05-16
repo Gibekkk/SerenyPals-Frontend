@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serenypals_frontend/screen/navbarlayout.dart';
-import 'package:serenypals_frontend/screen/loginscreen.dart';
-import 'package:serenypals_frontend/screen/otpscreen.dart';
-import 'package:serenypals_frontend/screen/registerscreen.dart';
+import 'routes.dart'; // import router yang sudah dibuat
 
 void main() {
   runApp(const MainApp());
@@ -13,15 +10,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'SerenyPals',
-      initialRoute: '/', // Rute awal
-      routes: {
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/otp': (context) => OtpForm(),
-        '/': (context) => const MainTabScaffold(),
-      },
+      routerConfig: router, // pakai router yang diimport
     );
   }
 }

@@ -16,8 +16,8 @@ class PsikiaterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Psikiater")),
-      body: Center(child: Text("Hubungi Psikiater")),
+      appBar: AppBar(title: Text("AI Page")),
+      body: Center(child: Text("AI Assistant")),
     );
   }
 }

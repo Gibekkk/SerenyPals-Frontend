@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import '../widget/customtextfield.dart';
@@ -93,7 +94,9 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   text: 'Masuk',
                   onPressed: () {
-                    // Aksi login
+                    context.go(
+                      '/Home',
+                    ); // pastikan ini sama dengan yang di router
                   },
                   backgroundColor: color1,
                   textColor: Colors.black,

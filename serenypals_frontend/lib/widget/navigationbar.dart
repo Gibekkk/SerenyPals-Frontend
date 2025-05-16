@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import 'package:serenypals_frontend/utils/fabaction.dart';
@@ -57,7 +58,11 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                       FloatingActionButton(
                         backgroundColor: widget.fabAIColor,
                         onPressed: () => widget.onFabActionChange(FabAction.ai),
-                        child: const Icon(Icons.smart_toy),
+                        child: Image.asset(
+                          'assets/img/ai.png', // pastikan ekstensinya PNG
+                          width: 50,
+                          height: 50,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -89,8 +94,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                         backgroundColor: widget.fabPsikiaterColor,
                         onPressed:
                             () => widget.onFabActionChange(FabAction.psikiater),
-                        child: const Icon(Icons.person),
+                        child: Image.asset(
+                          'assets/img/konsultasi.png', // pastikan ekstensinya PNG
+                          width: 50,
+                          height: 50,
+                        ),
                       ),
+
                       const SizedBox(height: 4),
                       Text(
                         'Psikiater',
@@ -119,16 +129,27 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                       child: FloatingActionButton(
                         shape: const CircleBorder(),
                         backgroundColor: widget.fabColor,
-                        child: Icon(
-                          widget.isFabExpanded ? Icons.close : Icons.add,
-                        ),
                         onPressed:
                             () => widget.onFabToggle(!widget.isFabExpanded),
+                        child: Center(
+                          child:
+                              widget.isFabExpanded
+                                  ? SvgPicture.asset(
+                                    'assets/img/close.svg',
+                                    width: 24,
+                                    height: 24,
+                                  )
+                                  : Image.asset(
+                                    'assets/img/konsultasifab.png',
+                                    width: 70,
+                                    height: 70,
+                                  ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Konsultasi',
+                      widget.isFabExpanded ? 'Tutup' : 'Konsultasi',
                       style: GoogleFonts.overlock(
                         color: Colors.black,
                         fontSize: 14,
@@ -151,11 +172,27 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                navButton(icon: Icons.dashboard, label: 'Dashboard', index: 0),
-                navButton(icon: Icons.forum, label: 'Forum', index: 1),
+                navButton(
+                  icon: 'assets/img/Dashboard.svg',
+                  label: 'Dashboard',
+                  index: 0,
+                ),
+                navButton(
+                  icon: 'assets/img/sharingforum.svg',
+                  label: 'Forum',
+                  index: 1,
+                ),
                 const SizedBox(width: 48),
-                navButton(icon: Icons.book, label: 'My Diary', index: 2),
-                navButton(icon: Icons.person, label: 'Profil', index: 3),
+                navButton(
+                  icon: 'assets/img/Diary.svg',
+                  label: 'My Diary',
+                  index: 2,
+                ),
+                navButton(
+                  icon: 'assets/img/Profile.svg',
+                  label: 'Profil',
+                  index: 3,
+                ),
               ],
             ),
           ),
@@ -165,7 +202,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   }
 
   Widget navButton({
-    required IconData icon,
+    required String icon,
     required String label,
     required int index,
   }) {
@@ -174,11 +211,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          SvgPicture.asset(
             icon,
+            width: 30,
+            height: 30,
             color: widget.currentTab == index ? color5 : color4,
-            size: 24,
           ),
+          SizedBox(height: 5),
           Text(
             label,
             style: GoogleFonts.overlock(
