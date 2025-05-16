@@ -9,7 +9,7 @@ const Color color4 = Color(0xFFFFF1D5);
 const Color color8 = Color(0xFFEBC7E6);
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({super.key, required String userId});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -100,12 +100,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       CircleAvatar(
                         radius: 60,
-                        backgroundImage: _profileImage != null
-                            ? FileImage(_profileImage!)
-                            : null,
-                        child: _profileImage == null
-                            ? const Icon(Icons.person, size: 60, color: Colors.white)
-                            : null,
+                        backgroundImage:
+                            _profileImage != null
+                                ? FileImage(_profileImage!)
+                                : null,
+                        child:
+                            _profileImage == null
+                                ? const Icon(
+                                  Icons.person,
+                                  size: 60,
+                                  color: Colors.white,
+                                )
+                                : null,
                       ),
                       Positioned(
                         bottom: 0,
@@ -135,10 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(height: 8),
                   Text(
                     email,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -215,12 +218,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     _buildMenuButton(
                       icon: Icons.logout,
                       text: 'Log Out',
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LogoutPage(),
-                        ),
-                      ),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LogoutPage(),
+                            ),
+                          ),
                     ),
                   ],
                 ),
@@ -240,8 +244,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 25),
       leading: Icon(icon, color: Colors.blueGrey[700]),
-      title: Text(text, 
-        style: const TextStyle(fontWeight: FontWeight.w500)),
+      title: Text(text, style: const TextStyle(fontWeight: FontWeight.w500)),
       trailing: const Icon(Icons.chevron_right, color: Colors.grey),
       onTap: onTap,
     );

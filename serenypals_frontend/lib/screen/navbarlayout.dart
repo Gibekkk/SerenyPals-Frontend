@@ -80,10 +80,10 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
   }
 
   final List<Widget> pages = [
-    DashboardContent(),
+    DashboardPage(),
     ForumPage(),
     MyDiaryPage(),
-    ProfilePage(),
+    ProfilePage(userId: ''),
     AIPage(),
     PsikiaterPage(),
   ];

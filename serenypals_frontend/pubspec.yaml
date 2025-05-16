@@ -19,6 +19,7 @@ dependencies:
   path: ^1.8.3
   go_router: ^15.1.2
   shared_preferences: ^2.5.3
+  flutter_svg: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -32,4 +33,15 @@ flutter:
     - assets/img/gambarlogin1.png
     - assets/img/gambarlogin2.png
     - assets/img/gambarlogin3.png
+    - assets/img/ai.png
+    - assets/img/Dashboard.svg
+    - assets/img/Diary.svg
+    - assets/img/konsultasi.png
+    - assets/img/konsultasifab.png
+    - assets/img/premium.png
+    - assets/img/sharingforum.svg
+    - assets/img/close.svg
+    - assets/img/Profile.svg
+
+
     
