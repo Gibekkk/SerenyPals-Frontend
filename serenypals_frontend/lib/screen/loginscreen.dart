@@ -94,9 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   text: 'Masuk',
                   onPressed: () {
-                    context.go(
-                      '/Home',
-                    ); // pastikan ini sama dengan yang di router
+                    context.go('/Home');
                   },
                   backgroundColor: color1,
                   textColor: Colors.black,

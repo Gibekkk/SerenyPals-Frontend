@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:serenypals_frontend/screen/loginscreen.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
 import '../utils/color.dart';
 import 'package:serenypals_frontend/widget/customtextfield.dart';
@@ -205,12 +205,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   CustomButton(
                     text: 'Daftar',
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                      );
+                      context.go('/login');
                     },
                     backgroundColor: color1,
                     textColor: Colors.black,
@@ -240,8 +235,7 @@ class _RegisterPageState extends State<RegisterPage> {
               fontWeight: FontWeight.bold,
             ),
             recognizer:
-                TapGestureRecognizer()
-                  ..onTap = () => Navigator.pushNamed(context, '/login'),
+                TapGestureRecognizer()..onTap = () => context.go('/login'),
           ),
           const TextSpan(text: ' di sini'),
         ],
