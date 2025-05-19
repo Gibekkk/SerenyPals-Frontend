@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:serenypals_frontend/screen/customloading.dart';
 import 'package:serenypals_frontend/screen/navbarlayout.dart';
 import 'package:serenypals_frontend/screen/otpscreen.dart';
 import 'package:serenypals_frontend/screen/psikiaterscreen.dart';
@@ -14,6 +15,11 @@ final GoRouter router = GoRouter(
       path: '/login',
       name: 'login',
       builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/loading',
+      name: 'loading',
+      builder: (context, state) => const LoadingScreen(),
     ),
     GoRoute(
       path: '/Register',
