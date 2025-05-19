@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:serenypals_frontend/screen/loginscreen.dart';
-import 'package:serenypals_frontend/screen/registerscreen.dart';
+import 'package:serenypals_frontend/screen/topup.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+void main() => runApp(const Mytino());
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class Mytino extends StatelessWidget {
+  const Mytino({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SerenyPals',
-      initialRoute: '/login', // Rute awal
-      routes: {
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-      },
+      theme: ThemeData(fontFamily: 'Poppins'),
+      home: const DiamondTopUpPage(),
     );
   }
 }
+
