@@ -46,6 +46,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const AIPage(),
     ),
     GoRoute(
+      path: '/Psikiater',
+      name: 'Psikiater',
+      builder: (context, state) => const PsikiaterPage(),
+    ),
+    GoRoute(
       path: '/profile/:id',
       name: 'profile',
       builder: (context, state) {
