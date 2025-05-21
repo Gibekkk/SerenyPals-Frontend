@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
@@ -23,9 +24,15 @@ class _MoodJournalingState extends State<MoodJournaling> {
     return Scaffold(
       backgroundColor: color4,
       appBar: AppBar(
-        title: const Text('Mood Journaling'),
+        title: Text(
+          'Mood Journaling',
+          style: GoogleFonts.overlock(fontWeight: FontWeight.w600),
+        ),
         backgroundColor: color2,
-        leading: const BackButton(),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go('/dashboard'),
+        ),
       ),
       body: SafeArea(
         child: LayoutBuilder(
@@ -83,7 +90,7 @@ class _MoodJournalingState extends State<MoodJournaling> {
                               print('Masalah: ${issueController.text}');
                               print('Cerita: ${storyController.text}');
                             },
-                            backgroundColor: Colors.purple[300]!,
+                            backgroundColor: color6,
                             textColor: Colors.white,
                             borderRadius: 20,
                             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -233,8 +240,9 @@ class QuestionBox extends StatelessWidget {
                 isMultiline ? TextInputType.multiline : TextInputType.text,
             decoration: InputDecoration(
               hintText: hintText,
+              hintStyle: GoogleFonts.overlock(color: Colors.grey.shade500),
               filled: true,
-              fillColor: color3,
+              fillColor: color8,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
