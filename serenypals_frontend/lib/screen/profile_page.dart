@@ -9,7 +9,7 @@ const Color color4 = Color(0xFFFFF1D5);
 const Color color8 = Color(0xFFEBC7E6);
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key, required String userId});
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();

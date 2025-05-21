@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: GoogleFonts.overlock(fontSize: 18, fontWeight: FontWeight.w700),
+        style: GoogleFonts.overlock(fontSize: 18, fontWeight: FontWeight.w600),
       ),
     );
   }

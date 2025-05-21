@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/color.dart';
 
@@ -12,8 +14,19 @@ class PetAndMoodSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _InfoCard(icon: Icons.pets, label: 'Anabul', bgColor: color8),
-          _InfoCard(icon: Icons.mood, label: 'Mood', bgColor: color7),
+          _InfoCard(
+            icon: Icons.pets,
+            label: 'Anabul',
+            bgColor: color8,
+            onTap: () => context.go('/anabul'), // Ganti rute sesuai nama kamu
+          ),
+          _InfoCard(
+            icon: Icons.mood,
+            label: 'Mood Journaling',
+            bgColor: color7,
+            onTap:
+                () => context.go('/mood-journaling'), // Ganti juga kalau perlu
+          ),
         ],
       ),
     );
@@ -24,31 +37,40 @@ class _InfoCard extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color bgColor;
+  final VoidCallback? onTap; // Tambah ini
 
   const _InfoCard({
     required this.icon,
     required this.label,
     required this.bgColor,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 2 - 24,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, size: 32),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-          ),
-        ],
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 - 24,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, size: 32),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: GoogleFonts.overlock(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -73,7 +95,7 @@ class _InfoCardSectionState extends State<InfoCardSection> {
       child: ExpansionTile(
         title: Text(
           'Selesai Klaim',
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.overlock(fontWeight: FontWeight.bold),
         ),
         initiallyExpanded: isExpanded,
         onExpansionChanged: (expanded) {
