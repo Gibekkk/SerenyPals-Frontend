@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
 
 class LoadingText extends StatefulWidget {
   final String text;
@@ -16,7 +17,7 @@ class LoadingText extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LoadingTextState createState() => _LoadingTextState();
+  State<LoadingText> createState() => _LoadingTextState();
 }
 
 class _LoadingTextState extends State<LoadingText> {
@@ -24,29 +25,39 @@ class _LoadingTextState extends State<LoadingText> {
   int _currentIndex = 0;
   Timer? _timer;
 
+  @override
+  void initState() {
+    super.initState();
+    _startTypingLoop();
+  }
+
   void _startTypingLoop() {
+    _timer?.cancel(); // Jaga-jaga
     _timer = Timer.periodic(widget.typingDuration, (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+
       if (_currentIndex < widget.text.length) {
         setState(() {
           _displayedText += widget.text[_currentIndex];
           _currentIndex++;
         });
       } else {
-        _timer?.cancel();
-        Future.delayed(widget.pauseDuration, () {
-          setState(() {
-            _displayedText = '';
-            _currentIndex = 0;
-          });
-          _startTypingLoop();
-        });
+        timer.cancel();
+        _restartAfterPause();
       }
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
+  void _restartAfterPause() async {
+    await Future.delayed(widget.pauseDuration);
+    if (!mounted) return;
+    setState(() {
+      _displayedText = '';
+      _currentIndex = 0;
+    });
     _startTypingLoop();
   }
 

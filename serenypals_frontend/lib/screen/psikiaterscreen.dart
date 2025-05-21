@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serenypals_frontend/screen/customloading.dart';
+import 'package:serenypals_frontend/widget/customloading.dart';
 import 'package:serenypals_frontend/screen/profile_page.dart';
 
 class AIPage extends StatelessWidget {

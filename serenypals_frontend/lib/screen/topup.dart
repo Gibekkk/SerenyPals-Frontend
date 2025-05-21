@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
-
-void main() => runApp(const Mytino());
-
-class Mytino extends StatelessWidget {
-  const Mytino({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'Poppins'),
-      home: const DiamondTopUpPage(),
-    );
-  }
-}
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:serenypals_frontend/utils/color.dart';
 
 class DiamondTopUpPage extends StatefulWidget {
   const DiamondTopUpPage({super.key});
@@ -30,44 +19,51 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
     DiamondPackage(389, 76000, 95000, discountPercent: 20, bonus: "10 koin"),
     DiamondPackage(699, 87000, 116000, discountPercent: 25, bonus: "10 koin"),
     DiamondPackage(1158, 276800, 346000, discountPercent: 20, bonus: "10 koin"),
-    DiamondPackage(389, 76000, 95000, discountPercent: 20, bonus: "10 koin"),
   ];
 
   void _showConfirmationDialog(DiamondPackage package) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Konfirmasi Pembelian"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("${package.diamond} Diamond",
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            Text("Rp${_formatNumber(package.discountedPrice)}"),
-            if (package.bonus != null) Text("Bonus: ${package.bonus}"),
-            const SizedBox(height: 10),
-            const Text("Apakah Anda yakin ingin membeli ini?"),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Batal"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Berhasil membeli ${package.diamond} Diamond!"),
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Konfirmasi Pembelian"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${package.diamond} Diamond",
+                  style: GoogleFonts.overlock(fontWeight: FontWeight.bold),
                 ),
-              );
-            },
-            child: const Text("Beli", style: TextStyle(color: Colors.red)),
+                Text("Rp${_formatNumber(package.discountedPrice)}"),
+                if (package.bonus != null) Text("Bonus: ${package.bonus}"),
+                const SizedBox(height: 10),
+                const Text("Apakah Anda yakin ingin membeli ini?"),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Batal"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Berhasil membeli ${package.diamond} Diamond!",
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Beli",
+                  style: GoogleFonts.overlock(color: Colors.red),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -81,82 +77,127 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF1D5),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 40),
-            const Center(
-              child: Text(
-                'SerenyShop',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+      backgroundColor: color4,
+      appBar: AppBar(
+        backgroundColor: color4,
+        centerTitle: true, // Ini membuat title di tengah
+        title: Text(
+          'SerenyPals',
+          style: GoogleFonts.overlock(
+            fontSize: 30,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go('/dashboard'),
+        ),
+      ),
+
+      body: Stack(
+        children: [
+          // Konten scrollable
+          SingleChildScrollView(
+            padding: const EdgeInsets.only(
+              bottom: 150,
+            ), // Beri jarak bawah agar tidak ketiban
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Center(
+                    child: Text(
+                      'Manjakan Petmu Agar Makin Imut!',
+                      style: GoogleFonts.overlock(
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset(
+                        'assets/img/capybara1.png',
+                        width: 80,
+                        height: 80,
+                      ),
+                      Image.asset(
+                        'assets/img/capybara2.png',
+                        width: 80,
+                        height: 80,
+                      ),
+                      Image.asset(
+                        'assets/img/capybara3.png',
+                        width: 80,
+                        height: 80,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Grid
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 1, // lebih proporsional
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
+                    itemCount: packages.length,
+                    itemBuilder:
+                        (context, index) => DiamondCard(
+                          package: packages[index],
+                          isSelected: selectedIndex == index,
+                          onTap: () => setState(() => selectedIndex = index),
+                        ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 20),
-            const Center(
-              child: Text(
-                'Manjakan Petmu Agar Makin Imut!',
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
-            ),
-            const SizedBox(height: 20),
+          ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset('assets/img/capybara1.png', width: 80, height: 80),
-                Image.asset('assets/img/capybara2.png', width: 80, height: 80),
-                Image.asset('assets/img/capybara3.png', width: 80, height: 80),
-              ],
-            ),
-            const SizedBox(height: 20),
-
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.7,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                ),
-                itemCount: packages.length,
-                itemBuilder: (context, index) => DiamondCard(
-                  package: packages[index],
-                  isSelected: selectedIndex == index,
-                  onTap: () => setState(() => selectedIndex = index),
-                ),
-              ),
-            ),
-
-            // HANYA 1 tombol Beli di sini
-            if (selectedIndex != null)
-              Container(
-                margin: const EdgeInsets.only(top: 10),
+          // Tombol beli di bawah, selalu tampil
+          if (selectedIndex != null)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                margin: const EdgeInsets.all(16),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: const Color(0xFFC5E3EA),
                   borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, -2),
+                    ),
+                  ],
                 ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           '${packages[selectedIndex!].diamond} Diamond',
-                          style: const TextStyle(
+                          style: GoogleFonts.overlock(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
                           'Rp ${_formatNumber(packages[selectedIndex!].discountedPrice)}',
-                          style: const TextStyle(
+                          style: GoogleFonts.overlock(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -175,10 +216,10 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             'Beli Diamond',
-                            style: TextStyle(
+                            style: GoogleFonts.overlock(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
@@ -190,8 +231,8 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
                   ],
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }
@@ -215,9 +256,7 @@ class DiamondCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected
-              ? const Color(0xFFBFACE2)
-              : const Color(0xFFEBC7E6),
+          color: isSelected ? const Color(0xFFBFACE2) : const Color(0xFFEBC7E6),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -234,15 +273,11 @@ class DiamondCard extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Image.asset(
-                    'assets/img/diamond.png',
-                    width: 60,
-                    height: 60,
-                  ),
+                  Image.asset('assets/img/diamond.png', width: 60, height: 60),
                   const SizedBox(height: 10),
                   Text(
                     '${package.diamond} Diamond',
-                    style: const TextStyle(
+                    style: GoogleFonts.overlock(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -257,7 +292,7 @@ class DiamondCard extends StatelessWidget {
                       children: [
                         Text(
                           'Rp${_formatNumber(package.originalPrice!)}',
-                          style: TextStyle(
+                          style: GoogleFonts.overlock(
                             fontSize: 12,
                             decoration: TextDecoration.lineThrough,
                             color: Colors.grey[600],
@@ -275,7 +310,7 @@ class DiamondCard extends StatelessWidget {
                           ),
                           child: Text(
                             '${package.discountPercent}%',
-                            style: const TextStyle(
+                            style: GoogleFonts.overlock(
                               fontSize: 10,
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
@@ -286,7 +321,7 @@ class DiamondCard extends StatelessWidget {
                     ),
                   Text(
                     'Rp${_formatNumber(package.discountedPrice)}',
-                    style: const TextStyle(
+                    style: GoogleFonts.overlock(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -296,7 +331,7 @@ class DiamondCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
                         package.bonus!,
-                        style: const TextStyle(
+                        style: GoogleFonts.overlock(
                           fontSize: 12,
                           color: Colors.green,
                           fontWeight: FontWeight.bold,

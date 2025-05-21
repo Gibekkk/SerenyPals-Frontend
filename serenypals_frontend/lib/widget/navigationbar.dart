@@ -38,7 +38,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: widget.currentTab, children: widget.children),
+      body: widget.children.first,
       floatingActionButton: SizedBox.expand(
         child: Stack(
           clipBehavior: Clip.none,
@@ -147,6 +147,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 10),
                     Text(
                       widget.isFabExpanded ? 'Tutup' : 'Konsultasi',
@@ -182,7 +183,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   label: 'Forum',
                   index: 1,
                 ),
-                const SizedBox(width: 48),
+                const SizedBox(width: 20),
                 navButton(
                   icon: 'assets/img/Diary.svg',
                   label: 'My Diary',

@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   text: 'Masuk',
                   onPressed: () {
-                    context.go('/Home');
+                    context.go('/dashboard');
                   },
                   backgroundColor: color1,
                   textColor: Colors.black,

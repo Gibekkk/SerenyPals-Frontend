@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:serenypals_frontend/screen/dashboardpage.dart';
-import 'package:serenypals_frontend/screen/psikiaterscreen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import 'package:serenypals_frontend/utils/fabaction.dart';
 import 'package:serenypals_frontend/widget/navigationbar.dart';
-import 'package:serenypals_frontend/screen/profile_page.dart';
 
 class MainTabScaffold extends StatefulWidget {
-  const MainTabScaffold({super.key});
+  final Widget child;
+  const MainTabScaffold({super.key, required this.child});
 
   @override
   State<MainTabScaffold> createState() => _MainTabScaffoldState();
@@ -22,22 +21,58 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
   Color _fabPsikiaterColor = color3;
   bool _fabOpened = false;
 
+  final List<String> tabPaths = [
+    '/dashboard',
+    '/forum',
+    '/diary',
+    '/profile',
+    '/ai',
+    '/psikiater',
+  ];
+
   void _onTabChanged(int index) {
+    if (_currentTab == index) {
+      // Klik dua kali di tab yang sama → toggle FAB kalau tab AI atau Psikiater
+      if (index == 4 || index == 5) {
+        setState(() {
+          if (_fabOpened) {
+            _fabAction = FabAction.none;
+            _resetFabChildColors();
+          } else {
+            _onFabActionChanged(
+              index == 4 ? FabAction.ai : FabAction.psikiater,
+            );
+          }
+        });
+      }
+      return;
+    }
+
     setState(() {
       _currentTab = index;
+      _fabExpanded = false;
 
-      // Tutup FAB saat ganti tab secara manual
-      _fabExpanded = true;
-
-      // Reset warna jika bukan dari FAB
+      // Reset FAB kalau bukan tab FAB
       if (index != 4 && index != 5) {
         _fabAction = FabAction.none;
         _resetFabChildColors();
       }
     });
+
+    context.go(tabPaths[index]);
   }
 
   void _onFabActionChanged(FabAction action) async {
+    // Jika sudah terbuka dan diklik lagi → reset (tutup FAB)
+    if (_fabOpened && _fabAction == action) {
+      setState(() {
+        _fabAction = FabAction.none;
+      });
+      _resetFabChildColors();
+      return;
+    }
+
+    // Kalau beda action atau belum terbuka → lanjut buka seperti biasa
     setState(() {
       _fabAction = action;
       _fabExpanded = true;
@@ -54,6 +89,7 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
           _fabColor = color3;
           _fabOpened = true;
         });
+        context.go(tabPaths[4]);
         break;
       case FabAction.psikiater:
         setState(() {
@@ -63,6 +99,7 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
           _fabColor = color3;
           _fabOpened = true;
         });
+        context.go(tabPaths[5]);
         break;
       case FabAction.none:
         _resetFabChildColors();
@@ -78,15 +115,6 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
       _fabOpened = false;
     });
   }
-
-  final List<Widget> pages = [
-    DashboardPage(),
-    ForumPage(),
-    MyDiaryPage(),
-    ProfilePage(userId: ''),
-    AIPage(),
-    PsikiaterPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +135,7 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
       fabColor: _fabColor,
       fabAIColor: _fabAIColor,
       fabPsikiaterColor: _fabPsikiaterColor,
-      children: pages,
+      children: [widget.child],
     );
   }
 }
