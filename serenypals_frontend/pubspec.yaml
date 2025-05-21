@@ -42,6 +42,7 @@ flutter:
     - assets/img/sharingforum.svg
     - assets/img/close.svg
     - assets/img/Profile.svg
+    - assets/qris_dummy.png
     - assets/loading/Capybaratea.gif
 
 
