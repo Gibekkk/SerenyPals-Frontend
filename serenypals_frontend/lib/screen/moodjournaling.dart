@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 import '../widget/custom_button.dart';
+import '../widget/mooddialog.dart';
 
 class MoodJournaling extends StatefulWidget {
   const MoodJournaling({super.key});
@@ -24,6 +25,7 @@ class _MoodJournalingState extends State<MoodJournaling> {
     return Scaffold(
       backgroundColor: color4,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Mood Journaling',
           style: GoogleFonts.overlock(fontWeight: FontWeight.w600),
@@ -89,6 +91,10 @@ class _MoodJournalingState extends State<MoodJournaling> {
                               print('Mood: $moodLevel');
                               print('Masalah: ${issueController.text}');
                               print('Cerita: ${storyController.text}');
+                              showDialog(
+                                context: context,
+                                builder: (context) => const ThankYouDialog(),
+                              );
                             },
                             backgroundColor: color6,
                             textColor: Colors.white,
