@@ -38,6 +38,8 @@ class TermsPopup extends StatelessWidget {
             CustomButton(
               text: 'Tutup',
               onPressed: () => Navigator.of(context).pop(),
+              backgroundColor: color7,
+              textColor: Colors.black,
             ),
           ],
         ),

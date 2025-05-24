@@ -207,6 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     onPressed: () {
                       context.go('/login');
                     },
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                     backgroundColor: color1,
                     textColor: Colors.black,
                   ),

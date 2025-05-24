@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:serenypals_frontend/screen/konseling.dart';
 import 'package:serenypals_frontend/screen/profile_page.dart';
 
 import 'screen/dashboardpage.dart';
@@ -73,7 +74,7 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/psikiater',
           name: 'psikiater',
-          builder: (context, state) => const PsikiaterPage(),
+          builder: (context, state) => const KonselingOnlinePage(),
         ),
         GoRoute(
           path: '/diary',

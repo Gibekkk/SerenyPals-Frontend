@@ -96,10 +96,14 @@ class _MoodJournalingState extends State<MoodJournaling> {
                                 builder: (context) => const ThankYouDialog(),
                               );
                             },
+
                             backgroundColor: color6,
                             textColor: Colors.white,
                             borderRadius: 20,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 15,
+                              horizontal: 30,
+                            ),
                           ),
                         ),
                       ],
