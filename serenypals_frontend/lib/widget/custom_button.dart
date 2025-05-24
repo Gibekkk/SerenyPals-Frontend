@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:serenypals_frontend/utils/color.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -9,15 +8,17 @@ class CustomButton extends StatelessWidget {
   final Color textColor;
   final double borderRadius;
   final EdgeInsetsGeometry padding;
+  final double? fontSize; // ✅ opsional
 
   const CustomButton({
     super.key,
     required this.text,
     required this.onPressed,
-    this.backgroundColor = color1,
-    this.textColor = Colors.black,
-    this.borderRadius = 10.0,
-    this.padding = const EdgeInsets.symmetric(vertical: 20),
+    required this.backgroundColor,
+    required this.textColor,
+    this.borderRadius = 8.0,
+    this.padding = const EdgeInsets.all(12.0),
+    this.fontSize, // ✅ tidak wajib diisi
   });
 
   @override
@@ -26,15 +27,19 @@ class CustomButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
-        foregroundColor: textColor,
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+        padding: padding,
+        minimumSize: const Size(0, 0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius),
         ),
+        elevation: 0,
       ),
       child: Text(
         text,
-        style: GoogleFonts.overlock(fontSize: 18, fontWeight: FontWeight.w600),
+        style: GoogleFonts.overlock(
+          color: textColor,
+          fontSize: fontSize ?? 18.0, // ✅ pakai default kalau null
+        ),
       ),
     );
   }

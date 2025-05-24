@@ -96,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     context.go('/dashboard');
                   },
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   backgroundColor: color1,
                   textColor: Colors.black,
                 ),
@@ -116,9 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         recognizer:
                             TapGestureRecognizer()
-                              ..onTap =
-                                  () =>
-                                      Navigator.pushNamed(context, '/register'),
+                              ..onTap = () => context.go('/Register'),
                       ),
                       const TextSpan(text: ' di sini'),
                     ],
