@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:serenypals_frontend/utils/color.dart';
-
+import '../models/konselormodel.dart';
+import '../utils/color.dart';
 import 'custom_button.dart';
 
 class KonselorCard extends StatelessWidget {
-  const KonselorCard({super.key});
+  final Konselor konselor;
+
+  const KonselorCard({super.key, required this.konselor});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ChatPage()),
+        context.go(
+          '/psikiater/chat/${Uri.encodeComponent((konselor.name ?? '').isNotEmpty ? konselor.name! : 'Nama Konselor')}',
         );
       },
-      borderRadius: BorderRadius.circular(
-        8,
-      ), // agar ada efek ripple sesuai kontainer
+      borderRadius: BorderRadius.circular(8),
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xFFD8F6F0),
@@ -27,10 +27,17 @@ class KonselorCard extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 24,
               backgroundColor: Colors.blueGrey,
-              child: Icon(Icons.person, color: Colors.white),
+              backgroundImage:
+                  (konselor.avatarUrl.isNotEmpty)
+                      ? NetworkImage(konselor.avatarUrl)
+                      : null,
+              child:
+                  konselor.avatarUrl.isEmpty
+                      ? const Icon(Icons.person, color: Colors.white)
+                      : null,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -38,14 +45,18 @@ class KonselorCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Nama",
+                    (konselor.name ?? '').isNotEmpty
+                        ? konselor.name!
+                        : 'Nama Konselor',
                     style: GoogleFonts.overlock(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
                   Text(
-                    "Psikiater/psikolog",
+                    konselor.title.isNotEmpty
+                        ? konselor.title
+                        : 'Psikolog/Konselor',
                     style: GoogleFonts.overlock(fontSize: 14),
                   ),
                 ],
@@ -54,9 +65,7 @@ class KonselorCard extends StatelessWidget {
             const SizedBox(width: 8),
             CustomButton(
               text: 'Jadwal',
-              onPressed: () {
-                showJadwalPopup(context); // 👈 panggil dialog di sini
-              },
+              onPressed: () => showJadwalPopup(context, konselor),
               backgroundColor: color2,
               textColor: Colors.black,
               fontSize: 16,
@@ -70,7 +79,7 @@ class KonselorCard extends StatelessWidget {
   }
 }
 
-void showJadwalPopup(BuildContext context) {
+void showJadwalPopup(BuildContext context, Konselor konselor) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -83,22 +92,23 @@ void showJadwalPopup(BuildContext context) {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "Jadwal Konselor",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text(
+                "Jadwal ${konselor.name}",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-
-              // Jadwal vertikal
               ...[
-                "Senin – 08:00 – 20.00",
-                "Selasa – 08:00 – 20.00",
-                "Rabu – 08:00 – 20.00",
-                "Kamis – 08:00 – 20.00",
-                "Jumat – 08:00 – 20.00",
-                "Sabtu – 08:00 – 20.00",
-                "Minggu – 08:00 – 20.00",
+                "Senin – 08:00 – 20:00",
+                "Selasa – 08:00 – 20:00",
+                "Rabu – 08:00 – 20:00",
+                "Kamis – 08:00 – 20:00",
+                "Jumat – 08:00 – 20:00",
+                "Sabtu – 08:00 – 20:00",
+                "Minggu – 08:00 – 20:00",
               ].map(
                 (text) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -115,13 +125,4 @@ void showJadwalPopup(BuildContext context) {
       );
     },
   );
-}
-
-class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
-  }
 }
