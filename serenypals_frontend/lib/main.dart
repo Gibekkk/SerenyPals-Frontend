@@ -13,6 +13,8 @@ class Mytino extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'SerenyPals',
+      theme: ThemeData(useMaterial3: false),
+
       routerConfig: router, // pakai router yang diimport
     );
   }

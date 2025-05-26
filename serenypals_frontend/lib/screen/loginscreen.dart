@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,103 +28,121 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 24),
-                const ImageCarousel(),
-                const SizedBox(height: 10),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 24),
+                  const ImageCarousel(),
+                  const SizedBox(height: 10),
 
-                const SizedBox(height: 20),
-                Text(
-                  'SerenyPals',
-                  style: GoogleFonts.overlock(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.black,
-                  ),
-                ),
-
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Masuk',
+                  const SizedBox(height: 20),
+                  Text(
+                    'SerenyPals',
                     style: GoogleFonts.overlock(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
                       color: Colors.black,
                     ),
                   ),
-                ),
 
-                // Email Field
-                const SizedBox(height: 8),
-                CustomInputField(
-                  hint: 'Masukkan email',
-                  controller: _emailController,
-                  icon: Icons.email,
-                  keyboardType: TextInputType.emailAddress,
-                  obscureText: false,
-                ),
-                const SizedBox(height: 16),
-
-                // Password Field
-                const SizedBox(height: 8),
-                CustomInputField(
-                  hint: 'Masukkan password',
-                  controller: _passwordController,
-                  icon: Icons.lock,
-                  obscureText: _obscurePassword,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscurePassword
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: Colors.grey,
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Masuk',
+                      style: GoogleFonts.overlock(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _obscurePassword = !_obscurePassword;
-                      });
+                  ),
+
+                  // Email Field
+                  const SizedBox(height: 8),
+                  CustomInputField(
+                    hint: 'Masukkan email',
+                    controller: _emailController,
+                    icon: Icons.email,
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: false,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email wajib diisi';
+                      }
+                      return null;
                     },
                   ),
-                ),
-                const SizedBox(height: 25),
+                  const SizedBox(height: 16),
 
-                // Custom Button
-                CustomButton(
-                  text: 'Masuk',
-                  onPressed: () {
-                    context.go('/dashboard');
-                  },
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                  backgroundColor: color1,
-                  textColor: Colors.black,
-                ),
-
-                const SizedBox(height: 24),
-
-                // Register Navigation
-                RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.overlock(color: Colors.black),
-                    children: [
-                      const TextSpan(text: 'Belum punya akun? '),
-                      TextSpan(
-                        text: 'Daftar',
-                        style: GoogleFonts.overlock(
-                          color: color1,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        recognizer:
-                            TapGestureRecognizer()
-                              ..onTap = () => context.go('/Register'),
+                  // Password Field
+                  const SizedBox(height: 8),
+                  CustomInputField(
+                    hint: 'Masukkan password',
+                    controller: _passwordController,
+                    icon: Icons.lock,
+                    obscureText: _obscurePassword,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password wajib diisi';
+                      }
+                      return null;
+                    },
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.grey,
                       ),
-                      const TextSpan(text: ' di sini'),
-                    ],
+                      onPressed: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 25),
+
+                  // Custom Button
+                  CustomButton(
+                    text: 'Masuk',
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // Semua field valid
+                        context.go('/dashboard');
+                      }
+                    },
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    backgroundColor: color1,
+                    textColor: Colors.black,
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Register Navigation
+                  RichText(
+                    text: TextSpan(
+                      style: GoogleFonts.overlock(color: Colors.black),
+                      children: [
+                        const TextSpan(text: 'Belum punya akun? '),
+                        TextSpan(
+                          text: 'Daftar',
+                          style: GoogleFonts.overlock(
+                            color: color1,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () => context.go('/Register'),
+                        ),
+                        const TextSpan(text: ' di sini'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

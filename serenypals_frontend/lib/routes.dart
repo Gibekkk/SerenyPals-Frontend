@@ -1,7 +1,8 @@
 import 'package:go_router/go_router.dart';
-import 'package:serenypals_frontend/screen/konseling.dart';
+import 'package:serenypals_frontend/screen/konselingpage.dart';
 import 'package:serenypals_frontend/screen/profile_page.dart';
 
+import 'screen/chatpsikologpage.dart';
 import 'screen/dashboardpage.dart';
 import 'screen/loginscreen.dart';
 import 'screen/moodjournaling.dart';
@@ -51,8 +52,16 @@ final GoRouter router = GoRouter(
       name: 'anabul',
       builder: (context, state) => const DiamondTopUpPage(),
     ),
+    GoRoute(
+      path: '/psikiater/chat/:name',
+      name: 'chatPsikolog',
+      builder: (context, state) {
+        final name = state.pathParameters['name']!;
+        return ChatPsikolog(name: name);
+      },
+    ),
 
-    // ✅ ShellRoute untuk halaman utama dengan bottom nav
+    // ShellRoute untuk halaman utama dengan bottom nav
     ShellRoute(
       builder: (context, state, child) => MainTabScaffold(child: child),
       routes: [

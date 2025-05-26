@@ -23,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _newsletterValue = false;
   bool _obscurePassword = true;
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -30,7 +31,58 @@ class _RegisterPageState extends State<RegisterPage> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: color2,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: color1,
+                textStyle: GoogleFonts.overlock(), // Ganti font tombol
+              ),
+            ),
+            datePickerTheme: DatePickerThemeData(
+              backgroundColor: color4,
+              headerBackgroundColor: color1,
+              headerForegroundColor: Colors.black,
+              dayForegroundColor: MaterialStateColor.resolveWith(
+                (states) =>
+                    states.contains(MaterialState.selected)
+                        ? color2
+                        : Colors.black,
+              ),
+              dayBackgroundColor: MaterialStateColor.resolveWith(
+                (states) =>
+                    states.contains(MaterialState.selected)
+                        ? color2
+                        : Colors.transparent,
+              ),
+            ),
+            textTheme: TextTheme(
+              titleLarge: GoogleFonts.overlock(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+              bodyLarge: GoogleFonts.overlock(
+                fontSize: 16,
+                color: Colors.black,
+              ),
+              bodyMedium: GoogleFonts.overlock(
+                fontSize: 14,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
+
     if (picked != null) {
       setState(() {
         _birthDateController.text = DateFormat('dd-MM-yyyy').format(picked);
@@ -47,174 +99,214 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'SerenyPals',
-                    style: GoogleFonts.overlock(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.black,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'SerenyPals',
+                      style: GoogleFonts.overlock(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Daftarkan Akun',
-                    style: GoogleFonts.overlock(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
+                    Text(
+                      'Daftarkan Akun',
+                      style: GoogleFonts.overlock(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
 
-                  // Nama
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Nama',
-                        style: GoogleFonts.overlock(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      CustomInputField(
-                        hint: 'Masukkan nama',
-                        controller: _nameController,
-                        icon: Icons.person,
-                        obscureText: false,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Tanggal Lahir
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Tanggal Lahir',
-                        style: GoogleFonts.overlock(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      InkWell(
-                        onTap: () => _selectDate(context),
-                        child: AbsorbPointer(
-                          child: CustomInputField(
-                            hint: 'Pilih tanggal lahir',
-                            controller: _birthDateController,
-                            icon: Icons.calendar_today,
-                            obscureText: false,
+                    // Nama
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Nama',
+                          style: GoogleFonts.overlock(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // No. Telepon
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'No. Telepon',
-                        style: GoogleFonts.overlock(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      CustomInputField(
-                        hint: 'Masukkan nomor telepon',
-                        controller: _phoneController,
-                        icon: Icons.phone,
-                        keyboardType: TextInputType.phone,
-                        obscureText: false,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Email
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Email',
-                        style: GoogleFonts.overlock(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      CustomInputField(
-                        hint: 'Masukkan email',
-                        controller: _emailController,
-                        icon: Icons.email,
-                        keyboardType: TextInputType.emailAddress,
-                        obscureText: false,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Password
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Password',
-                        style: GoogleFonts.overlock(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      CustomInputField(
-                        hint: 'Masukkan password',
-                        controller: _passwordController,
-                        icon: Icons.lock,
-                        obscureText: _obscurePassword,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscurePassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _obscurePassword = !_obscurePassword;
-                            });
+                        const SizedBox(height: 8),
+                        CustomInputField(
+                          hint: 'Masukkan nama',
+                          controller: _nameController,
+                          icon: Icons.person,
+                          obscureText: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Nama wajib diisi';
+                            }
+                            return null;
                           },
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
 
-                  const SizedBox(height: 24),
-                  NewsletterCheckbox(
-                    value: _newsletterValue,
-                    onChanged: (val) => setState(() => _newsletterValue = val),
-                  ),
-                  SizedBox(height: 25),
-                  CustomButton(
-                    text: 'Daftar',
-                    onPressed: () {
-                      context.go('/login');
-                    },
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                    backgroundColor: color1,
-                    textColor: Colors.black,
-                  ),
-                  const SizedBox(height: 32),
-                  const SizedBox(height: 16),
-                  _buildLoginNavigation(),
-                ],
+                    // Tanggal Lahir
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Tanggal Lahir',
+                          style: GoogleFonts.overlock(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        InkWell(
+                          onTap: () => _selectDate(context),
+                          child: AbsorbPointer(
+                            child: CustomInputField(
+                              hint: 'Pilih tanggal lahir',
+                              controller: _birthDateController,
+                              icon: Icons.calendar_today,
+                              obscureText: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Tanggal Lahir wajib diisi';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+
+                    // No. Telepon
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'No. Telepon',
+                          style: GoogleFonts.overlock(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        CustomInputField(
+                          hint: 'Masukkan nomor telepon',
+                          controller: _phoneController,
+                          icon: Icons.phone,
+                          keyboardType: TextInputType.phone,
+                          obscureText: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'No.Telepon wajib diisi';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Email
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Email',
+                          style: GoogleFonts.overlock(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        CustomInputField(
+                          hint: 'Masukkan email',
+                          controller: _emailController,
+                          icon: Icons.email,
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Email wajib diisi';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Password
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Password',
+                          style: GoogleFonts.overlock(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        CustomInputField(
+                          hint: 'Masukkan password',
+                          controller: _passwordController,
+                          icon: Icons.lock,
+                          obscureText: _obscurePassword,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password wajib diisi';
+                            }
+                            return null;
+                          },
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 24),
+                    NewsletterCheckbox(
+                      value: _newsletterValue,
+                      onChanged:
+                          (val) => setState(() => _newsletterValue = val),
+                    ),
+                    SizedBox(height: 25),
+                    CustomButton(
+                      text: 'Daftar',
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Semua field valid
+                          context.go('/dashboard');
+                        }
+                      },
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 15,
+                      ),
+                      backgroundColor: color1,
+                      textColor: Colors.black,
+                    ),
+                    const SizedBox(height: 32),
+                    const SizedBox(height: 16),
+                    _buildLoginNavigation(),
+                  ],
+                ),
               ),
             ),
           ),
