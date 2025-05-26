@@ -31,7 +31,58 @@ class _RegisterPageState extends State<RegisterPage> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: color2,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: color1,
+                textStyle: GoogleFonts.overlock(), // Ganti font tombol
+              ),
+            ),
+            datePickerTheme: DatePickerThemeData(
+              backgroundColor: color4,
+              headerBackgroundColor: color1,
+              headerForegroundColor: Colors.black,
+              dayForegroundColor: MaterialStateColor.resolveWith(
+                (states) =>
+                    states.contains(MaterialState.selected)
+                        ? color2
+                        : Colors.black,
+              ),
+              dayBackgroundColor: MaterialStateColor.resolveWith(
+                (states) =>
+                    states.contains(MaterialState.selected)
+                        ? color2
+                        : Colors.transparent,
+              ),
+            ),
+            textTheme: TextTheme(
+              titleLarge: GoogleFonts.overlock(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+              bodyLarge: GoogleFonts.overlock(
+                fontSize: 16,
+                color: Colors.black,
+              ),
+              bodyMedium: GoogleFonts.overlock(
+                fontSize: 14,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
+
     if (picked != null) {
       setState(() {
         _birthDateController.text = DateFormat('dd-MM-yyyy').format(picked);
@@ -89,7 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           obscureText: false,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Password wajib diisi';
+                              return 'Nama wajib diisi';
                             }
                             return null;
                           },
@@ -120,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               obscureText: false,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Password wajib diisi';
+                                  return 'Tanggal Lahir wajib diisi';
                                 }
                                 return null;
                               },
@@ -151,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           obscureText: false,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Password wajib diisi';
+                              return 'No.Telepon wajib diisi';
                             }
                             return null;
                           },
@@ -180,7 +231,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           obscureText: false,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Password wajib diisi';
+                              return 'Email wajib diisi';
                             }
                             return null;
                           },
