@@ -41,6 +41,7 @@ class KonselingOnlinePage extends StatelessWidget {
           'Konseling Online',
           style: GoogleFonts.overlock(
             fontSize: 25,
+            color: Colors.black,
             fontWeight: FontWeight.w600,
           ),
         ),

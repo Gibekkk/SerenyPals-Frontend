@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MaterialApp(home: PaymentScreen()));
+import '../utils/color.dart';
 
-const color3 = Color(0xFFBDDDE4);
-const color4 = Color(0xFFFFF1D5);
+void main() => runApp(MaterialApp(home: PaymentScreen()));
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});

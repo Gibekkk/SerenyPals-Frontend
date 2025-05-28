@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import '../utils/color.dart';
 import 'edit_profile_page.dart';
 import 'logout_page.dart';
-
-const Color color1 = Color(0xFF9FB3DF);
-const Color color4 = Color(0xFFFFF1D5);
-const Color color8 = Color(0xFFEBC7E6);
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -81,13 +79,22 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: color4,
       appBar: AppBar(
-        title: const Text('Profile'),
         backgroundColor: color1,
         elevation: 0,
         toolbarHeight: 60,
+        title: Text(
+          'Profile',
+          style: GoogleFonts.overlock(
+            color: Colors.black,
+            fontSize: 23,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      backgroundColor: color4,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -132,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(height: 20),
                   Text(
                     name,
-                    style: const TextStyle(
+                    style: GoogleFonts.overlock(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -141,7 +148,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(height: 8),
                   Text(
                     email,
-                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                    style: GoogleFonts.overlock(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -152,35 +162,50 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Card(
-                color: color8,
+                color: color7,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Icon(Icons.card_membership, color: Colors.white),
+                      Image.asset(
+                        'assets/img/premium.png',
+                        width: 24,
+                        height: 24,
+                        color: Colors.black,
+                      ),
                       const SizedBox(width: 12),
-                      Column(
-                        children: [
-                          const Text(
-                            'SerenyPremium',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'SerenyPremium',
+                              style: GoogleFonts.overlock(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Berakhir di 23 Maret 2025',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white.withOpacity(0.9),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Berakhir di 23 Maret 2025',
+                                  style: GoogleFonts.overlock(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -244,7 +269,10 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 25),
       leading: Icon(icon, color: Colors.blueGrey[700]),
-      title: Text(text, style: const TextStyle(fontWeight: FontWeight.w500)),
+      title: Text(
+        text,
+        style: GoogleFonts.overlock(fontWeight: FontWeight.w500),
+      ),
       trailing: const Icon(Icons.chevron_right, color: Colors.grey),
       onTap: onTap,
     );

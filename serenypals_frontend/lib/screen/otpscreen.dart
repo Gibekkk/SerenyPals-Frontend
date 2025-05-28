@@ -1,16 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
+import 'package:go_router/go_router.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import 'package:serenypals_frontend/widget/otpfield.dart';
 
-class OtpForm extends StatelessWidget {
+class OtpForm extends StatefulWidget {
   const OtpForm({super.key});
 
   @override
+  State<OtpForm> createState() => _OtpFormState();
+}
+
+class _OtpFormState extends State<OtpForm> {
+  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
+
+  @override
+  void dispose() {
+    for (final node in _focusNodes) {
+      node.dispose();
+    }
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final String email = "user@example.com"; // Ganti dengan email yang sesuai
+    final String email = "user@example.com";
 
     return Scaffold(
       backgroundColor: color4,
@@ -19,11 +42,14 @@ class OtpForm extends StatelessWidget {
         backgroundColor: color4,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context), // Tombol kembali
+          onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Verifikasi OTP',
-          style: GoogleFonts.overlock(fontWeight: FontWeight.w700),
+          style: GoogleFonts.overlock(
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
         ),
         centerTitle: true,
       ),
@@ -58,45 +84,49 @@ class OtpForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            // Menggunakan Wrap untuk OTP fields agar lebih responsif
             Wrap(
               alignment: WrapAlignment.center,
-              spacing: 8, // Jarak antar OTP fields
-              runSpacing: 8, // Jarak antar baris
-              children: List.generate(6, (index) => OtpField(index: index)),
+              spacing: 8,
+              runSpacing: 8,
+              children: List.generate(
+                6,
+                (index) => OtpField(
+                  index: index,
+                  focusNodes: _focusNodes,
+                  controllers: _controllers,
+                ),
+              ),
             ),
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Tombol "Batal" dengan ukuran yang fleksibel
                 Expanded(
-                  child: SizedBox(
-                    width: double.infinity, // Tombol mengikuti lebar layar
-                    child: CustomButton(
-                      text: 'Batal',
-                      onPressed: () => Navigator.pop(context),
-                      backgroundColor: Colors.grey.shade400,
-                      textColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
+                  child: CustomButton(
+                    text: 'Batal',
+                    onPressed: () => Navigator.pop(context),
+                    backgroundColor: Colors.grey.shade400,
+                    textColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                 ),
-                const SizedBox(width: 20), // Jarak antar tombol
-                // Tombol "Verifikasi" dengan ukuran yang fleksibel
+                const SizedBox(width: 20),
                 Expanded(
-                  child: SizedBox(
-                    width: double.infinity, // Tombol mengikuti lebar layar
-                    child: CustomButton(
-                      text: 'Verifikasi',
-                      onPressed: () {
-                        // Call the BLoC's submit OTP event
-                        // context.read<OtpFormBloc>().add(OtpFormSubmitEvent());
-                      },
-                      backgroundColor: color1,
-                      textColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
+                  child: CustomButton(
+                    text: 'Verifikasi',
+                    onPressed: () {
+                      final otp = _controllers.map((c) => c.text).join();
+                      if (otp.length == 6) {
+                        context.go('/login');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Lengkapi semua digit OTP')),
+                        );
+                      }
+                    },
+                    backgroundColor: color1,
+                    textColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                 ),
               ],

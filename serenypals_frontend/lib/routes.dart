@@ -1,26 +1,38 @@
 import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/screen/konselingpage.dart';
+import 'package:serenypals_frontend/screen/onboarding.dart';
 import 'package:serenypals_frontend/screen/profile_page.dart';
+import 'package:serenypals_frontend/screen/splashscreen.dart';
 
 import 'screen/chatpsikologpage.dart';
 import 'screen/dashboardpage.dart';
+import 'screen/halamanai.dart';
 import 'screen/loginscreen.dart';
 import 'screen/moodjournaling.dart';
 import 'screen/navbarlayout.dart';
 import 'screen/otpscreen.dart';
-import 'screen/psikiaterscreen.dart';
 import 'screen/registerscreen.dart';
 import 'screen/topup.dart';
 import 'widget/customloading.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/Onboarding',
   routes: [
     // Routes di luar layout
     GoRoute(
       path: '/login',
       name: 'login',
       builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/Onboarding',
+      name: 'Onboarding',
+      builder: (context, state) => OnboardingScreen(),
+    ),
+    GoRoute(
+      path: '/SplashScreen',
+      name: 'SplashScreen',
+      builder: (context, state) => SplashScreen(),
     ),
     GoRoute(
       path: '/loading',

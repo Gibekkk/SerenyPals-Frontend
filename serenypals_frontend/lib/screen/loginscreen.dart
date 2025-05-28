@@ -68,8 +68,11 @@ class _LoginPageState extends State<LoginPage> {
                     keyboardType: TextInputType.emailAddress,
                     obscureText: false,
                     validator: (value) {
+                      final regex = RegExp(r"^[a-zA-Z0-9._%+-]+@gmail\.com$");
                       if (value == null || value.isEmpty) {
                         return 'Email wajib diisi';
+                      } else if (!regex.hasMatch(value)) {
+                        return 'Gunakan format email yang valid dan domain @gmail.com';
                       }
                       return null;
                     },
@@ -111,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // Semua field valid
-                        context.go('/dashboard');
+                        context.go('/SplashScreen');
                       }
                     },
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),

@@ -9,6 +9,7 @@ class CustomButton extends StatelessWidget {
   final double borderRadius;
   final EdgeInsetsGeometry padding;
   final double? fontSize; // ✅ opsional
+  final FontWeight? fontWeight; // ✅ Tambahkan ini
 
   const CustomButton({
     super.key,
@@ -19,6 +20,7 @@ class CustomButton extends StatelessWidget {
     this.borderRadius = 8.0,
     this.padding = const EdgeInsets.all(12.0),
     this.fontSize, // ✅ tidak wajib diisi
+    this.fontWeight,
   });
 
   @override
@@ -39,6 +41,7 @@ class CustomButton extends StatelessWidget {
         style: GoogleFonts.overlock(
           color: textColor,
           fontSize: fontSize ?? 18.0, // ✅ pakai default kalau null
+          fontWeight: fontWeight ?? FontWeight.normal,
         ),
       ),
     );
