@@ -6,48 +6,54 @@ class ChatInputField extends StatelessWidget {
   final VoidCallback onSend;
 
   const ChatInputField({
-    super.key,
+    Key? key,
     required this.controller,
     required this.onSend,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: Offset(0, -2),
+          ),
+        ],
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: color2,
-                borderRadius: BorderRadius.circular(20),
+                color: color4,
+                borderRadius: BorderRadius.circular(24),
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: TextField(
                 controller: controller,
                 minLines: 1,
-                maxLines: 5,
+                maxLines: 4,
                 keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                decoration: const InputDecoration(
+                decoration: const InputDecoration.collapsed(
                   hintText: 'Tulis pesan...',
-                  border: InputBorder.none,
-                  isCollapsed: true,
                 ),
               ),
             ),
           ),
           const SizedBox(width: 8),
-          CircleAvatar(
-            backgroundColor: color6,
-            radius: 24,
-            child: IconButton(
-              icon: const Icon(Icons.send, color: Colors.white),
-              onPressed: onSend,
+          GestureDetector(
+            onTap: onSend,
+            child: CircleAvatar(
+              backgroundColor: color6,
+              radius: 26,
+              child: const Icon(Icons.send, color: Colors.white),
             ),
           ),
         ],

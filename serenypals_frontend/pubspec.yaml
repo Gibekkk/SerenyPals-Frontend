@@ -37,6 +37,10 @@ flutter:
     - assets/img/gambarlogin1.png
     - assets/img/gambarlogin2.png
     - assets/img/gambarlogin3.png
+    - assets/img/onboarding1.png
+    - assets/img/onboarding2.png
+    - assets/img/onboarding3.png
+    - assets/img/logo.png
     - assets/img/ai.png
     - assets/img/Dashboard.svg
     - assets/img/Diary.svg

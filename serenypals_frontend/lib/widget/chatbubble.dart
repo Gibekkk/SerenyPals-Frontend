@@ -12,20 +12,29 @@ class ChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
-      child: ConstrainedBox(
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
         constraints: BoxConstraints(
-          maxWidth:
-              MediaQuery.of(context).size.width * 0.7, // max 70% screen width
+          maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: isSender ? color6 : color2,
-            borderRadius: BorderRadius.circular(16),
+        decoration: BoxDecoration(
+          color: isSender ? color6 : color2,
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(16),
+            topRight: const Radius.circular(16),
+            bottomLeft: isSender ? const Radius.circular(16) : Radius.zero,
+            bottomRight: isSender ? Radius.zero : const Radius.circular(16),
           ),
-          child: Text(text),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
+        child: Text(text, style: const TextStyle(fontSize: 16, height: 1.4)),
       ),
     );
   }
