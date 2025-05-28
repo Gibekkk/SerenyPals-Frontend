@@ -101,6 +101,8 @@ class _RegisterPageState extends State<RegisterPage> {
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -201,8 +203,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           keyboardType: TextInputType.phone,
                           obscureText: false,
                           validator: (value) {
+                            final phoneRegex = RegExp(r'^[0-9]+$');
                             if (value == null || value.isEmpty) {
-                              return 'No.Telepon wajib diisi';
+                              return 'No. Telepon wajib diisi';
+                            } else if (!phoneRegex.hasMatch(value)) {
+                              return 'No. Telepon hanya boleh angka';
                             }
                             return null;
                           },
@@ -230,14 +235,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           keyboardType: TextInputType.emailAddress,
                           obscureText: false,
                           validator: (value) {
+                            final regex = RegExp(
+                              r"^[a-zA-Z0-9._%+-]+@gmail\.com$",
+                            );
                             if (value == null || value.isEmpty) {
                               return 'Email wajib diisi';
+                            } else if (!regex.hasMatch(value)) {
+                              return 'Gunakan format email yang valid dan domain @gmail.com';
                             }
                             return null;
                           },
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 16),
 
                     // Password
@@ -291,8 +302,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       text: 'Daftar',
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          // Semua field valid
-                          context.go('/dashboard');
+                          context.go('/OTP');
                         }
                       },
                       padding: EdgeInsets.symmetric(
