@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 class CustomInputField extends StatefulWidget {
@@ -58,7 +57,8 @@ class _CustomInputFieldState extends State<CustomInputField>
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   widget.label!,
-                  style: GoogleFonts.overlock(
+                  style: TextStyle(
+                    fontFamily: 'Overlock',
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
@@ -73,11 +73,12 @@ class _CustomInputFieldState extends State<CustomInputField>
               decoration: InputDecoration(
                 prefixIcon: Icon(widget.icon, color: Colors.black54),
                 hintText: widget.hint,
-                hintStyle: GoogleFonts.overlock(),
+                hintStyle: TextStyle(fontFamily: 'Overlock'),
                 labelText:
                     widget
                         .label, // Optional: bisa pakai labelText untuk float label
-                labelStyle: GoogleFonts.overlock(
+                labelStyle: TextStyle(
+                  fontFamily: 'Overlock',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,

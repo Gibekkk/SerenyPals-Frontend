@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import '../widget/customtextfield.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
@@ -40,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 20),
                   Text(
                     'SerenyPals',
-                    style: GoogleFonts.overlock(
+                    style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w900,
                       color: Colors.black,
@@ -51,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Masuk',
-                      style: GoogleFonts.overlock(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -62,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   // Email Field
                   const SizedBox(height: 8),
                   CustomInputField(
+                    key: const Key('email_field'),
                     hint: 'Masukkan email',
                     controller: _emailController,
                     icon: Icons.email,
@@ -82,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   // Password Field
                   const SizedBox(height: 8),
                   CustomInputField(
+                    key: const Key('password_field'),
                     hint: 'Masukkan password',
                     controller: _passwordController,
                     icon: Icons.lock,
@@ -110,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Custom Button
                   CustomButton(
+                    key: const Key('login_button'),
                     text: 'Masuk',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -127,12 +129,12 @@ class _LoginPageState extends State<LoginPage> {
                   // Register Navigation
                   RichText(
                     text: TextSpan(
-                      style: GoogleFonts.overlock(color: Colors.black),
+                      style: TextStyle(color: Colors.black),
                       children: [
                         const TextSpan(text: 'Belum punya akun? '),
                         TextSpan(
                           text: 'Daftar',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             color: color1,
                             fontWeight: FontWeight.bold,
                           ),

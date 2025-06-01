@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/widget/termsandconditionsdialog.dart';
 import '../utils/color.dart';
 
@@ -17,6 +16,8 @@ class NewsletterCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: const Key(''),
+
       children: [
         Checkbox(
           value: value,
@@ -26,7 +27,7 @@ class NewsletterCheckbox extends StatelessWidget {
         Flexible(
           child: RichText(
             text: TextSpan(
-              style: GoogleFonts.overlock(color: Colors.black),
+              style: TextStyle(color: Colors.black),
               children: [
                 const TextSpan(
                   text:
@@ -34,10 +35,7 @@ class NewsletterCheckbox extends StatelessWidget {
                 ),
                 TextSpan(
                   text: 'Syarat & Ketentuan ',
-                  style: GoogleFonts.overlock(
-                    color: color1,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(color: color1, fontWeight: FontWeight.bold),
                   recognizer:
                       TapGestureRecognizer()
                         ..onTap =

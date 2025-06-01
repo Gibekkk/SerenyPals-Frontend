@@ -38,6 +38,7 @@ class ChatInputField extends StatelessWidget {
               ),
               child: TextField(
                 controller: controller,
+                style: TextStyle(),
                 minLines: 1,
                 maxLines: 4,
                 keyboardType: TextInputType.multiline,

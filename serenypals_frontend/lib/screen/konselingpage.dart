@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../models/konselormodel.dart';
@@ -39,7 +38,7 @@ class KonselingOnlinePage extends StatelessWidget {
         backgroundColor: color1,
         title: Text(
           'Konseling Online',
-          style: GoogleFonts.overlock(
+          style: TextStyle(
             fontSize: 25,
             color: Colors.black,
             fontWeight: FontWeight.w600,

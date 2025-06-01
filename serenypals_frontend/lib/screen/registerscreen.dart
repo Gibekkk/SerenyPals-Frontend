@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
 import '../utils/color.dart';
@@ -42,40 +41,34 @@ class _RegisterPageState extends State<RegisterPage> {
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 foregroundColor: color1,
-                textStyle: GoogleFonts.overlock(), // Ganti font tombol
+                textStyle: TextStyle(color: Colors.black), // Ganti font tombol
               ),
             ),
             datePickerTheme: DatePickerThemeData(
               backgroundColor: color4,
               headerBackgroundColor: color1,
               headerForegroundColor: Colors.black,
-              dayForegroundColor: MaterialStateColor.resolveWith(
+              dayForegroundColor: WidgetStateColor.resolveWith(
                 (states) =>
-                    states.contains(MaterialState.selected)
+                    states.contains(WidgetState.selected)
                         ? color2
                         : Colors.black,
               ),
-              dayBackgroundColor: MaterialStateColor.resolveWith(
+              dayBackgroundColor: WidgetStateColor.resolveWith(
                 (states) =>
-                    states.contains(MaterialState.selected)
+                    states.contains(WidgetState.selected)
                         ? color2
                         : Colors.transparent,
               ),
             ),
             textTheme: TextTheme(
-              titleLarge: GoogleFonts.overlock(
+              titleLarge: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),
-              bodyLarge: GoogleFonts.overlock(
-                fontSize: 16,
-                color: Colors.black,
-              ),
-              bodyMedium: GoogleFonts.overlock(
-                fontSize: 14,
-                color: Colors.black,
-              ),
+              bodyLarge: TextStyle(fontSize: 16, color: Colors.black),
+              bodyMedium: TextStyle(fontSize: 14, color: Colors.black),
             ),
           ),
           child: child!,
@@ -108,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Text(
                       'SerenyPals',
-                      style: GoogleFonts.overlock(
+                      style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w900,
                         color: Colors.black,
@@ -116,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     Text(
                       'Daftarkan Akun',
-                      style: GoogleFonts.overlock(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
@@ -129,13 +122,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Text(
                           'Nama',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 8),
                         CustomInputField(
+                          key: const Key('name_field'),
                           hint: 'Masukkan nama',
                           controller: _nameController,
                           icon: Icons.person,
@@ -157,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Text(
                           'Tanggal Lahir',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -167,6 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           onTap: () => _selectDate(context),
                           child: AbsorbPointer(
                             child: CustomInputField(
+                              key: const Key('birthdate_field'),
                               hint: 'Pilih tanggal lahir',
                               controller: _birthDateController,
                               icon: Icons.calendar_today,
@@ -190,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Text(
                           'No. Telepon',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -198,6 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(height: 8),
                         CustomInputField(
                           hint: 'Masukkan nomor telepon',
+                          key: const Key('phone_field'),
                           controller: _phoneController,
                           icon: Icons.phone,
                           keyboardType: TextInputType.phone,
@@ -222,13 +218,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Text(
                           'Email',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 8),
                         CustomInputField(
+                          key: const Key('email_field'),
                           hint: 'Masukkan email',
                           controller: _emailController,
                           icon: Icons.email,
@@ -257,13 +254,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Text(
                           'Password',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 8),
                         CustomInputField(
+                          key: const Key('password_field'),
                           hint: 'Masukkan password',
                           controller: _passwordController,
                           icon: Icons.lock,
@@ -293,12 +291,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     const SizedBox(height: 24),
                     NewsletterCheckbox(
+                      key: Key('newsletter_checkbox'),
                       value: _newsletterValue,
                       onChanged:
                           (val) => setState(() => _newsletterValue = val),
                     ),
                     SizedBox(height: 25),
                     CustomButton(
+                      key: Key('register_button'),
                       text: 'Daftar',
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -327,16 +327,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildLoginNavigation() {
     return RichText(
+      key: const Key('login_navigation'),
       text: TextSpan(
-        style: GoogleFonts.overlock(color: Colors.black),
+        style: TextStyle(color: Colors.black),
         children: [
           const TextSpan(text: 'Sudah punya akun? '),
           TextSpan(
             text: 'Masuk',
-            style: GoogleFonts.overlock(
-              color: color1,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(color: color1, fontWeight: FontWeight.bold),
             recognizer:
                 TapGestureRecognizer()..onTap = () => context.go('/login'),
           ),

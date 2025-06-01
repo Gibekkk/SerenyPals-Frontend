@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
 import 'package:go_router/go_router.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +35,7 @@ class _OtpFormState extends State<OtpForm> {
     final String email = "user@example.com";
 
     return Scaffold(
+      key: const Key('otp_screen'),
       backgroundColor: color4,
       appBar: AppBar(
         elevation: 1,
@@ -46,10 +46,7 @@ class _OtpFormState extends State<OtpForm> {
         ),
         title: Text(
           'Verifikasi OTP',
-          style: GoogleFonts.overlock(
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black),
         ),
         centerTitle: true,
       ),
@@ -62,14 +59,11 @@ class _OtpFormState extends State<OtpForm> {
             Text.rich(
               TextSpan(
                 text: 'Masukkan kode OTP yang dikirim ke email ',
-                style: GoogleFonts.overlock(fontSize: 20),
+                style: TextStyle(fontSize: 20),
                 children: [
                   TextSpan(
                     text: email,
-                    style: GoogleFonts.overlock(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 18,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
                   ),
                 ],
               ),
@@ -78,10 +72,7 @@ class _OtpFormState extends State<OtpForm> {
             const SizedBox(height: 24),
             Text(
               'Masukkan Kode',
-              style: GoogleFonts.overlock(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 16),
             Wrap(
