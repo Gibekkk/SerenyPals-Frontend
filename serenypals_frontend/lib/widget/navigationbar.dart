@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import 'package:serenypals_frontend/utils/fabaction.dart';
 
@@ -67,7 +66,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                       const SizedBox(height: 4),
                       Text(
                         'AI Assistant',
-                        style: GoogleFonts.overlock(
+                        style: TextStyle(
+                          fontFamily: 'Overlock',
                           fontSize: 12,
                           color: Colors.black,
                         ),
@@ -104,7 +104,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                       const SizedBox(height: 4),
                       Text(
                         'Psikiater',
-                        style: GoogleFonts.overlock(
+                        style: TextStyle(
+                          fontFamily: 'Overlock',
                           fontSize: 12,
                           color: Colors.black,
                         ),
@@ -151,7 +152,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                     const SizedBox(height: 10),
                     Text(
                       widget.isFabExpanded ? 'Tutup' : 'Konsultasi',
-                      style: GoogleFonts.overlock(
+                      style: TextStyle(
+                        fontFamily: 'Overlock',
                         color: Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -221,7 +223,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           SizedBox(height: 5),
           Text(
             label,
-            style: GoogleFonts.overlock(
+            style: TextStyle(
+              fontFamily: 'Overlock',
               fontSize: 14,
               color: Colors.black,
               fontWeight: FontWeight.bold,

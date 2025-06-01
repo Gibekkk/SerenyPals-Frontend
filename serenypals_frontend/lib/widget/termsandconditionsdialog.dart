@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
 
@@ -19,19 +18,13 @@ class TermsPopup extends StatelessWidget {
           children: [
             Text(
               'Syarat & Ketentuan',
-              style: GoogleFonts.overlock(
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 12),
             Text(
               'Ini adalah syarat dan ketentuan aplikasi kami. '
               'Silakan baca dengan seksama sebelum melanjutkan.',
-              style: GoogleFonts.overlock(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
               textAlign: TextAlign.justify,
             ),
             const SizedBox(height: 20),

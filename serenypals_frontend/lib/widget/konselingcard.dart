@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../models/konselormodel.dart';
 import '../utils/color.dart';
 import 'custom_button.dart';
@@ -48,7 +47,8 @@ class KonselorCard extends StatelessWidget {
                     (konselor.name ?? '').isNotEmpty
                         ? konselor.name!
                         : 'Nama Konselor',
-                    style: GoogleFonts.overlock(
+                    style: TextStyle(
+                      fontFamily: 'Overlock',
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -57,7 +57,7 @@ class KonselorCard extends StatelessWidget {
                     konselor.title.isNotEmpty
                         ? konselor.title
                         : 'Psikolog/Konselor',
-                    style: GoogleFonts.overlock(fontSize: 14),
+                    style: TextStyle(fontFamily: 'Overlock', fontSize: 14),
                   ),
                 ],
               ),

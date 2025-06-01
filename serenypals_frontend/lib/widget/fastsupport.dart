@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 class FastSupportSection extends StatefulWidget {
@@ -184,18 +183,12 @@ class _SupportCard extends StatelessWidget {
               children: [
                 Text(
                   item.title,
-                  style: GoogleFonts.overlock(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   item.description,
-                  style: GoogleFonts.overlock(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -214,7 +207,7 @@ class _SupportCard extends StatelessWidget {
                   onPressed: onPressed,
                   child: Text(
                     item.buttonText,
-                    style: GoogleFonts.overlock(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

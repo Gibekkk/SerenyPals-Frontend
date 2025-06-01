@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import '../utils/color.dart';
 import 'edit_profile_page.dart';
@@ -86,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
         toolbarHeight: 60,
         title: Text(
           'Profile',
-          style: GoogleFonts.overlock(
+          style: TextStyle(
             color: Colors.black,
             fontSize: 23,
             fontWeight: FontWeight.w700,
@@ -139,19 +138,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(height: 20),
                   Text(
                     name,
-                    style: GoogleFonts.overlock(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     email,
-                    style: GoogleFonts.overlock(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -185,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Text(
                               'SerenyPremium',
-                              style: GoogleFonts.overlock(
+                              style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
@@ -196,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 Text(
                                   'Berakhir di 23 Maret 2025',
-                                  style: GoogleFonts.overlock(
+                                  style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black87,
                                     fontWeight: FontWeight.w600,
@@ -269,10 +262,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 25),
       leading: Icon(icon, color: Colors.blueGrey[700]),
-      title: Text(
-        text,
-        style: GoogleFonts.overlock(fontWeight: FontWeight.w500),
-      ),
+      title: Text(text, style: TextStyle(fontWeight: FontWeight.w500)),
       trailing: const Icon(Icons.chevron_right, color: Colors.grey),
       onTap: onTap,
     );

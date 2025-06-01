@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart'; // WAJIB untuk context.go
 import '../utils/color.dart';
 
@@ -41,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key('splash_screen'),
       backgroundColor: color4, // Gunakan warna kustom kamu
       body: FadeTransition(
         opacity: _animation,
@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen>
               const SizedBox(height: 20),
               Text(
                 'Serenypals',
-                style: GoogleFonts.overlock(
+                style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen>
               const SizedBox(height: 10),
               Text(
                 'Teman Relaksasi dan Bercerita',
-                style: GoogleFonts.overlock(fontSize: 25, color: Colors.black),
+                style: TextStyle(fontSize: 25, color: Colors.black),
               ),
             ],
           ),

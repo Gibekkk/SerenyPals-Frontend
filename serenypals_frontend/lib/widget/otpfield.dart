@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // <--- Tambahkan ini
-import 'package:google_fonts/google_fonts.dart';
 
 class OtpField extends StatefulWidget {
   final int index;
@@ -32,7 +31,7 @@ class _OtpFieldState extends State<OtpField> {
           FilteringTextInputFormatter.digitsOnly,
         ], // ✅ Batasi input hanya angka
         textAlign: TextAlign.center,
-        style: GoogleFonts.overlock(fontSize: 20),
+        style: TextStyle(fontFamily: 'Overlock', fontSize: 20),
         decoration: InputDecoration(
           counterText: "",
           enabledBorder: OutlineInputBorder(

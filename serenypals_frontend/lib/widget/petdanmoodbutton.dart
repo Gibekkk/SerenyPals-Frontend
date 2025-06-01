@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/color.dart';
 
@@ -64,7 +63,8 @@ class _InfoCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               label,
-              style: GoogleFonts.overlock(
+              style: TextStyle(
+                fontFamily: 'Overlock',
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
@@ -95,7 +95,7 @@ class _InfoCardSectionState extends State<InfoCardSection> {
       child: ExpansionTile(
         title: Text(
           'Selesai Klaim',
-          style: GoogleFonts.overlock(fontWeight: FontWeight.bold),
+          style: TextStyle(fontFamily: 'Overlock', fontWeight: FontWeight.bold),
         ),
         initiallyExpanded: isExpanded,
         onExpansionChanged: (expanded) {

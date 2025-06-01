@@ -14,7 +14,11 @@ class MeditationTipsSection extends StatelessWidget {
         children: [
           const Text(
             'Tips Meditasi',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontFamily: 'Overlock',
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 12),
           _TipCard(
@@ -56,7 +60,11 @@ class _TipCard extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              style: const TextStyle(
+                fontFamily: 'Overlock',
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           const Icon(Icons.arrow_forward_ios, size: 16),

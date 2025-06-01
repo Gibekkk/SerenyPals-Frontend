@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
 import '../utils/color.dart';
@@ -92,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Text(
                           page['text'],
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
                             color: Colors.brown[800],
@@ -132,10 +131,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       onPressed: () => context.go('/login'),
                       child: Text(
                         'Skip',
-                        style: GoogleFonts.overlock(
-                          fontSize: 16,
-                          color: Colors.grey,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
                     ),
                     CustomButton(

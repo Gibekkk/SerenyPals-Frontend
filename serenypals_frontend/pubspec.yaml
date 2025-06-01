@@ -11,7 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
-  google_fonts: ^6.2.1
   http: ^1.4.0
   intl: ^0.20.2
   image_picker: ^1.0.4
@@ -25,6 +24,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
   flutter_lints: ^5.0.0
   mockito: ^5.4.6
   bloc_test: ^10.0.0
@@ -32,6 +33,22 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+  - family: Overlock
+    fonts:
+      - asset: assets/fonts/Overlock-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/Overlock-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/Overlock-Black.ttf
+        weight: 900
+      - asset: assets/fonts/Overlock-Italic.ttf
+        weight: 400
+        style: italic
+      - asset: assets/fonts/Overlock-BoldItalic.ttf
+        weight: 700
+        style: italic
 
   assets:
     - assets/img/gambarlogin1.png
@@ -59,7 +76,7 @@ flutter:
     - assets/img/moodjournaling.png
     - assets/loading/Capybaratea.gif
 
-
+  
 
 
     

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 class Task {
@@ -75,7 +74,8 @@ class _TaskSectionState extends State<TaskSection> {
           children: [
             Text(
               '🎯 Tugas Harian',
-              style: GoogleFonts.overlock(
+              style: TextStyle(
+                fontFamily: 'Overlock',
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -105,7 +105,7 @@ class _TaskSectionState extends State<TaskSection> {
                         children: [
                           Text(
                             '${task.title} +${task.xp}',
-                            style: GoogleFonts.overlock(fontSize: 14),
+                            style: TextStyle(fontSize: 14),
                           ),
                           task.isDone && !task.isClaimed
                               ? ElevatedButton(
@@ -118,7 +118,8 @@ class _TaskSectionState extends State<TaskSection> {
                                 ),
                                 child: Text(
                                   'Klaim',
-                                  style: GoogleFonts.overlock(
+                                  style: TextStyle(
+                                    fontFamily: 'Overlock',
                                     color: Colors.white,
                                   ),
                                 ),
@@ -137,7 +138,8 @@ class _TaskSectionState extends State<TaskSection> {
                                 ),
                                 child: Text(
                                   task.isDone ? 'Selesai' : 'Belum',
-                                  style: GoogleFonts.overlock(
+                                  style: TextStyle(
+                                    fontFamily: 'Overlock',
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),

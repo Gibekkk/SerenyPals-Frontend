@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 import '../widget/custom_button.dart';
@@ -28,7 +27,7 @@ class _MoodJournalingState extends State<MoodJournaling> {
         centerTitle: true,
         title: Text(
           'Mood Journaling',
-          style: GoogleFonts.overlock(fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
         backgroundColor: color2,
         leading: IconButton(
@@ -159,10 +158,7 @@ class MoodQuestionBox extends StatelessWidget {
       children: [
         Text(
           question,
-          style: GoogleFonts.overlock(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         Row(
@@ -198,7 +194,7 @@ class MoodQuestionBox extends StatelessWidget {
         Center(
           child: Text(
             labels[moodIndex],
-            style: GoogleFonts.overlock(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
               color: Colors.grey[700],
@@ -234,10 +230,7 @@ class QuestionBox extends StatelessWidget {
       children: [
         Text(
           question,
-          style: GoogleFonts.overlock(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         Container(
@@ -250,7 +243,7 @@ class QuestionBox extends StatelessWidget {
                 isMultiline ? TextInputType.multiline : TextInputType.text,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: GoogleFonts.overlock(color: Colors.grey.shade500),
+              hintStyle: TextStyle(color: Colors.grey.shade500),
               filled: true,
               fillColor: color8,
               border: OutlineInputBorder(

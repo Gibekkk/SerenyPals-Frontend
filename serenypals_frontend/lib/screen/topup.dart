@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 class DiamondTopUpPage extends StatefulWidget {
@@ -33,7 +32,7 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
               children: [
                 Text(
                   "${package.diamond} Diamond",
-                  style: GoogleFonts.overlock(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text("Rp${_formatNumber(package.discountedPrice)}"),
                 if (package.bonus != null) Text("Bonus: ${package.bonus}"),
@@ -57,10 +56,7 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
                     ),
                   );
                 },
-                child: Text(
-                  "Beli",
-                  style: GoogleFonts.overlock(color: Colors.red),
-                ),
+                child: Text("Beli", style: TextStyle(color: Colors.red)),
               ),
             ],
           ),
@@ -83,10 +79,7 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
         centerTitle: true, // Ini membuat title di tengah
         title: Text(
           'SerenyPals',
-          style: GoogleFonts.overlock(
-            fontSize: 30,
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -108,10 +101,7 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
                   Center(
                     child: Text(
                       'Manjakan Petmu Agar Makin Imut!',
-                      style: GoogleFonts.overlock(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -190,14 +180,14 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
                       children: [
                         Text(
                           '${packages[selectedIndex!].diamond} Diamond',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
                           'Rp ${_formatNumber(packages[selectedIndex!].discountedPrice)}',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -219,7 +209,7 @@ class _DiamondTopUpPageState extends State<DiamondTopUpPage> {
                         child: Center(
                           child: Text(
                             'Beli Diamond',
-                            style: GoogleFonts.overlock(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
@@ -277,10 +267,7 @@ class DiamondCard extends StatelessWidget {
                   const SizedBox(height: 10),
                   Text(
                     '${package.diamond} Diamond',
-                    style: GoogleFonts.overlock(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -292,7 +279,7 @@ class DiamondCard extends StatelessWidget {
                       children: [
                         Text(
                           'Rp${_formatNumber(package.originalPrice!)}',
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             fontSize: 12,
                             decoration: TextDecoration.lineThrough,
                             color: Colors.grey[600],
@@ -310,7 +297,7 @@ class DiamondCard extends StatelessWidget {
                           ),
                           child: Text(
                             '${package.discountPercent}%',
-                            style: GoogleFonts.overlock(
+                            style: TextStyle(
                               fontSize: 10,
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
@@ -321,17 +308,14 @@ class DiamondCard extends StatelessWidget {
                     ),
                   Text(
                     'Rp${_formatNumber(package.discountedPrice)}',
-                    style: GoogleFonts.overlock(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   if (package.bonus != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
                         package.bonus!,
-                        style: GoogleFonts.overlock(
+                        style: TextStyle(
                           fontSize: 12,
                           color: Colors.green,
                           fontWeight: FontWeight.bold,

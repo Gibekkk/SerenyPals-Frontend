@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import '../widget/chatbubble.dart';
 
@@ -146,10 +145,7 @@ class _AIPageState extends State<AIPage> {
                     }
                   });
                 },
-                child: Text(
-                  "Hapus",
-                  style: GoogleFonts.overlock(color: Colors.red),
-                ),
+                child: Text("Hapus", style: TextStyle(color: Colors.red)),
               ),
             ],
           ),
@@ -245,7 +241,7 @@ class _AIPageState extends State<AIPage> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       'SerenyPals',
-                      style: GoogleFonts.overlock(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
@@ -276,7 +272,7 @@ class _AIPageState extends State<AIPage> {
                         ),
                         title: Text(
                           chatList[index],
-                          style: GoogleFonts.overlock(
+                          style: TextStyle(
                             color:
                                 index == selectedIndex
                                     ? Colors.white
@@ -324,7 +320,7 @@ class _AIPageState extends State<AIPage> {
         title: Center(
           child: Text(
             selectedIndex == -1 ? 'SerenyPals' : chatList[selectedIndex],
-            style: GoogleFonts.overlock(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         actions: [
@@ -427,7 +423,7 @@ class _AnimatedGreeting extends StatelessWidget {
           Text(
             "Keluarkan keluh kesahmu dengan bercerita",
             textAlign: TextAlign.center,
-            style: GoogleFonts.overlock(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
               color: Colors.blueGrey,
@@ -437,7 +433,7 @@ class _AnimatedGreeting extends StatelessWidget {
           Text(
             "Pembicaraan kamu private kok!",
             textAlign: TextAlign.center,
-            style: GoogleFonts.overlock(fontSize: 14, color: Colors.blueGrey),
+            style: TextStyle(fontSize: 14, color: Colors.blueGrey),
           ),
         ],
       ),

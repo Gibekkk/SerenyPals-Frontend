@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../utils/color.dart';
 import 'loading_text.dart';
 
@@ -51,9 +50,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 text: widget.loadingText,
                 style:
                     widget.loadingTextStyle ??
-                    GoogleFonts.overlock(
+                    TextStyle(
+                      fontFamily:
+                          'Overlock', // harus sama dengan di pubspec.yaml
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight:
+                          FontWeight.bold, // pastikan file TTF-nya support w700
                     ),
               ),
             ],

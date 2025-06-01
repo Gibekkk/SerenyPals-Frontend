@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 import '../widget/chatbubble.dart';
@@ -83,7 +82,7 @@ class _ChatPsikologState extends State<ChatPsikolog> {
             const SizedBox(width: 12),
             Text(
               widget.name ?? 'Konselor',
-              style: GoogleFonts.overlock(
+              style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
               ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:serenypals_frontend/widget/meditasiwidget.dart';
 import '../utils/color.dart';
 import '../widget/petdanmoodbutton.dart';
@@ -50,10 +49,7 @@ class HeaderSection extends StatelessWidget {
             children: [
               Text(
                 'SerenyPals',
-                style: GoogleFonts.overlock(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w900,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
               ),
 
               GestureDetector(
@@ -83,7 +79,7 @@ class HeaderSection extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         'SerenyPremium',
-                        style: GoogleFonts.overlock(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -144,10 +140,7 @@ class _WeeklyCheckInState extends State<_WeeklyCheckIn> {
         children: [
           Text(
             'Check-in Selama Seminggu Untuk +100',
-            style: GoogleFonts.overlock(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 15),
           Stack(
@@ -199,7 +192,7 @@ class _DayCheckCircle extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(label, style: GoogleFonts.overlock(fontSize: 10)),
+        Text(label, style: TextStyle(fontSize: 10)),
       ],
     );
   }
