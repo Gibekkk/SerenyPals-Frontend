@@ -6,14 +6,20 @@ import 'package:serenypals_frontend/widget/navigationbar.dart';
 
 class MainTabScaffold extends StatefulWidget {
   final Widget child;
-  const MainTabScaffold({super.key, required this.child});
+  final int currentIndex;
+
+  const MainTabScaffold({
+    super.key,
+    required this.child,
+    required this.currentIndex,
+  });
 
   @override
   State<MainTabScaffold> createState() => _MainTabScaffoldState();
 }
 
 class _MainTabScaffoldState extends State<MainTabScaffold> {
-  int _currentTab = 0;
+  late int _currentTab;
   bool _fabExpanded = false;
   Color _fabColor = color3;
   FabAction _fabAction = FabAction.none;
@@ -29,6 +35,12 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
     '/ai',
     '/psikiater',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentTab = widget.currentIndex;
+  }
 
   void _onTabChanged(int index) {
     if (_currentTab == index) {
@@ -63,7 +75,6 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
   }
 
   void _onFabActionChanged(FabAction action) async {
-    // Jika sudah terbuka dan diklik lagi → reset (tutup FAB)
     if (_fabOpened && _fabAction == action) {
       setState(() {
         _fabAction = FabAction.none;
@@ -72,7 +83,6 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
       return;
     }
 
-    // Kalau beda action atau belum terbuka → lanjut buka seperti biasa
     setState(() {
       _fabAction = action;
       _fabExpanded = true;

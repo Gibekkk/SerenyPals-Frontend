@@ -216,11 +216,3 @@ class ForumPage extends StatelessWidget {
     return Center(child: Text("Forum"));
   }
 }
-
-class MyDiaryPage extends StatelessWidget {
-  const MyDiaryPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("My Diary"));
-  }
-}

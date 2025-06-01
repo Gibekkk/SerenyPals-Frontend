@@ -41,22 +41,22 @@ class _RegisterPageState extends State<RegisterPage> {
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 foregroundColor: color1,
-                textStyle: TextStyle(), // Ganti font tombol
+                textStyle: TextStyle(color: Colors.black), // Ganti font tombol
               ),
             ),
             datePickerTheme: DatePickerThemeData(
               backgroundColor: color4,
               headerBackgroundColor: color1,
               headerForegroundColor: Colors.black,
-              dayForegroundColor: MaterialStateColor.resolveWith(
+              dayForegroundColor: WidgetStateColor.resolveWith(
                 (states) =>
-                    states.contains(MaterialState.selected)
+                    states.contains(WidgetState.selected)
                         ? color2
                         : Colors.black,
               ),
-              dayBackgroundColor: MaterialStateColor.resolveWith(
+              dayBackgroundColor: WidgetStateColor.resolveWith(
                 (states) =>
-                    states.contains(MaterialState.selected)
+                    states.contains(WidgetState.selected)
                         ? color2
                         : Colors.transparent,
               ),

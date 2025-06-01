@@ -12,6 +12,7 @@ import 'screen/navbarlayout.dart';
 import 'screen/otpscreen.dart';
 import 'screen/registerscreen.dart';
 import 'screen/topup.dart';
+import 'screen/virtualdiaryscreen.dart';
 import 'widget/customloading.dart';
 
 GoRouter router(String initialLocation) {
@@ -65,6 +66,10 @@ GoRouter router(String initialLocation) {
         builder: (context, state) => const DiamondTopUpPage(),
       ),
       GoRoute(
+        path: '/create-diary',
+        builder: (context, state) => CreateDiaryScreen(),
+      ),
+      GoRoute(
         path: '/psikiater/chat/:name',
         name: 'chatPsikolog',
         builder: (context, state) {
@@ -73,9 +78,31 @@ GoRouter router(String initialLocation) {
         },
       ),
 
-      // ShellRoute untuk halaman utama dengan bottom nav
       ShellRoute(
-        builder: (context, state, child) => MainTabScaffold(child: child),
+        builder: (context, state, child) {
+          // Dapatkan path saat ini
+          final location = state.uri.path;
+
+          // Daftar tab (harus sama urutan dan isi seperti di MainTabScaffold)
+          final tabPaths = [
+            '/dashboard',
+            '/forum',
+            '/diary',
+            '/profile',
+            '/ai',
+            '/psikiater',
+          ];
+
+          // Cari index tab sekarang
+          final currentTab = tabPaths.indexWhere(
+            (path) => location.startsWith(path),
+          );
+
+          return MainTabScaffold(
+            currentIndex: currentTab != -1 ? currentTab : 0,
+            child: child,
+          );
+        },
         routes: [
           GoRoute(
             path: '/dashboard',
@@ -100,7 +127,7 @@ GoRouter router(String initialLocation) {
           GoRoute(
             path: '/diary',
             name: 'diary',
-            builder: (context, state) => const MyDiaryPage(),
+            builder: (context, state) => MyDiaryPage(),
           ),
           GoRoute(
             path: '/profile',
