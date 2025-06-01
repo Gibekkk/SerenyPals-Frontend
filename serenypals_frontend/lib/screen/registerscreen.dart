@@ -298,7 +298,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: 25),
                     CustomButton(
-                      key: const Key('register_button'),
+                      key: Key('register_button'),
                       text: 'Daftar',
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -327,6 +327,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildLoginNavigation() {
     return RichText(
+      key: const Key('login_navigation'),
       text: TextSpan(
         style: TextStyle(color: Colors.black),
         children: [

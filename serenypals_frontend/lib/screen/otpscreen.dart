@@ -35,6 +35,7 @@ class _OtpFormState extends State<OtpForm> {
     final String email = "user@example.com";
 
     return Scaffold(
+      key: const Key('otp_screen'),
       backgroundColor: color4,
       appBar: AppBar(
         elevation: 1,
