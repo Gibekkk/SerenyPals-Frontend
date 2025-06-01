@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:serenypals_frontend/routes.dart';
 
-import 'routes.dart'; // import router yang sudah dibuat
-
-void main() {
-  runApp(const Mytino());
+void main({String initialRoute = '/Onboarding'}) {
+  runApp(MyApp(initialRoute: initialRoute));
 }
 
-class Mytino extends StatelessWidget {
-  const Mytino({super.key});
+class MyApp extends StatelessWidget {
+  final String initialRoute;
+
+  const MyApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
+    final goRouter = router(initialRoute); // kita buat fungsi khusus
     return MaterialApp.router(
-      title: 'SerenyPals',
-      theme: ThemeData(useMaterial3: false),
-
-      routerConfig: router, // pakai router yang diimport
+      routerConfig: goRouter,
+      theme: ThemeData(fontFamily: 'Overlock'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
