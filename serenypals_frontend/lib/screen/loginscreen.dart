@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Masuk',
+                      key: const Key('masuk_text'),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -116,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // Semua field valid
-                        context.go('/SplashScreen');
+                        context.go('/splashscreen');
                       }
                     },
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -128,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Register Navigation
                   RichText(
+                    key: const Key('register_navigation'), // <---- add this key
                     text: TextSpan(
                       style: TextStyle(color: Colors.black),
                       children: [

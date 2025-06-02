@@ -11,6 +11,7 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key('dashboard'),
       backgroundColor: color4,
       body: SafeArea(
         child: SingleChildScrollView(

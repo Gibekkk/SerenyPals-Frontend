@@ -31,8 +31,8 @@ GoRouter router(String initialLocation) {
         builder: (context, state) => OnboardingScreen(),
       ),
       GoRoute(
-        path: '/SplashScreen',
-        name: 'SplashScreen',
+        path: '/splashscreen',
+        name: 'splashscreen',
         builder: (context, state) => SplashScreen(),
       ),
       GoRoute(
