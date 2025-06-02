@@ -3,12 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:serenypals_frontend/main.dart' as app;
 
-// Fungsi bantu scroll ke widget dan tap tanpa warning hit-test
 Future<void> scrollToAndTap(WidgetTester tester, Finder finder) async {
   await tester.ensureVisible(finder);
   await tester.pumpAndSettle();
 
-  // Tap tombol dengan suppress warning supaya tidak muncul warning hit-test
   await tester.tap(finder, warnIfMissed: false);
   await tester.pumpAndSettle();
 }

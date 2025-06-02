@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart'; // WAJIB untuk context.go
+import 'package:go_router/go_router.dart';
 import '../utils/color.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  Timer? _timer; // ✅ simpan Timer untuk dibatalkan
 
   @override
   void initState() {
@@ -26,13 +28,15 @@ class _SplashScreenState extends State<SplashScreen>
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 3), () {
-      context.go('/dashboard'); // GUNAKAN GoRouter untuk navigasi
+    _timer = Timer(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      context.go('/dashboard');
     });
   }
 
   @override
   void dispose() {
+    _timer?.cancel(); // ✅ batalkan timer jika belum sempat jalan
     _controller.dispose();
     super.dispose();
   }
@@ -40,8 +44,10 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: const Key('splash_screen'),
-      backgroundColor: color4, // Gunakan warna kustom kamu
+      key: const Key(
+        'splash_screen',
+      ), // <- ini harus ada supaya test bisa temukan
+      backgroundColor: color4,
       body: FadeTransition(
         opacity: _animation,
         child: Center(

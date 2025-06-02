@@ -55,6 +55,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   child: Column(
                     children: [
                       FloatingActionButton(
+                        heroTag: 'fab_ai',
                         backgroundColor: widget.fabAIColor,
                         onPressed: () => widget.onFabActionChange(FabAction.ai),
                         child: Image.asset(
@@ -91,6 +92,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   child: Column(
                     children: [
                       FloatingActionButton(
+                        heroTag: 'fab_psikiater',
                         backgroundColor: widget.fabPsikiaterColor,
                         onPressed:
                             () => widget.onFabActionChange(FabAction.psikiater),
@@ -128,6 +130,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                       width: 72,
                       height: 72,
                       child: FloatingActionButton(
+                        heroTag: 'fab_main',
                         shape: const CircleBorder(),
                         backgroundColor: widget.fabColor,
                         onPressed:
