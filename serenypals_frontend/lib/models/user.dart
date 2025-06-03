@@ -1,43 +1,22 @@
-class User {
-  final String id;
+class UserModel {
   final String name;
-  final String notelepon;
-  final String birthdate;
+  final String birthDate;
+  final String phone;
   final String email;
-  final String password;
-  final String token;
 
-  const User({
-    required this.id,
+  UserModel({
     required this.name,
-    required this.notelepon,
-    required this.birthdate,
+    required this.birthDate,
+    required this.phone,
     required this.email,
-    required this.password,
-    required this.token,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
-      notelepon: json['notelepon'] ?? '',
-      birthdate: json['birthdate'] ?? '',
-      email: json['email'] ?? '',
-      password: json['password'] ?? '',
-      token: json['token'] ?? '',
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      name: json['name'],
+      birthDate: json['birth_date'],
+      phone: json['phone'],
+      email: json['email'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'notelepon': notelepon,
-      'birthdate': birthdate,
-      'email': email,
-      'password': password,
-      'token': token,
-    };
   }
 }
