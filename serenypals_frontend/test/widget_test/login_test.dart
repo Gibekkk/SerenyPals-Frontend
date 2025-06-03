@@ -29,6 +29,7 @@ void main() {
   tearDown(() async {
     await streamController.close();
     await mockAuthBloc.close();
+    reset(mockAuthBloc);
   });
 
   GoRouter createRouter() {

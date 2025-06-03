@@ -22,8 +22,9 @@ void main() {
     when(mockAuthBloc.stream).thenAnswer((_) => Stream.empty());
   });
 
-  tearDown(() {
+  tearDown(() async {
     reset(mockAuthBloc);
+    await mockAuthBloc.close();
   });
 
   group('Register Page Tests', () {
