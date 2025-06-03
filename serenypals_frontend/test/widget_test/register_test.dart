@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -14,7 +13,6 @@ import 'package:serenypals_frontend/screen/otpscreen.dart';
 
 import '../mocks/mocks.mocks.dart';
 
-@GenerateMocks([AuthBloc])
 void main() {
   late MockAuthBloc mockAuthBloc;
 
