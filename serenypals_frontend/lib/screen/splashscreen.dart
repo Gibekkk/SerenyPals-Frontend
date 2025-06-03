@@ -4,7 +4,13 @@ import 'package:go_router/go_router.dart';
 import '../utils/color.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final Duration delay;
+
+  const SplashScreen({
+    Key? key,
+    this.delay = const Duration(seconds: 2),
+  }) // Ubah ke ms untuk testing
+  : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -14,29 +20,29 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  Timer? _timer; // ✅ simpan Timer untuk dibatalkan
+  Timer? _navigateTimer;
 
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
-      vsync: this,
       duration: const Duration(seconds: 2),
+      vsync: this,
     );
-
-    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _controller.forward();
 
-    _timer = Timer(const Duration(seconds: 2), () {
-      if (!mounted) return;
-      context.go('/dashboard');
+    // Navigasi dengan Timer yang bisa dibatalkan
+    _navigateTimer = Timer(widget.delay, () {
+      if (mounted) {
+        context.go('/onboarding');
+      }
     });
   }
 
   @override
   void dispose() {
-    _timer?.cancel(); // ✅ batalkan timer jika belum sempat jalan
+    _navigateTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -44,9 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: const Key(
-        'splash_screen',
-      ), // <- ini harus ada supaya test bisa temukan
+      key: const Key('splashscreen'),
       backgroundColor: color4,
       body: FadeTransition(
         opacity: _animation,
@@ -54,20 +58,12 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/img/logo.png', width: 300, height: 300),
+              Image.asset('assets/img/logo.png', width: 150, height: 150),
               const SizedBox(height: 20),
-              Text(
+              const Text(
                 'Serenypals',
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Teman Relaksasi dan Bercerita',
-                style: TextStyle(fontSize: 25, color: Colors.black),
+                key: Key('splash_text'),
+                style: TextStyle(fontSize: 24),
               ),
             ],
           ),

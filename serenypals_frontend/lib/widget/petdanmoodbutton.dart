@@ -13,18 +13,22 @@ class PetAndMoodSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _InfoCard(
-            icon: Icons.pets,
-            label: 'Anabul',
-            bgColor: color8,
-            onTap: () => context.go('/anabul'), // Ganti rute sesuai nama kamu
+          Expanded(
+            child: _InfoCard(
+              icon: Icons.pets,
+              label: 'Anabul',
+              bgColor: color8,
+              onTap: () => context.go('/anabul'),
+            ),
           ),
-          _InfoCard(
-            icon: Icons.mood,
-            label: 'Mood Journaling',
-            bgColor: color7,
-            onTap:
-                () => context.go('/mood-journaling'), // Ganti juga kalau perlu
+          const SizedBox(width: 16), // beri jarak antar card
+          Expanded(
+            child: _InfoCard(
+              icon: Icons.mood,
+              label: 'Mood Journaling',
+              bgColor: color7,
+              onTap: () => context.go('/mood-journaling'),
+            ),
           ),
         ],
       ),
@@ -51,7 +55,6 @@ class _InfoCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        width: MediaQuery.of(context).size.width / 2 - 24,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: bgColor,

@@ -1,90 +1,221 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
-import 'package:serenypals_frontend/main.dart' as app;
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-Future<void> scrollToAndTap(WidgetTester tester, Finder finder) async {
-  await tester.ensureVisible(finder);
-  await tester.pumpAndSettle();
-  await tester.tap(finder, warnIfMissed: false);
-  await tester.pumpAndSettle();
-}
+import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
+import 'package:serenypals_frontend/blocs/auth/auth_event.dart';
+import 'package:serenypals_frontend/blocs/auth/auth_state.dart';
+import 'package:serenypals_frontend/screen/loginscreen.dart';
+import 'package:serenypals_frontend/screen/dashboardpage.dart';
 
+import '../mocks/mock_auth.mocks.dart';
+
+@GenerateMocks([AuthBloc])
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  late MockAuthBloc mockAuthBloc;
+  late StreamController<AuthState> streamController;
 
-  group('Login Page - Full UI & Validation Test', () {
-    testWidgets('Semua elemen login muncul dengan lengkap', (tester) async {
-      app.main(initialRoute: '/login');
-      await tester.pumpAndSettle();
+  setUp(() {
+    mockAuthBloc = MockAuthBloc();
+    streamController = StreamController<AuthState>.broadcast();
 
-      expect(find.text('SerenyPals'), findsOneWidget);
-      expect(find.byKey(const Key('masuk_text')), findsOneWidget);
+    when(mockAuthBloc.stream).thenAnswer((_) => streamController.stream);
+    when(mockAuthBloc.state).thenReturn(AuthInitial());
+  });
 
-      expect(find.byKey(const Key('email_field')), findsOneWidget);
-      expect(find.byKey(const Key('password_field')), findsOneWidget);
-      expect(find.byKey(const Key('login_button')), findsOneWidget);
+  tearDown(() async {
+    await streamController.close();
+    await mockAuthBloc.close();
+  });
 
-      final richText = tester.widget<RichText>(
-        find.byKey(const Key('register_navigation')),
-      );
-      expect(richText.text.toPlainText(), contains('Daftar'));
-    });
+  GoRouter createRouter() {
+    return GoRouter(
+      initialLocation: '/login',
+      routes: [
+        GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
+        GoRoute(
+          path: '/dashboard',
+          builder: (context, state) => const DashboardPage(),
+        ),
+      ],
+    );
+  }
 
-    testWidgets('Validasi field kosong saat login', (tester) async {
-      app.main(initialRoute: '/login');
-      await tester.pumpAndSettle();
+  testWidgets('Login sukses langsung ke dashboard', (tester) async {
+    final router = createRouter();
 
-      await scrollToAndTap(tester, find.byKey(const Key('login_button')));
+    await tester.pumpWidget(
+      BlocProvider<AuthBloc>.value(
+        value: mockAuthBloc,
+        child: MaterialApp.router(
+          routerConfig: router,
+          builder: (context, child) {
+            return MediaQuery(data: MediaQueryData(), child: child!);
+          },
+        ),
+      ),
+    );
 
-      expect(find.text('Email wajib diisi'), findsOneWidget);
-      expect(find.text('Password wajib diisi'), findsOneWidget);
-    });
+    expect(find.byType(LoginPage), findsOneWidget);
 
-    testWidgets('Validasi format email salah', (tester) async {
-      app.main(initialRoute: '/login');
-      await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const Key('email_field')),
+      'user@gmail.com',
+    );
+    await tester.enterText(
+      find.byKey(const Key('password_field')),
+      'password123',
+    );
+    await tester.tap(find.byKey(const Key('login_button')));
+    await tester.pumpAndSettle();
 
-      await tester.enterText(
-        find.byKey(const Key('email_field')),
-        'fanny@outlook.com',
-      );
-      await tester.enterText(
-        find.byKey(const Key('password_field')),
-        'password123',
-      );
+    verify(
+      mockAuthBloc.add(
+        LoginUser(email: 'user@gmail.com', password: 'password123'),
+      ),
+    ).called(1);
 
-      await scrollToAndTap(tester, find.byKey(const Key('login_button')));
+    // Simulasi login sukses langsung navigasi ke dashboard
+    streamController.add(LoginSuccess());
+    await tester.pumpAndSettle();
 
-      expect(find.textContaining('Gunakan format email'), findsOneWidget);
-    });
+    // Pastikan halaman dashboard muncul
+    expect(find.byType(DashboardPage), findsOneWidget);
+    expect(find.byType(LoginPage), findsNothing);
+  });
 
-    testWidgets('Login sukses dan navigasi ke splash screen lalu dashboard', (
-      tester,
-    ) async {
-      app.main(initialRoute: '/login');
-      await tester.pumpAndSettle();
+  testWidgets('Login gagal menampilkan pesan error', (tester) async {
+    final router = GoRouter(
+      initialLocation: '/login',
+      routes: [
+        GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
+      ],
+    );
 
-      await tester.enterText(
-        find.byKey(const Key('email_field')),
-        'fanny@gmail.com',
-      );
-      await tester.enterText(
-        find.byKey(const Key('password_field')),
-        'password123',
-      );
+    await tester.pumpWidget(
+      BlocProvider<AuthBloc>.value(
+        value: mockAuthBloc,
+        child: MaterialApp.router(
+          routerConfig: router,
+          builder: (context, child) {
+            return MediaQuery(data: MediaQueryData(), child: child!);
+          },
+        ),
+      ),
+    );
 
-      // Tap tombol login
-      await tester.tap(find.byKey(const Key('login_button')));
-      await tester.pump(); // Render frame navigasi ke SplashScreen
+    // Isi form valid tapi password salah
+    await tester.enterText(
+      find.byKey(const Key('email_field')),
+      'user@gmail.com',
+    );
+    await tester.enterText(
+      find.byKey(const Key('password_field')),
+      'wrongpass',
+    );
 
-      await tester.pump(const Duration(seconds: 1)); // Tunggu animasi berjalan
-      expect(find.byKey(const Key('splash_screen')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('login_button')));
+    await tester.pump();
 
-      await tester.pump(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+    verify(
+      mockAuthBloc.add(
+        LoginUser(email: 'user@gmail.com', password: 'wrongpass'),
+      ),
+    ).called(1);
 
-      expect(find.byKey(const Key('dashboard')), findsOneWidget);
-    });
+    // Simulasikan login gagal
+    streamController.add(AuthFailure('Login gagal'));
+    await tester.pumpAndSettle();
+
+    // Pesan error harus muncul
+    expect(find.text('Login gagal'), findsOneWidget);
+  });
+
+  testWidgets('Validasi email wajib diisi', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthBloc>.value(
+          value: mockAuthBloc,
+          child: const LoginPage(),
+        ),
+      ),
+    );
+
+    // Email dikosongkan
+    await tester.enterText(find.byKey(const Key('email_field')), '');
+    await tester.enterText(
+      find.byKey(const Key('password_field')),
+      'password123',
+    );
+
+    await tester.tap(find.byKey(const Key('login_button')));
+    await tester.pumpAndSettle();
+
+    // Pastikan muncul pesan error bahwa email wajib diisi
+    expect(find.text('Email wajib diisi'), findsOneWidget);
+
+    // Login tidak dipanggil
+    verifyNever(mockAuthBloc.add(any));
+  });
+
+  testWidgets('Validasi email format salah', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthBloc>.value(
+          value: mockAuthBloc,
+          child: const LoginPage(),
+        ),
+      ),
+    );
+
+    // Email salah format, tidak ada '@gmail.com'
+    await tester.enterText(find.byKey(const Key('email_field')), 'salahemail');
+    await tester.enterText(
+      find.byKey(const Key('password_field')),
+      'password123',
+    );
+
+    await tester.tap(find.byKey(const Key('login_button')));
+    await tester.pumpAndSettle();
+
+    // Harus muncul pesan bahwa format email salah
+    expect(
+      find.text('Gunakan format email yang valid dan domain @gmail.com'),
+      findsOneWidget,
+    );
+
+    // Login tidak dipanggil
+    verifyNever(mockAuthBloc.add(any));
+  });
+
+  testWidgets('Validasi password kosong', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthBloc>.value(
+          value: mockAuthBloc,
+          child: const LoginPage(),
+        ),
+      ),
+    );
+
+    await tester.enterText(
+      find.byKey(const Key('email_field')),
+      'fanny@gmail.com',
+    );
+    await tester.enterText(find.byKey(const Key('password_field')), '');
+
+    await tester.tap(find.byKey(const Key('login_button')));
+    await tester.pumpAndSettle();
+
+    // Validasi password wajib diisi gagal dan tampil error
+    expect(find.text('Password wajib diisi'), findsOneWidget);
+
+    // Event LoginUser tidak boleh dipanggil
+    verifyNever(mockAuthBloc.add(any));
   });
 }

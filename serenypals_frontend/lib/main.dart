@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:serenypals_frontend/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main({String initialRoute = '/Onboarding'}) async {
-  await initializeDateFormatting(
-    'id_ID',
-    null,
-  ); // Inisialisasi locale Indonesia
+import 'package:serenypals_frontend/routes.dart';
+import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
+import 'package:serenypals_frontend/repositories/auth_repository.dart';
 
-  runApp(MyApp(initialRoute: initialRoute));
+void main({String initialRoute = '/splashscreen'}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id_ID', null);
+
+  // Inisialisasi repository
+  final authRepository = AuthRepository();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => AuthBloc(authRepository)),
+        // Tambahkan Bloc lain di sini jika perlu
+      ],
+      child: MyApp(initialRoute: initialRoute),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,15 +32,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final goRouter = router(initialRoute); // kita buat fungsi khusus
+    final goRouter = router(initialRoute);
+
     return MaterialApp.router(
       routerConfig: goRouter,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('id', 'ID')],
+      supportedLocales: const [Locale('id', 'ID')],
       theme: ThemeData(fontFamily: 'Overlock'),
       debugShowCheckedModeBanner: false,
     );
