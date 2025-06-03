@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:serenypals_frontend/widget/meditasiwidget.dart';
 import '../utils/color.dart';
@@ -6,24 +8,22 @@ import '../widget/task.dart';
 import 'package:serenypals_frontend/widget/fastsupport.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+  const DashboardPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: const Key('dashboard'),
       backgroundColor: color4,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              HeaderSection(),
-              _WeeklyCheckIn(), // ← pindahkan ke sini
-              PetAndMoodSection(),
-              TaskSection(),
-              FastSupportSection(),
-              MeditationTipsSection(),
-              SizedBox(height: 24),
+              const HeaderSection(),
+              const _WeeklyCheckIn(),
+              const PetAndMoodSection(),
+              const TaskSection(),
+              FastSupportSection(enableAnimation: false), // Nonaktifkan animasi
+              const MeditationTipsSection(),
             ],
           ),
         ),
@@ -105,25 +105,32 @@ class _WeeklyCheckIn extends StatefulWidget {
 }
 
 class _WeeklyCheckInState extends State<_WeeklyCheckIn> {
-  // Untuk tracking status check-in hari
   List<bool> isCheckedList = [true, true, false, false, false, false, false];
+  Timer? _checkInTimer;
 
-  // Trigger animasi setelah masuk
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 1000), () {
+
+    // Mulai timer untuk animasi check-in
+    _checkInTimer = Timer(Duration(milliseconds: 1000), () {
+      if (!mounted) return;
       setState(() {
-        // Ubah hari yang belum check-in agar bisa dianimasi ke kuning (simulasi)
         isCheckedList = [true, true, true, false, false, false, false];
       });
     });
   }
 
   @override
+  void dispose() {
+    _checkInTimer?.cancel(); // pastikan timer dibatalkan saat widget dibuang
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: color3,
@@ -139,7 +146,7 @@ class _WeeklyCheckInState extends State<_WeeklyCheckIn> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Check-in Selama Seminggu Untuk +100',
             style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
@@ -154,15 +161,21 @@ class _WeeklyCheckInState extends State<_WeeklyCheckIn> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _DayCheckCircle(label: 'Senin', isChecked: isCheckedList[0]),
-                  _DayCheckCircle(label: 'Selasa', isChecked: isCheckedList[1]),
-                  _DayCheckCircle(label: 'Rabu', isChecked: isCheckedList[2]),
-                  _DayCheckCircle(label: 'Kamis', isChecked: isCheckedList[3]),
-                  _DayCheckCircle(label: 'Jumat', isChecked: isCheckedList[4]),
-                  _DayCheckCircle(label: 'Sabtu', isChecked: isCheckedList[5]),
-                  _DayCheckCircle(label: 'Minggu', isChecked: isCheckedList[6]),
-                ],
+                children: List.generate(7, (index) {
+                  const dayLabels = [
+                    'Senin',
+                    'Selasa',
+                    'Rabu',
+                    'Kamis',
+                    'Jumat',
+                    'Sabtu',
+                    'Minggu',
+                  ];
+                  return _DayCheckCircle(
+                    label: dayLabels[index],
+                    isChecked: isCheckedList[index],
+                  );
+                }),
               ),
             ],
           ),
@@ -183,7 +196,7 @@ class _DayCheckCircle extends StatelessWidget {
     return Column(
       children: [
         AnimatedContainer(
-          duration: Duration(milliseconds: 600),
+          duration: const Duration(milliseconds: 600),
           curve: Curves.easeInOut,
           width: 16,
           height: 16,
@@ -193,7 +206,7 @@ class _DayCheckCircle extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(label, style: TextStyle(fontSize: 10)),
+        Text(label, style: const TextStyle(fontSize: 10)),
       ],
     );
   }

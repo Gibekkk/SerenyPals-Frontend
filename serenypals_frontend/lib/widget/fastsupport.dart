@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 class FastSupportSection extends StatefulWidget {
-  const FastSupportSection({super.key});
+  final bool enableAnimation;
+
+  const FastSupportSection({super.key, this.enableAnimation = true});
 
   @override
   State<FastSupportSection> createState() => _FastSupportSectionState();
@@ -11,6 +13,7 @@ class FastSupportSection extends StatefulWidget {
 class _FastSupportSectionState extends State<FastSupportSection> {
   late final PageController _pageController;
   bool _didAnimate = false;
+  bool _disposed = false; // Track dispose untuk lebih aman
 
   final List<SupportItem> supports = [
     SupportItem(
@@ -28,16 +31,18 @@ class _FastSupportSectionState extends State<FastSupportSection> {
       buttonText: 'Chat Sekarang',
     ),
   ];
+
   @override
   void initState() {
     super.initState();
 
-    // Tambahkan viewportFraction di sini
     _pageController = PageController(viewportFraction: 1);
 
-    // Opsional: swipe hint animation
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!_didAnimate && supports.length > 1) {
+      if (!_didAnimate &&
+          supports.length > 1 &&
+          widget.enableAnimation &&
+          !_disposed) {
         _animateSwipeHint();
         _didAnimate = true;
       }
@@ -46,25 +51,33 @@ class _FastSupportSectionState extends State<FastSupportSection> {
 
   Future<void> _animateSwipeHint() async {
     try {
+      // Delay awal supaya UI sudah stabil
       await Future.delayed(const Duration(milliseconds: 500));
+      if (!mounted || _disposed) return;
+
       await _pageController.animateToPage(
         1,
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
+      if (!mounted || _disposed) return;
+
       await Future.delayed(const Duration(milliseconds: 400));
+      if (!mounted || _disposed) return;
+
       await _pageController.animateToPage(
         0,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } catch (e) {
-      // Controller mungkin sudah di-dispose
+      // Bisa terjadi saat dispose, aman untuk diabaikan
     }
   }
 
   @override
   void dispose() {
+    _disposed = true;
     _pageController.dispose();
     super.dispose();
   }
@@ -152,7 +165,6 @@ class _SupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 20),
-
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: item.backgroundColor,
@@ -174,7 +186,6 @@ class _SupportCard extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
           ),
-
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -183,12 +194,18 @@ class _SupportCard extends StatelessWidget {
               children: [
                 Text(
                   item.title,
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   item.description,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -207,7 +224,7 @@ class _SupportCard extends StatelessWidget {
                   onPressed: onPressed,
                   child: Text(
                     item.buttonText,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

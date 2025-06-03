@@ -1,7 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
+import 'package:serenypals_frontend/blocs/auth/auth_event.dart';
+import 'package:serenypals_frontend/blocs/auth/auth_state.dart';
 import 'package:serenypals_frontend/utils/color.dart';
+import '../widget/customloading.dart';
 import '../widget/customtextfield.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
 import 'package:serenypals_frontend/widget/carousel_image.dart';
@@ -18,15 +23,48 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
+  bool _isDialogShowing = false;
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: color4,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Center(
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoading) {
+          if (!_isDialogShowing) {
+            _isDialogShowing = true;
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const LoadingDialog(),
+            );
+          }
+        } else {
+          if (_isDialogShowing &&
+              Navigator.of(context, rootNavigator: true).canPop()) {
+            Navigator.of(context, rootNavigator: true).pop();
+            _isDialogShowing = false;
+          }
+
+          if (state is LoginSuccess) {
+            context.go('/dashboard');
+          } else if (state is AuthFailure) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: color4,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
             child: Form(
               key: _formKey,
               child: Column(
@@ -59,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  // Email Field
                   const SizedBox(height: 8),
                   CustomInputField(
                     key: const Key('email_field'),
@@ -80,8 +117,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Password Field
-                  const SizedBox(height: 8),
                   CustomInputField(
                     key: const Key('password_field'),
                     hint: 'Masukkan password',
@@ -110,14 +145,17 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 25),
 
-                  // Custom Button
                   CustomButton(
                     key: const Key('login_button'),
                     text: 'Masuk',
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        // Semua field valid
-                        context.go('/splashscreen');
+                        context.read<AuthBloc>().add(
+                          LoginUser(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        );
                       }
                     },
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -127,11 +165,10 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 24),
 
-                  // Register Navigation
                   RichText(
-                    key: const Key('register_navigation'), // <---- add this key
+                    key: const Key('register_navigation'),
                     text: TextSpan(
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                       children: [
                         const TextSpan(text: 'Belum punya akun? '),
                         TextSpan(
@@ -142,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           recognizer:
                               TapGestureRecognizer()
-                                ..onTap = () => context.go('/Register'),
+                                ..onTap = () => context.go('/register'),
                         ),
                         const TextSpan(text: ' di sini'),
                       ],

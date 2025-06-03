@@ -1,65 +1,68 @@
 import 'package:flutter/material.dart';
-import '../utils/color.dart';
 import 'loading_text.dart';
 
-class LoadingScreen extends StatefulWidget {
+class LoadingDialog extends StatefulWidget {
   final String loadingText;
   final TextStyle? loadingTextStyle;
   final Color backgroundColor;
   final String gifAssetPath;
 
-  const LoadingScreen({
+  const LoadingDialog({
     Key? key,
     this.loadingText = 'Loading...',
     this.loadingTextStyle,
-    this.backgroundColor = color4, // default background
-    this.gifAssetPath = 'assets/loading/loading.gif',
+    this.backgroundColor =
+        Colors.transparent, // default background semi-transparent bisa diatur
+    this.gifAssetPath = 'assets/loading/Capybaratea.gif',
   }) : super(key: key);
 
   @override
-  State<LoadingScreen> createState() => _LoadingScreenState();
+  State<LoadingDialog> createState() => _LoadingDialogState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen> {
+class _LoadingDialogState extends State<LoadingDialog> {
   Color _currentBackgroundColor = Colors.transparent;
 
   @override
   void initState() {
     super.initState();
-    // Delay sedikit supaya animasi terlihat
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
-        _currentBackgroundColor = widget.backgroundColor;
+        _currentBackgroundColor = widget.backgroundColor.withOpacity(0.8);
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnimatedContainer(
-        duration: const Duration(seconds: 2),
-        color: _currentBackgroundColor,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(widget.gifAssetPath, width: 300, height: 300),
-              const SizedBox(height: 20),
-              LoadingText(
-                text: widget.loadingText,
-                style:
-                    widget.loadingTextStyle ??
-                    TextStyle(
-                      fontFamily:
-                          'Overlock', // harus sama dengan di pubspec.yaml
-                      fontSize: 20,
-                      fontWeight:
-                          FontWeight.bold, // pastikan file TTF-nya support w700
-                    ),
-              ),
-            ],
-          ),
+    return Dialog(
+      backgroundColor:
+          Colors.transparent, // Supaya background bisa animasi sendiri
+      elevation: 0,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: _currentBackgroundColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(widget.gifAssetPath, width: 300, height: 300),
+            const SizedBox(height: 16),
+            LoadingText(
+              text: widget.loadingText,
+              style:
+                  widget.loadingTextStyle ??
+                  const TextStyle(
+                    fontFamily: 'Overlock',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+            ),
+          ],
         ),
       ),
     );

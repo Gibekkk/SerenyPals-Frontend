@@ -33,7 +33,7 @@ class TermsPopup extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(),
               backgroundColor: color7,
               textColor: Colors.black,
-            ),
+            ), // pastikan koma di sini ada
           ],
         ),
       ),

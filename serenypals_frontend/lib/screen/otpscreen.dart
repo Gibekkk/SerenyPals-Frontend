@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 import 'package:serenypals_frontend/widget/otpfield.dart';
 
 class OtpForm extends StatefulWidget {
-  const OtpForm({super.key});
-
+  final String email;
+  const OtpForm({super.key, required this.email});
   @override
   State<OtpForm> createState() => _OtpFormState();
 }
@@ -32,19 +31,17 @@ class _OtpFormState extends State<OtpForm> {
 
   @override
   Widget build(BuildContext context) {
-    final String email = "user@example.com";
-
     return Scaffold(
-      key: const Key('otp_screen'),
+      key: Key('otp_screen'), // Use the key passed from widget
       backgroundColor: color4,
       appBar: AppBar(
         elevation: 1,
         backgroundColor: color4,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
+        title: const Text(
           'Verifikasi OTP',
           style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black),
         ),
@@ -59,18 +56,21 @@ class _OtpFormState extends State<OtpForm> {
             Text.rich(
               TextSpan(
                 text: 'Masukkan kode OTP yang dikirim ke email ',
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
                 children: [
                   TextSpan(
-                    text: email,
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
+                    text: widget.email,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18,
+                    ),
                   ),
                 ],
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'Masukkan Kode',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
@@ -111,7 +111,9 @@ class _OtpFormState extends State<OtpForm> {
                         context.go('/login');
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Lengkapi semua digit OTP')),
+                          const SnackBar(
+                            content: Text('Lengkapi semua digit OTP'),
+                          ),
                         );
                       }
                     },

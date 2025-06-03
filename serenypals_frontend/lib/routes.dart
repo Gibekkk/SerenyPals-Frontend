@@ -14,16 +14,23 @@ import 'screen/registerscreen.dart';
 import 'screen/topup.dart';
 import 'screen/virtualdiaryscreen.dart';
 import 'widget/customloading.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
+import 'package:serenypals_frontend/repositories/auth_repository.dart';
 
 GoRouter router(String initialLocation) {
   return GoRouter(
     initialLocation: initialLocation,
     routes: [
-      // Routes di luar layout
       GoRoute(
         path: '/login',
         name: 'login',
-        builder: (context, state) => const LoginPage(),
+        builder: (context, state) {
+          return BlocProvider(
+            create: (_) => AuthBloc(AuthRepository()),
+            child: const LoginPage(),
+          );
+        },
       ),
       GoRoute(
         path: '/Onboarding',
@@ -33,22 +40,27 @@ GoRouter router(String initialLocation) {
       GoRoute(
         path: '/splashscreen',
         name: 'splashscreen',
-        builder: (context, state) => SplashScreen(),
+        builder: (context, state) => SplashScreen(delay: Duration(seconds: 2)),
       ),
       GoRoute(
         path: '/loading',
         name: 'loading',
-        builder: (context, state) => const LoadingScreen(),
+        builder: (context, state) => const LoadingDialog(),
       ),
       GoRoute(
         path: '/register',
         name: 'Register',
-        builder: (context, state) => const RegisterPage(),
+        builder: (context, state) {
+          return BlocProvider(
+            create: (_) => AuthBloc(AuthRepository()),
+            child: const RegisterPage(),
+          );
+        },
       ),
       GoRoute(
         path: '/OTP',
         name: 'OTP',
-        builder: (context, state) => const OtpForm(),
+        builder: (context, state) => const OtpForm(email: 'email@gmail.com'),
       ),
       GoRoute(
         path: '/mood-journaling',

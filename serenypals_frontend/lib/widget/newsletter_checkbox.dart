@@ -16,10 +16,9 @@ class NewsletterCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      key: const Key(''),
-
       children: [
         Checkbox(
+          key: const Key('newsletter_checkbox_input'), // beda key
           value: value,
           onChanged: (val) => onChanged(val!),
           activeColor: color1,
@@ -27,7 +26,11 @@ class NewsletterCheckbox extends StatelessWidget {
         Flexible(
           child: RichText(
             text: TextSpan(
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Overlock',
+                fontSize: 14,
+              ),
               children: [
                 const TextSpan(
                   text:
@@ -35,7 +38,12 @@ class NewsletterCheckbox extends StatelessWidget {
                 ),
                 TextSpan(
                   text: 'Syarat & Ketentuan ',
-                  style: TextStyle(color: color1, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: color1,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Overlock',
+                  ),
                   recognizer:
                       TapGestureRecognizer()
                         ..onTap =
@@ -44,7 +52,10 @@ class NewsletterCheckbox extends StatelessWidget {
                               builder: (context) => const TermsPopup(),
                             ),
                 ),
-                const TextSpan(text: 'yang telah kami ajukan'),
+                const TextSpan(
+                  text: 'yang telah kami ajukan',
+                  style: TextStyle(fontFamily: 'Overlock', fontSize: 14),
+                ),
               ],
             ),
           ),
