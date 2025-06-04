@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../utils/color.dart';
+import '../../utils/color.dart';
 
 void main() => runApp(MaterialApp(home: PaymentScreen()));
 

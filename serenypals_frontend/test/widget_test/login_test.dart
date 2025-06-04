@@ -9,8 +9,8 @@ import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_event.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_state.dart';
-import 'package:serenypals_frontend/screen/loginscreen.dart';
-import 'package:serenypals_frontend/screen/dashboardpage.dart';
+import 'package:serenypals_frontend/views/view/loginscreen.dart';
+import 'package:serenypals_frontend/views/view/dashboardpage.dart';
 
 import '../mocks/mock_auth.mocks.dart';
 

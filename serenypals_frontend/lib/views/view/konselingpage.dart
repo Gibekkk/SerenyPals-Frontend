@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../models/konselormodel.dart';
-import '../utils/color.dart';
-import '../widget/konselingcard.dart';
+import '../../models/konselormodel.dart';
+import '../../utils/color.dart';
+import '../../widget/konselingcard.dart';
 
 class KonselingOnlinePage extends StatelessWidget {
   const KonselingOnlinePage({super.key});

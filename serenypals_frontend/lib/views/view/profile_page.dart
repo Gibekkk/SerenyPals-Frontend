@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../utils/color.dart';
+import '../../utils/color.dart';
 import 'edit_profile_page.dart';
 import 'logout_page.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
-import '../widget/custom_button.dart';
-import '../widget/mooddialog.dart';
+import '../../widget/custom_button.dart';
+import '../../widget/mooddialog.dart';
 
 class MoodJournaling extends StatefulWidget {
   const MoodJournaling({super.key});

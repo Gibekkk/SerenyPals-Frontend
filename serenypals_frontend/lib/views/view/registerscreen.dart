@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
-import '../blocs/auth/auth_bloc.dart';
-import '../blocs/auth/auth_event.dart';
-import '../blocs/auth/auth_state.dart';
-import '../utils/color.dart';
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/auth/auth_event.dart';
+import '../../blocs/auth/auth_state.dart';
+import '../../utils/color.dart';
 import 'package:serenypals_frontend/widget/customtextfield.dart';
 import 'package:serenypals_frontend/widget/newsletter_checkbox.dart';
-import '../widget/customloading.dart';
+import '../../widget/customloading.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

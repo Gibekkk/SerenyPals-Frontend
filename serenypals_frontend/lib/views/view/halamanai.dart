@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serenypals_frontend/utils/color.dart';
-import '../widget/chatbubble.dart';
+import '../../widget/chatbubble.dart';
 
 typedef ChatMessage =
     Map<String, String>; // {'role': 'user'/'bot', 'text': '...'}
