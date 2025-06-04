@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
-import '../widget/chatbubble.dart';
-import '../widget/chatinputtext.dart';
+import '../../widget/chatbubble.dart';
+import '../../widget/chatinputtext.dart';
 
 class ChatPsikolog extends StatefulWidget {
   final String? name;

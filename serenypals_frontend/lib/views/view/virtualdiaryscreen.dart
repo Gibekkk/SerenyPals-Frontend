@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
-import '../widget/custom_button.dart';
+import '../../widget/custom_button.dart';
 
 // Model sederhana untuk diary entry
 class DiaryEntry {

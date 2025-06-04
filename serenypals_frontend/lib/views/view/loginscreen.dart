@@ -6,8 +6,8 @@ import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_event.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_state.dart';
 import 'package:serenypals_frontend/utils/color.dart';
-import '../widget/customloading.dart';
-import '../widget/customtextfield.dart';
+import '../../widget/customloading.dart';
+import '../../widget/customtextfield.dart';
 import 'package:serenypals_frontend/widget/custom_button.dart';
 import 'package:serenypals_frontend/widget/carousel_image.dart';
 
