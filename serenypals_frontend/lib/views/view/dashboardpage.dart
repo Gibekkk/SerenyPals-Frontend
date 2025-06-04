@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:serenypals_frontend/widget/meditasiwidget.dart';
-import '../utils/color.dart';
-import '../widget/petdanmoodbutton.dart';
-import '../widget/task.dart';
+import '../../utils/color.dart';
+import '../../widget/petdanmoodbutton.dart';
+import '../../widget/task.dart';
 import 'package:serenypals_frontend/widget/fastsupport.dart';
 
 class DashboardPage extends StatelessWidget {

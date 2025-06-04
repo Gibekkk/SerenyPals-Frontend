@@ -45,10 +45,10 @@ class _CustomInputFieldState extends State<CustomInputField>
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: _visible ? 1.0 : 0.0,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 200),
       child: AnimatedSlide(
         offset: _visible ? Offset.zero : const Offset(0, 0.2),
-        duration: const Duration(milliseconds: 600),
+        duration: const Duration(milliseconds: 300),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
