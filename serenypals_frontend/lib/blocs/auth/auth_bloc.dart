@@ -11,6 +11,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RegisterUser>(_onRegister);
     on<VerifyOtp>(_onVerifyOtp);
     on<LoginUser>(_onLogin);
+    on<RequestForgotPassword>(_onRequestForgotPassword);
+    on<VerifyForgotOtp>(_onVerifyForgotOtp);
+    on<ResetPassword>(_onResetPassword);
   }
 
   Future<void> _onRegister(RegisterUser event, Emitter<AuthState> emit) async {
@@ -47,6 +50,49 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(LoginSuccess());
     } catch (e) {
       emit(AuthFailure("Email atau password salah"));
+    }
+  }
+
+  Future<void> _onRequestForgotPassword(
+    RequestForgotPassword event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      await authRepo.sendForgotOtp(event.email);
+      emit(ForgotOtpSent());
+    } catch (e) {
+      emit(ForgotPasswordFailure('Gagal mengirim OTP'));
+    }
+  }
+
+  Future<void> _onVerifyForgotOtp(
+    VerifyForgotOtp event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      final verified = await authRepo.verifyForgotOtp(event.email, event.otp);
+      if (verified) {
+        emit(ForgotOtpVerified());
+      } else {
+        emit(ForgotPasswordFailure('OTP salah'));
+      }
+    } catch (e) {
+      emit(ForgotPasswordFailure('Verifikasi OTP gagal'));
+    }
+  }
+
+  Future<void> _onResetPassword(
+    ResetPassword event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      await authRepo.resetPassword(event.email, event.newPassword);
+      emit(PasswordResetSuccess(event.email));
+    } catch (e) {
+      emit(ForgotPasswordFailure('Reset password gagal'));
     }
   }
 }

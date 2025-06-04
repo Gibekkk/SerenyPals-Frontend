@@ -111,10 +111,8 @@ void main() {
           GoRoute(
             path: '/OTP',
             builder:
-                (context, state) => OtpForm(
-                  key: const Key('otp_form'),
-                  email: state.extra as String? ?? 'user@gmail.com',
-                ),
+                (context, state) =>
+                    OtpForm(email: state.extra as String? ?? 'user@gmail.com'),
           ),
         ],
       );
@@ -154,13 +152,29 @@ void main() {
         warnIfMissed: false,
       );
       await tester.pump();
+      await tester.pumpAndSettle();
 
+      // Verify AuthBloc event
+      verify(
+        mockAuthBloc.add(
+          RegisterUser(
+            name: 'Test User',
+            birthDate: '01-01-2000',
+            phone: '08123456789',
+            email: 'test@gmail.com',
+            password: 'password123',
+            subscribeNewsletter: true,
+          ),
+        ),
+      ).called(1);
+
+      await tester.pumpAndSettle();
       // Emit success state
       controller.add(AuthRegisterSuccess());
       await tester.pumpAndSettle();
 
       // Verify navigation
-      expect(find.byKey(const Key('otp_form')), findsOneWidget);
+      expect(find.byKey(const Key('otp_screen')), findsOneWidget);
 
       await controller.close();
     });

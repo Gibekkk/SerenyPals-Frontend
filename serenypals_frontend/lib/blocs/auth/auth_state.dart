@@ -24,3 +24,21 @@ class AuthFailure extends AuthState {
   final String message;
   AuthFailure(this.message);
 }
+
+class ForgotOtpSent extends AuthState {}
+
+class ForgotOtpVerified extends AuthState {}
+
+class PasswordResetSuccess extends AuthState {
+  final String message;
+  PasswordResetSuccess(this.message);
+
+  List<Object?> get props => [message];
+}
+
+class ForgotPasswordFailure extends AuthState {
+  final String message;
+  ForgotPasswordFailure(this.message);
+
+  List<Object?> get props => [message];
+}

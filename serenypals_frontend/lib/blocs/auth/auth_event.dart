@@ -46,3 +46,39 @@ class LoginUser extends AuthEvent {
   @override
   List<Object?> get props => [email, password];
 }
+
+class RequestForgotPassword extends AuthEvent {
+  final String email;
+
+  const RequestForgotPassword({required this.email});
+
+  @override
+  List<Object?> get props => [email];
+}
+
+class VerifyForgotOtp extends AuthEvent {
+  final String email;
+  final String otp;
+
+  const VerifyForgotOtp({required this.email, required this.otp});
+
+  @override
+  List<Object?> get props => [email, otp];
+}
+
+class ResetPassword extends AuthEvent {
+  final String email;
+  final String newPassword;
+
+  const ResetPassword({required this.email, required this.newPassword});
+
+  @override
+  List<Object?> get props => [email, newPassword];
+}
+
+class Logout extends AuthEvent {
+  const Logout();
+
+  @override
+  List<Object?> get props => [];
+}
