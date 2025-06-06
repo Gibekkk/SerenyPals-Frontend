@@ -1,16 +1,21 @@
-name: serenypals_frontend
+name: serenypals_frontend # Menggunakan nama dari pubspec pertama
 description: "A new Flutter project."
-publish_to: 'none'
-version: 0.1.0
+publish_to: 'none' # Ensures your package isn't accidentally published to pub.dev
+version: 0.1.0+1 # Menggunakan versi dari pubspec kedua
 
 environment:
-  sdk: ^3.7.2
+  # This constraint indicates compatibility with Dart SDK versions from 3.2.0 (inclusive)
+  # up to, but not including, 4.0.0. This covers all current stable Dart 3.x versions.
+  # (Recommended to run 'flutter upgrade' to ensure your Flutter/Dart SDK is recent)
+  sdk: '>=3.2.0 <4.0.0'
 
 dependencies:
-  carousel_slider: ^5.0.0
   flutter:
-    sdk: flutter
-  flutter_localizations:
+    sdk: flutter # Required for any Flutter project
+
+  # Dependencies from pubspec 1
+  carousel_slider: ^5.0.0
+  flutter_localizations: # Standard Flutter localization package
     sdk: flutter
   flutter_bloc: ^9.1.1
   http: ^1.4.0
@@ -24,35 +29,40 @@ dependencies:
   equatable: ^2.0.7
   provider: ^6.0.5
 
+  # Dependencies from pubspec 2 (cupertino_icons)
+  cupertino_icons: ^1.0.8 # Good to have for basic icons
+
 dev_dependencies:
   flutter_test:
+    sdk: flutter # For writing Flutter unit and widget tests
+  integration_test: # From pubspec 1
     sdk: flutter
-  integration_test:
-    sdk: flutter
-  flutter_lints: ^5.0.0
-  mockito: ^5.4.6
-  bloc_test: ^10.0.0
-  build_runner: ^2.4.6
+  flutter_lints: ^5.0.0 # Standard lints for Flutter projects. Compatible with Dart 3.5+
+  mockito: ^5.4.6 # From pubspec 1
+  bloc_test: ^10.0.0 # From pubspec 1
+  build_runner: ^2.4.6 # From pubspec 1
 
 flutter:
   uses-material-design: true
 
+  # Fonts from pubspec 1
   fonts:
-  - family: Overlock
-    fonts:
-      - asset: assets/fonts/Overlock-Regular.ttf
-        weight: 400
-      - asset: assets/fonts/Overlock-Bold.ttf
-        weight: 700
-      - asset: assets/fonts/Overlock-Black.ttf
-        weight: 900
-      - asset: assets/fonts/Overlock-Italic.ttf
-        weight: 400
-        style: italic
-      - asset: assets/fonts/Overlock-BoldItalic.ttf
-        weight: 700
-        style: italic
+    - family: Overlock
+      fonts:
+        - asset: assets/fonts/Overlock-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Overlock-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Overlock-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Overlock-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Overlock-BoldItalic.ttf
+          weight: 700
+          style: italic
 
+  # Assets from both pubspecs (combined)
   assets:
     - assets/img/gambarlogin1.png
     - assets/img/gambarlogin2.png
@@ -78,10 +88,5 @@ flutter:
     - assets/img/diamond.png
     - assets/img/moodjournaling.png
     - assets/loading/Capybaratea.gif
+    - assets/images/bear_boba.png 
     - assets/capybara.png
-
-  
-
-
-    
-
