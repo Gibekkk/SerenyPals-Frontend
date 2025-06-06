@@ -27,6 +27,7 @@ dependencies:
   shared_preferences: ^2.5.3
   flutter_svg: ^2.1.0
   equatable: ^2.0.7
+  provider: ^6.0.5
 
   # Dependencies from pubspec 2 (cupertino_icons)
   cupertino_icons: ^1.0.8 # Good to have for basic icons
@@ -87,4 +88,5 @@ flutter:
     - assets/img/diamond.png
     - assets/img/moodjournaling.png
     - assets/loading/Capybaratea.gif
-    - assets/images/bear_boba.png # From your second pubspec, confirm its location!
+    - assets/images/bear_boba.png 
+    - assets/capybara.png
