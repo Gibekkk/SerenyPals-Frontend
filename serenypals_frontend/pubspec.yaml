@@ -1,25 +1,23 @@
-name: serenypals_frontend # Menggunakan nama dari pubspec pertama
-description: "A new Flutter project."
-publish_to: 'none' # Ensures your package isn't accidentally published to pub.dev
-version: 0.1.0+1 # Menggunakan versi dari pubspec kedua
+name: serenypals_frontend # Menggunakan nama dari pubspec tim
+description: "A new Flutter project for SerenyPals." # Deskripsi baru
+publish_to: 'none' # Memastikan paket tidak terpublish ke pub.dev
+version: 0.1.0+1 # Menggunakan versi dari pubspec tim
 
 environment:
-  # This constraint indicates compatibility with Dart SDK versions from 3.2.0 (inclusive)
-  # up to, but not including, 4.0.0. This covers all current stable Dart 3.x versions.
-  # (Recommended to run 'flutter upgrade' to ensure your Flutter/Dart SDK is recent)
+  # Menggunakan batasan SDK yang lebih luas dan terkini dari pubspec tim
   sdk: '>=3.2.0 <4.0.0'
 
 dependencies:
   flutter:
-    sdk: flutter # Required for any Flutter project
+    sdk: flutter # Wajib untuk setiap proyek Flutter
 
-  # Dependencies from pubspec 1
+  # Dependensi dari pubspec tim Anda
   carousel_slider: ^5.0.0
-  flutter_localizations: # Standard Flutter localization package
-    sdk: flutter
+  flutter_localizations:
+    sdk: flutter # Standar untuk lokalisasi Flutter
   flutter_bloc: ^9.1.1
   http: ^1.4.0
-  intl: 0.19.0
+  intl: ^0.19.0 # Pastikan versi ini kompatibel
   image_picker: ^1.0.4
   path_provider: ^2.1.1
   path: ^1.8.3
@@ -27,25 +25,27 @@ dependencies:
   shared_preferences: ^2.5.3
   flutter_svg: ^2.1.0
   equatable: ^2.0.7
-  provider: ^6.0.5
+  cupertino_icons: ^1.0.8 # Ikon Cupertino
 
-  # Dependencies from pubspec 2 (cupertino_icons)
-  cupertino_icons: ^1.0.8 # Good to have for basic icons
+  # Dependensi dari pubspec Anda (provider dan audioplayers)
+  # Menggunakan versi provider yang lebih tinggi jika ada perbedaan
+  provider: ^6.0.5 # Menggunakan versi ^6.0.5 dari pubspec tim Anda
+  audioplayers: ^6.0.0 # Menggunakan versi ^6.0.0 (sama di kedua pubspec)
 
 dev_dependencies:
   flutter_test:
-    sdk: flutter # For writing Flutter unit and widget tests
-  integration_test: # From pubspec 1
-    sdk: flutter
-  flutter_lints: ^5.0.0 # Standard lints for Flutter projects. Compatible with Dart 3.5+
-  mockito: ^5.4.6 # From pubspec 1
-  bloc_test: ^10.0.0 # From pubspec 1
-  build_runner: ^2.4.6 # From pubspec 1
+    sdk: flutter # Untuk menulis unit dan widget tests Flutter
+  integration_test:
+    sdk: flutter # Dari pubspec tim Anda
+  flutter_lints: ^5.0.0 # Lints standar untuk proyek Flutter
+  mockito: ^5.4.6 # Dari pubspec tim Anda
+  bloc_test: ^10.0.0 # Dari pubspec tim Anda
+  build_runner: ^2.4.6 # Dari pubspec tim Anda
 
 flutter:
   uses-material-design: true
 
-  # Fonts from pubspec 1
+  # Font dari pubspec tim Anda
   fonts:
     - family: Overlock
       fonts:
@@ -62,8 +62,9 @@ flutter:
           weight: 700
           style: italic
 
-  # Assets from both pubspecs (combined)
+  # Aset dari kedua pubspec (digabungkan)
   assets:
+    # Aset dari pubspec tim Anda (folder img, loading, images)
     - assets/img/gambarlogin1.png
     - assets/img/gambarlogin2.png
     - assets/img/gambarlogin3.png
@@ -82,11 +83,11 @@ flutter:
     - assets/img/Profile.svg
     - assets/img/chatadd.svg
     - assets/img/qris_dummy.png
-    - assets/img/capybara1.png
-    - assets/img/capybara2.png
-    - assets/img/capybara3.png
     - assets/img/diamond.png
     - assets/img/moodjournaling.png
-    - assets/loading/Capybaratea.gif
-    - assets/images/bear_boba.png 
-    - assets/capybara.png
+    - assets/loading/Capybaratea.gif # GIF Capybara (sepertinya untuk loading)
+    - assets/img/bear_boba.png
+    
+    # Aset khusus Anda (gambar capybara_pet dan audio)
+    - assets/img/capybara_pet.png # Gambar utama capybara Anda
+    - assets/audio/background_music.mp3 
