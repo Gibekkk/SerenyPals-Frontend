@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../blocs/forum/forum_bloc.dart';
 import '../../blocs/forum/forum_event.dart';
 import '../../models/post.dart';
-import 'forum_verification.dart';
 
 class AddForumScreen extends StatefulWidget {
   const AddForumScreen({super.key});
@@ -27,7 +27,8 @@ class _AddForumScreenState extends State<AddForumScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Forum'),
+        title: const Text('Add Forum'),
+        centerTitle: true,
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -36,12 +37,12 @@ class _AddForumScreenState extends State<AddForumScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Apa yang mau kamu bagikan hari ini?',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 32),
-              Text('Judul'),
+              const SizedBox(height: 32),
+              const Text('Judul'),
               TextField(
                 controller: _titleController,
                 decoration: InputDecoration(
@@ -56,18 +57,16 @@ class _AddForumScreenState extends State<AddForumScreen> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.blue),
+                    borderSide: const BorderSide(color: Colors.blue),
                   ),
                   filled: true,
                   fillColor: Colors.white,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 12.0,
-                    vertical: 8.0,
-                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 8.0),
                 ),
               ),
-              SizedBox(height: 24),
-              Text('Konten Sharing'),
+              const SizedBox(height: 24),
+              const Text('Konten Sharing'),
               Expanded(
                 child: TextField(
                   controller: _contentController,
@@ -85,15 +84,15 @@ class _AddForumScreenState extends State<AddForumScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.blue),
+                      borderSide: const BorderSide(color: Colors.blue),
                     ),
                     filled: true,
                     fillColor: Colors.blue.shade50,
-                    contentPadding: EdgeInsets.all(12.0),
+                    contentPadding: const EdgeInsets.all(12.0),
                   ),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Center(
                 child: SizedBox(
                   width: double.infinity,
@@ -102,7 +101,7 @@ class _AddForumScreenState extends State<AddForumScreen> {
                       if (_titleController.text.isEmpty ||
                           _contentController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text(
                               'Judul dan konten tidak boleh kosong!',
                             ),
@@ -110,36 +109,29 @@ class _AddForumScreenState extends State<AddForumScreen> {
                         );
                         return;
                       }
-
                       final newPost = Post(
                         title: _titleController.text,
                         content: _contentController.text,
                         likes: 0,
                         comments: 0,
                         isLiked: false,
-                        id: '01',
+                        id: '01', // Anda mungkin ingin menghasilkan ID yang unik
                       );
-
                       context.read<ForumBloc>().add(AddPostEvent(newPost));
 
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddForumVerificationScreen(),
-                        ),
-                      );
+                      // context.go('/sharingforum/verify/${newPost.id}');
+                      context.go('/sharingforum/verify');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue.shade100,
                       foregroundColor: Colors.black87,
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       elevation: 0,
                     ),
-                    child: Text('Post', style: TextStyle(fontSize: 18)),
+                    child: const Text('Post', style: TextStyle(fontSize: 18)),
                   ),
                 ),
               ),

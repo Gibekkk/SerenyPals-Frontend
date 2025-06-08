@@ -6,7 +6,7 @@ import 'forum_event.dart';
 import 'forum_state.dart';
 
 class ForumBloc extends Bloc<ForumEvent, ForumState> {
-  ForumBloc() : super(ForumInitial()) {
+  ForumBloc({required forumRepository}) : super(ForumInitial()) {
     on<AddPostEvent>(_onAddPost);
     on<ToggleLikePostEvent>(_onToggleLikePost);
     on<AddCommentEvent>(_onAddComment);

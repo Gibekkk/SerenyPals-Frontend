@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:serenypals_frontend/views/view/forum_screen.dart';
 import 'package:serenypals_frontend/views/view/konselingpage.dart';
 import 'package:serenypals_frontend/views/view/onboarding.dart';
 import 'package:serenypals_frontend/views/view/profile_page.dart';
@@ -39,9 +40,10 @@ GoRouter router(String initialLocation) {
         builder: (context, state) => OnboardingScreen(),
       ),
       GoRoute(
-        path: '/splashscreen',
-        name: 'splashscreen',
-        builder: (context, state) => SplashScreen(delay: Duration(seconds: 2)),
+        path: '/',
+        name: 'splash',
+        builder: (context, state) =>
+            SplashScreen(delay: Duration(milliseconds: 2000)),
       ),
       GoRoute(
         path: '/loading',
@@ -79,12 +81,20 @@ GoRouter router(String initialLocation) {
         builder: (context, state) => const DiamondTopUpPage(),
       ),
       GoRoute(
-        path: '/addforum',
-        builder: (context, state) => AddForumScreen(),
-      ),
-      GoRoute(
-        path: '/verify-forum',
-        builder: (context, state) => AddForumVerificationScreen(),
+        path: '/sharingforum',
+        builder: (context, state) => SharingForumScreen(),
+        routes: [
+          GoRoute(
+            path: 'add',
+            builder: (context, state) => AddForumScreen(),
+          ),
+          GoRoute(
+            path: 'verify',
+            builder: (context, state) {
+              return AddForumVerificationScreen();
+            },
+          ),
+        ],
       ),
       GoRoute(
         path: '/create-diary',
@@ -132,7 +142,7 @@ GoRouter router(String initialLocation) {
           GoRoute(
             path: '/forum',
             name: 'forum',
-            builder: (context, state) => const ForumPage(),
+            builder: (context, state) => ForumScreen(),
           ),
           GoRoute(
             path: '/ai',

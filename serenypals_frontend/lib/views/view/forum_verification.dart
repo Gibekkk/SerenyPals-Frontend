@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AddForumVerificationScreen extends StatelessWidget {
-  const AddForumVerificationScreen({super.key});
+  final String postId;
+
+  const AddForumVerificationScreen({super.key, required this.postId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Forum - Verifikasi'),
+        title: Text('Verifikasi Post ID: $postId'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
