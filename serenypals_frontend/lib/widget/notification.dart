@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
-import '../models/notification.dart';
+import '../models/notification.dart'; // Sesuaikan path
 
 class NotificationsContent extends StatelessWidget {
   final List<NotificationItem> notifications;
 
-  const NotificationsContent({super.key, required this.notifications});
+  const NotificationsContent({Key? key, required this.notifications})
+      : super(key: key);
 
   String _formatTimestamp(DateTime timestamp) {
     final now = DateTime.now();
@@ -27,7 +27,7 @@ class NotificationsContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (notifications.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'Belum ada notifikasi.',
           style: TextStyle(fontSize: 18, color: Colors.grey),
@@ -50,12 +50,12 @@ class NotificationsContent extends StatelessWidget {
               children: [
                 Text(
                   notification.message,
-                  style: const TextStyle(fontSize: 16, color: Colors.black87),
+                  style: TextStyle(fontSize: 16, color: Colors.black87),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5),
                 Text(
                   _formatTimestamp(notification.timestamp),
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
             ),

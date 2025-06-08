@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serenypals_frontend/blocs/forum/forum_bloc.dart';
 
 import 'package:serenypals_frontend/routes.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
@@ -18,7 +19,9 @@ void main({String initialRoute = '/splashscreen'}) async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AuthBloc(authRepository)),
-        // Tambahkan Bloc lain di sini jika perlu
+        BlocProvider(
+          create: (context) => ForumBloc(),
+        ),
       ],
       child: MyApp(initialRoute: initialRoute),
     ),

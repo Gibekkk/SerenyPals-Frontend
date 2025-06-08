@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/post.dart'; // Sesuaikan path
-import 'post_card.dart'; // Sesuaikan path
+import '../models/post.dart';
+import 'post_card.dart';
 
 class MyPostsContent extends StatelessWidget {
   final List<Post> posts;
@@ -18,7 +18,7 @@ class MyPostsContent extends StatelessWidget {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
-                child: PostCard(post: posts[index]), // Meneruskan objek Post
+                child: PostCard(post: posts[index]),
               );
             },
           ),

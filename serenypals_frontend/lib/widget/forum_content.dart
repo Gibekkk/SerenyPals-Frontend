@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
 import '../models/post.dart';
 import 'post_card.dart';
 
 class SharingForumContent extends StatelessWidget {
   final List<Post> posts;
 
-  const SharingForumContent({super.key, required this.posts});
+  const SharingForumContent({Key? key, required this.posts}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class SharingForumContent extends StatelessWidget {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
-                child: PostCard(post: posts[index]), // Meneruskan objek Post
+                child: PostCard(post: posts[index]),
               );
             },
           ),

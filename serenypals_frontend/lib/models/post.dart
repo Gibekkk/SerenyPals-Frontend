@@ -34,4 +34,9 @@ class Post extends Equatable {
 
   @override
   List<Object?> get props => [title, content, likes, comments, isLiked];
+
+  @override
+  String toString() {
+    return 'Post(title: $title, content: $content, likes: $likes, comments: $comments, isLiked: $isLiked)';
+  }
 }

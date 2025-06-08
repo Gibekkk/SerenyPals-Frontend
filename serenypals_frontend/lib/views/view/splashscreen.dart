@@ -8,9 +8,9 @@ class SplashScreen extends StatefulWidget {
 
   const SplashScreen({
     Key? key,
-    this.delay = const Duration(seconds: 2),
-  }) // Ubah ke ms untuk testing
-  : super(key: key);
+    this.delay =
+        const Duration(seconds: 2), // Ubah menjadi 1 detik (atau 1500 ms)
+  }) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -26,7 +26,8 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      // Durasi animasi fade juga bisa dipersingkat, misal 1.5 detik
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
@@ -35,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
     // Navigasi dengan Timer yang bisa dibatalkan
     _navigateTimer = Timer(widget.delay, () {
       if (mounted) {
-        context.go('/onboarding');
+        context.go('/Onboarding');
       }
     });
   }
@@ -58,12 +59,15 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/img/logo.png', width: 150, height: 150),
+              Image.asset('assets/img/logo.png', width: 250, height: 250),
               const SizedBox(height: 20),
               const Text(
                 'Serenypals',
                 key: Key('splash_text'),
-                style: TextStyle(fontSize: 24),
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
             ],
           ),

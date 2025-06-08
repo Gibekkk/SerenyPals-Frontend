@@ -9,16 +9,14 @@ class ForumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ForumCubit(), // Create and provide the ForumCubit
+      create: (context) => ForumBloc(), // Create and provide the ForumCubit
       child: MaterialApp(
         title: 'Sharing Forum',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          scaffoldBackgroundColor:
-              Colors
-                  .orange
-                  .shade50, // Warna latar belakang global (sesuai Figma)
+          scaffoldBackgroundColor: Colors
+              .orange.shade50, // Warna latar belakang global (sesuai Figma)
           appBarTheme: AppBarTheme(
             backgroundColor:
                 Colors.blue.shade100, // Warna biru muda untuk AppBar

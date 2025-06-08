@@ -14,6 +14,7 @@ import 'views/view/registerscreen.dart';
 import 'views/view/topup.dart';
 import 'views/view/virtualdiaryscreen.dart';
 import 'widget/customloading.dart';
+import 'views/view/forum_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
 import 'package:serenypals_frontend/repositories/auth_repository.dart';
@@ -40,7 +41,9 @@ GoRouter router(String initialLocation) {
       GoRoute(
         path: '/splashscreen',
         name: 'splashscreen',
-        builder: (context, state) => SplashScreen(delay: Duration(seconds: 2)),
+        builder: (context, state) => SplashScreen(
+          delay: const Duration(milliseconds: 500),
+        ),
       ),
       GoRoute(
         path: '/loading',
@@ -89,7 +92,6 @@ GoRouter router(String initialLocation) {
           return ChatPsikolog(name: name);
         },
       ),
-
       ShellRoute(
         builder: (context, state, child) {
           // Dapatkan path saat ini
@@ -124,7 +126,7 @@ GoRouter router(String initialLocation) {
           GoRoute(
             path: '/forum',
             name: 'forum',
-            builder: (context, state) => const ForumPage(),
+            builder: (context, state) => const ForumScreen(),
           ),
           GoRoute(
             path: '/ai',
