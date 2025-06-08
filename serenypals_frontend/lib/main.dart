@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serenypals_frontend/routes.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
 import 'package:serenypals_frontend/repositories/auth_repository.dart';
+import 'package:serenypals_frontend/repositories/forum_repository.dart';
+import 'blocs/forum/forum_bloc.dart';
 
 void main({String initialRoute = '/splashscreen'}) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +20,10 @@ void main({String initialRoute = '/splashscreen'}) async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AuthBloc(authRepository)),
-        // Tambahkan Bloc lain di sini jika perlu
+        BlocProvider(
+          create: (_) => ForumBloc(
+              forumRepository: ForumRepository), // Pass ForumRepository
+        ),
       ],
       child: MyApp(initialRoute: initialRoute),
     ),

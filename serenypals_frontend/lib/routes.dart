@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/views/view/konselingpage.dart';
 import 'package:serenypals_frontend/views/view/onboarding.dart';
 import 'package:serenypals_frontend/views/view/profile_page.dart';
+import 'package:serenypals_frontend/views/view/sharingforum.dart';
 import 'package:serenypals_frontend/views/view/splashscreen.dart';
 import 'views/view/chatpsikologpage.dart';
 import 'views/view/dashboardpage.dart';
@@ -78,6 +79,14 @@ GoRouter router(String initialLocation) {
         builder: (context, state) => const DiamondTopUpPage(),
       ),
       GoRoute(
+        path: '/addforum',
+        builder: (context, state) => AddForumScreen(),
+      ),
+      GoRoute(
+        path: '/verify-forum',
+        builder: (context, state) => AddForumVerificationScreen(),
+      ),
+      GoRoute(
         path: '/create-diary',
         builder: (context, state) => CreateDiaryScreen(),
       ),
@@ -89,7 +98,6 @@ GoRouter router(String initialLocation) {
           return ChatPsikolog(name: name);
         },
       ),
-
       ShellRoute(
         builder: (context, state, child) {
           // Dapatkan path saat ini
