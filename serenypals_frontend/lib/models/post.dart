@@ -1,5 +1,5 @@
 class Post {
-  String id; // Tambahkan ID untuk mengidentifikasi postingan di backend
+  String? id; // Tambahkan ID untuk mengidentifikasi postingan di backend
   String title;
   String content;
   int likes;
@@ -7,7 +7,7 @@ class Post {
   bool isLiked;
 
   Post({
-    required this.id,
+    this.id,
     required this.title,
     required this.content,
     this.likes = 0,
