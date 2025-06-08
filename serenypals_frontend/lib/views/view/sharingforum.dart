@@ -51,13 +51,19 @@ class ForumProvider extends ChangeNotifier {
   // Menambah postingan baru
   void addPost(Post newPost) {
     _allPosts.insert(0, newPost); // Tambahkan di paling atas
-    _myPosts.insert(0, newPost); // Asumsikan postingan baru masuk ke "Postingan Saya"
+    _myPosts.insert(
+      0,
+      newPost,
+    ); // Asumsikan postingan baru masuk ke "Postingan Saya"
     notifyListeners(); // Beri tahu widget yang mendengarkan untuk di-rebuild
   }
 
   // Menambah notifikasi
   void addNotification(String message) {
-    _notifications.insert(0, NotificationItem(message: message, timestamp: DateTime.now()));
+    _notifications.insert(
+      0,
+      NotificationItem(message: message, timestamp: DateTime.now()),
+    );
     notifyListeners(); // Beri tahu widget yang mendengarkan untuk di-rebuild
   }
 
@@ -67,7 +73,6 @@ class ForumProvider extends ChangeNotifier {
   }
 }
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -76,13 +81,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        scaffoldBackgroundColor: Colors.orange.shade50, // Warna latar belakang global (sesuai Figma)
+        scaffoldBackgroundColor:
+            Colors.orange.shade50, // Warna latar belakang global (sesuai Figma)
         // >>> PERUBAHAN DI SINI: AppBarTheme diperbarui <<<
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.blue.shade100, // Warna biru muda untuk AppBar
-          foregroundColor: Colors.black87, // Warna teks di AppBar (hampir hitam)
+          foregroundColor:
+              Colors.black87, // Warna teks di AppBar (hampir hitam)
           elevation: 0, // Menghilangkan shadow di AppBar
-          iconTheme: IconThemeData(color: Colors.black87), // Warna ikon di AppBar (misal: hamburger menu, back button)
+          iconTheme: IconThemeData(
+            color: Colors.black87,
+          ), // Warna ikon di AppBar (misal: hamburger menu, back button)
         ),
         // >>> AKHIR PERUBAHAN <<<
       ),
@@ -116,10 +125,7 @@ class _SharingForumScreenState extends State<SharingForumScreen> {
               ),
               child: Text(
                 'Forums',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 24),
               ),
             ),
             ListTile(
@@ -190,7 +196,9 @@ class _SharingForumScreenState extends State<SharingForumScreen> {
             }
             return MyPostsContent(posts: forumProvider.myPosts);
           case 'Notifikasi':
-            return NotificationsContent(notifications: forumProvider.notifications);
+            return NotificationsContent(
+              notifications: forumProvider.notifications,
+            );
           default:
             return Center(child: Text('Halaman tidak ditemukan'));
         }
@@ -249,13 +257,14 @@ class MyPostsContent extends StatelessWidget {
         ),
       ],
     );
-}
+  }
 }
 
 class NotificationsContent extends StatelessWidget {
   final List<NotificationItem> notifications;
 
-  const NotificationsContent({Key? key, required this.notifications}) : super(key: key);
+  const NotificationsContent({Key? key, required this.notifications})
+    : super(key: key);
 
   // Helper untuk format waktu
   String _formatTimestamp(DateTime timestamp) {
@@ -321,10 +330,7 @@ class NotificationsContent extends StatelessWidget {
 class PostCard extends StatefulWidget {
   final Post post;
 
-  const PostCard({
-    Key? key,
-    required this.post,
-  }) : super(key: key);
+  const PostCard({Key? key, required this.post}) : super(key: key);
 
   @override
   _PostCardState createState() => _PostCardState();
@@ -357,7 +363,11 @@ class _PostCardState extends State<PostCard> {
               children: [
                 Text(
                   widget.post.title, // Tampilkan judul postingan
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black87),
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
                 SizedBox(height: 5.0),
                 Text(
@@ -371,20 +381,30 @@ class _PostCardState extends State<PostCard> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          widget.post.isLiked = !widget.post.isLiked; // Toggle like status
+                          widget.post.isLiked =
+                              !widget.post.isLiked; // Toggle like status
                           if (widget.post.isLiked) {
                             widget.post.likes++;
-                            forumProvider.addNotification('Postinganmu "${widget.post.title}" disukai.');
+                            forumProvider.addNotification(
+                              'Postinganmu "${widget.post.title}" disukai.',
+                            );
                           } else {
                             widget.post.likes--;
                           }
-                          forumProvider.updatePost(widget.post); // Beri tahu provider ada update
+                          forumProvider.updatePost(
+                            widget.post,
+                          ); // Beri tahu provider ada update
                         });
                       },
                       child: Icon(
-                        widget.post.isLiked ? Icons.favorite : Icons.favorite_border,
+                        widget.post.isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_border,
                         size: 20,
-                        color: widget.post.isLiked ? Colors.red : Colors.grey, // Warna hati
+                        color:
+                            widget.post.isLiked
+                                ? Colors.red
+                                : Colors.grey, // Warna hati
                       ),
                     ),
                     SizedBox(width: 4.0),
@@ -397,10 +417,15 @@ class _PostCardState extends State<PostCard> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          _showCommentInput = !_showCommentInput; // Tampilkan/sembunyikan input komentar
+                          _showCommentInput =
+                              !_showCommentInput; // Tampilkan/sembunyikan input komentar
                         });
                       },
-                      child: Icon(Icons.comment_outlined, size: 20, color: Colors.grey),
+                      child: Icon(
+                        Icons.comment_outlined,
+                        size: 20,
+                        color: Colors.grey,
+                      ),
                     ),
                     SizedBox(width: 4.0),
                     Text(
@@ -422,8 +447,13 @@ class _PostCardState extends State<PostCard> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                              fillColor: Colors.white, // Background putih untuk input komentar
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                              fillColor:
+                                  Colors
+                                      .white, // Background putih untuk input komentar
                               filled: true,
                             ),
                           ),
@@ -432,18 +462,26 @@ class _PostCardState extends State<PostCard> {
                         ElevatedButton(
                           onPressed: () {
                             if (_commentController.text.isNotEmpty) {
-                              String commentText = _commentController.text; // Ambil teks komentar
+                              String commentText =
+                                  _commentController
+                                      .text; // Ambil teks komentar
                               setState(() {
-                                widget.post.comments++; // Tambah jumlah komentar
+                                widget
+                                    .post
+                                    .comments++; // Tambah jumlah komentar
                                 _commentController.clear(); // Bersihkan input
                                 _showCommentInput = false; // Sembunyikan input
-                                forumProvider.updatePost(widget.post); // Beri tahu provider ada update
+                                forumProvider.updatePost(
+                                  widget.post,
+                                ); // Beri tahu provider ada update
                               });
 
                               // Notifikasi SnackBar (opsional, karena juga masuk ke page notifikasi)
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Komentar berhasil ditambahkan!'),
+                                  content: Text(
+                                    'Komentar berhasil ditambahkan!',
+                                  ),
                                   duration: Duration(seconds: 1),
                                 ),
                               );
@@ -451,11 +489,15 @@ class _PostCardState extends State<PostCard> {
                               // Tambahkan notifikasi ke ForumProvider
                               String notificationMessage;
                               if (widget.post.comments == 1) {
-                                notificationMessage = 'Postinganmu "${widget.post.title}" mendapatkan 1 komentar: "$commentText"';
+                                notificationMessage =
+                                    'Postinganmu "${widget.post.title}" mendapatkan 1 komentar: "$commentText"';
                               } else {
-                                notificationMessage = 'Postinganmu "${widget.post.title}" mendapatkan ${widget.post.comments} komentar. Komentar terbaru: "$commentText"';
+                                notificationMessage =
+                                    'Postinganmu "${widget.post.title}" mendapatkan ${widget.post.comments} komentar. Komentar terbaru: "$commentText"';
                               }
-                              forumProvider.addNotification(notificationMessage);
+                              forumProvider.addNotification(
+                                notificationMessage,
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -464,7 +506,10 @@ class _PostCardState extends State<PostCard> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 15,
+                            ),
                           ),
                           child: Text('Kirim'),
                         ),
@@ -535,7 +580,10 @@ class _AddForumScreenState extends State<AddForumScreen> {
                   ),
                   filled: true,
                   fillColor: Colors.white,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                    vertical: 8.0,
+                  ),
                 ),
               ),
               SizedBox(height: 24),
@@ -571,15 +619,23 @@ class _AddForumScreenState extends State<AddForumScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_titleController.text.isEmpty || _contentController.text.isEmpty) {
+                      if (_titleController.text.isEmpty ||
+                          _contentController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Judul dan konten tidak boleh kosong!')),
+                          SnackBar(
+                            content: Text(
+                              'Judul dan konten tidak boleh kosong!',
+                            ),
+                          ),
                         );
                         return;
                       }
 
                       // Dapatkan instance ForumProvider
-                      final forumProvider = Provider.of<ForumProvider>(context, listen: false);
+                      final forumProvider = Provider.of<ForumProvider>(
+                        context,
+                        listen: false,
+                      );
 
                       // Buat postingan baru dengan 0 like dan 0 komentar
                       final newPost = Post(
@@ -590,12 +646,17 @@ class _AddForumScreenState extends State<AddForumScreen> {
                         isLiked: false,
                       );
 
-                      forumProvider.addPost(newPost); // Tambahkan postingan melalui provider
+                      forumProvider.addPost(
+                        newPost,
+                      ); // Tambahkan postingan melalui provider
 
                       Navigator.pop(context); // Tutup AddForumScreen
-                      Navigator.push( // Navigasi ke Verifikasi
+                      Navigator.push(
+                        // Navigasi ke Verifikasi
                         context,
-                        MaterialPageRoute(builder: (context) => AddForumVerificationScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => AddForumVerificationScreen(),
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
