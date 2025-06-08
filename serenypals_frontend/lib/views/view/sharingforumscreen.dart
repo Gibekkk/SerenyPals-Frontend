@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:serenypals_frontend/utils/color.dart';
 import '../../blocs/forum/forum_bloc.dart';
 import '../../blocs/forum/forum_state.dart';
-import 'add_forum_screen.dart';
 import '../../widget/my_forum.dart';
 import '../../widget/notification.dart';
 import '../../widget/forum_content.dart';
@@ -29,12 +30,25 @@ class _SharingForumScreenState extends State<SharingForumScreen> {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: color7,
               ),
               child: Text(
                 'Forums',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24),
               ),
+            ),
+            ListTile(
+              leading: Icon(Icons.forum),
+              title: Text('Forum Sharing'),
+              onTap: () {
+                setState(() {
+                  _currentPage = 'Sharing Forum';
+                });
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.article),
@@ -62,10 +76,11 @@ class _SharingForumScreenState extends State<SharingForumScreen> {
       body: _buildBodyContent(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddForumScreen()),
-          );
+          context.go('/sharingforum/add'); // Navigate to AddForumScreen
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => AddForumScreen()),
+          // );
         },
         backgroundColor: Colors.blue.shade200,
         child: Icon(Icons.add),

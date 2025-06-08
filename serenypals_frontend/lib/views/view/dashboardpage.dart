@@ -52,7 +52,6 @@ class HeaderSection extends StatelessWidget {
                 'SerenyPals',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
               ),
-
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -220,13 +219,5 @@ class PremiumPage extends StatelessWidget {
       appBar: AppBar(title: Text("Psikiater")),
       body: Center(child: Text("Hubungi Psikiater")),
     );
-  }
-}
-
-class ForumPage extends StatelessWidget {
-  const ForumPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Forum"));
   }
 }

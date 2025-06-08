@@ -9,7 +9,7 @@ import 'package:serenypals_frontend/repositories/auth_repository.dart';
 import 'package:serenypals_frontend/repositories/forum_repository.dart';
 import 'blocs/forum/forum_bloc.dart';
 
-void main({String initialRoute = '/splashscreen'}) async {
+void main({String initialRoute = '/'}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id_ID', null);
 
