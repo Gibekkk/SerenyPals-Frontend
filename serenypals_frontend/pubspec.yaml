@@ -87,7 +87,10 @@ flutter:
     - assets/img/moodjournaling.png
     - assets/loading/Capybaratea.gif # GIF Capybara (sepertinya untuk loading)
     - assets/img/bear_boba.png
-    
+    - assets/img/capybara.png
+    - assets/img/capybara1.png
+    - assets/img/capybara2.png
+    - assets/img/capybara3.png
     # Aset khusus Anda (gambar capybara_pet dan audio)
     - assets/img/capybara_pet.png # Gambar utama capybara Anda
     - assets/audio/background_music.mp3 
