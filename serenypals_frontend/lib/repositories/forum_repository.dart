@@ -4,5 +4,6 @@ abstract class ForumRepository {
   Future<List<Post>> fetchAllPosts();
   Future<Post> addPost(Post newPost);
   Future<Post> updatePost(Post updatedPost);
-  // Anda bisa menambahkan method lain seperti deletePost, addComment, dll.
+  Future<void> deletePost(String postId); // Tambahkan ini
+  // Bisa ditambah: getPostById, dsb.
 }

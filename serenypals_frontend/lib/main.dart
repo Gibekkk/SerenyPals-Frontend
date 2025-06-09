@@ -6,23 +6,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serenypals_frontend/routes.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
 import 'package:serenypals_frontend/repositories/auth_repository.dart';
-import 'package:serenypals_frontend/repositories/forum_repository.dart';
+import 'package:serenypals_frontend/services/forum_services.dart';
 import 'blocs/forum/forum_bloc.dart';
 
 void main({String initialRoute = '/'}) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Inisialisasi lokal tanggal/waktu untuk bahasa Indonesia
   await initializeDateFormatting('id_ID', null);
 
   // Inisialisasi repository
   final authRepository = AuthRepository();
+  final forumRepository = ForumApiService();
 
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => AuthBloc(authRepository)),
+        // Bloc Auth dengan passing authRepository
         BlocProvider(
-          create: (_) => ForumBloc(
-              forumRepository: ForumRepository), // Pass ForumRepository
+          create: (_) => AuthBloc(authRepository),
+        ),
+        // Bloc Forum dengan passing forumRepository (instance, bukan class)
+        BlocProvider(
+          create: (_) => ForumBloc(forumRepository: forumRepository),
         ),
       ],
       child: MyApp(initialRoute: initialRoute),

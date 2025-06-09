@@ -38,14 +38,12 @@ class AddNotificationEvent extends ForumEvent {
   List<Object> get props => [message];
 }
 
-// --- Event Baru yang Mungkin Anda Butuhkan ---
-
 // Event untuk memuat data awal forum (misalnya saat aplikasi pertama kali dibuka)
 class LoadForumData extends ForumEvent {
   const LoadForumData();
 }
 
-// Event untuk menyegarkan data forum (misalnya untuk pull-to-refresh)
+// Event untuk menyegarkan data forum (misalnya untuk pull-to-refresh atau pindah tab)
 class RefreshForumData extends ForumEvent {
   const RefreshForumData();
 }
@@ -75,8 +73,7 @@ class MarkNotificationAsRead extends ForumEvent {
   List<Object> get props => [notificationId];
 }
 
-// Event untuk memfilter postingan (misalnya berdasarkan kategori atau tag)
-// Jika Anda ingin menerapkan fitur filter
+// Event untuk memfilter postingan (jika Anda ingin menerapkan fitur filter)
 class FilterPostsEvent extends ForumEvent {
   final String? category; // Contoh filter berdasarkan kategori
   final String? searchTerm; // Contoh filter berdasarkan kata kunci pencarian
@@ -85,9 +82,4 @@ class FilterPostsEvent extends ForumEvent {
 
   @override
   List<Object> get props => [category ?? '', searchTerm ?? ''];
-}
-
-// Event untuk memuat lebih banyak postingan (jika Anda menerapkan pagination/lazy loading)
-class LoadMorePosts extends ForumEvent {
-  const LoadMorePosts();
 }

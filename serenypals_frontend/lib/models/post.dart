@@ -46,6 +46,7 @@ class Post {
     int? likes,
     int? comments,
     bool? isLiked,
+    required DateTime timestamp,
   }) {
     return Post(
       id: id ?? this.id,
