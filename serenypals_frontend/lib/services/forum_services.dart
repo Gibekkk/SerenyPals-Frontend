@@ -1,14 +1,9 @@
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
+import 'dart:async';
 import 'package:serenypals_frontend/models/post.dart';
-import 'package:serenypals_frontend/repositories/forum_repository.dart'; // Import interface ForumRepository
+import 'package:serenypals_frontend/repositories/forum_repository.dart';
 
 class ForumApiService implements ForumRepository {
-  // Ganti ini dengan URL API Anda yang sebenarnya
-  // final String _baseUrl = 'https://your-api-domain.com/api/v1/forum';
-
-  // Simulasi data in-memory karena belum ada API backend
-  // Dalam aplikasi nyata, ini akan diambil dari server
+  // Gunakan List<Post> non-final agar bisa diubah
   final List<Post> _mockPosts = [
     Post(
       id: '1',
@@ -28,79 +23,37 @@ class ForumApiService implements ForumRepository {
     ),
   ];
 
-  // Method untuk mengambil semua postingan
   @override
   Future<List<Post>> fetchAllPosts() async {
-    // Simulasi penundaan jaringan
-    await Future.delayed(const Duration(seconds: 1));
-
-    // Dalam aplikasi nyata, Anda akan melakukan panggilan HTTP
-    /*
-    final response = await http.get(Uri.parse(_baseUrl));
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      return data.map((json) => Post.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to load posts');
-    }
-    */
-    return _mockPosts; // Mengembalikan data simulasi
+    await Future.delayed(const Duration(seconds: 1)); // Simulasikan delay API
+    return List<Post>.from(_mockPosts); // return salinan
   }
 
-  // Method untuk menambahkan postingan baru
   @override
   Future<Post> addPost(Post newPost) async {
-    // Simulasi penundaan jaringan
-    await Future.delayed(
-        const Duration(seconds: 5)); // Menunda 5 detik untuk simulasi
-
-    // Dalam aplikasi nyata, Anda akan melakukan panggilan HTTP POST
-    /*
-    final response = await http.post(
-      Uri.parse(_baseUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(newPost.toJson()),
+    await Future.delayed(const Duration(seconds: 2)); // Simulasikan delay API
+    final postWithId = newPost.copyWith(
+      id: DateTime.now().millisecondsSinceEpoch.toString(), // Generate ID unik
+      timestamp: DateTime.now(), // Tambahkan timestamp
     );
-
-    if (response.statusCode == 201) { // 201 Created
-      return Post.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to add post');
-    }
-    */
-
-    // Tambahkan ID unik untuk simulasi
-    final addedPost = newPost.copyWith(
-        id: (DateTime.now().millisecondsSinceEpoch).toString());
-    _mockPosts.insert(0, addedPost); // Tambahkan ke daftar simulasi
-    return addedPost;
+    _mockPosts.insert(0, postWithId); // Tambahkan di awal daftar
+    return postWithId;
   }
 
-  // Method untuk memperbarui postingan (misalnya, toggle like, tambah komentar)
   @override
   Future<Post> updatePost(Post updatedPost) async {
-    // Simulasi penundaan jaringan
-    await Future.delayed(const Duration(seconds: 1));
-
-    // Dalam aplikasi nyata, Anda akan melakukan panggilan HTTP PUT atau PATCH
-    /*
-    final response = await http.put(
-      Uri.parse('$_baseUrl/${updatedPost.id}'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(updatedPost.toJson()),
-    );
-
-    if (response.statusCode == 200) {
-      return Post.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to update post');
-    }
-    */
-
+    await Future.delayed(const Duration(milliseconds: 500));
     final index = _mockPosts.indexWhere((p) => p.id == updatedPost.id);
     if (index != -1) {
-      _mockPosts[index] = updatedPost; // Perbarui di daftar simulasi
+      _mockPosts[index] = updatedPost;
+      return updatedPost;
     }
-    return updatedPost;
+    throw Exception('Postingan tidak ditemukan untuk diperbarui');
+  }
+
+  @override
+  Future<void> deletePost(String postId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    _mockPosts.removeWhere((p) => p.id == postId);
   }
 }

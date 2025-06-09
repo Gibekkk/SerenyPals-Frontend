@@ -1,9 +1,11 @@
+// routes.dart
 import 'package:go_router/go_router.dart';
-import 'package:serenypals_frontend/views/view/forum_screen.dart';
+import 'package:serenypals_frontend/views/view/add_forum_screen.dart'; // Import ini jika belum
+import 'package:serenypals_frontend/views/view/forum_verification.dart'; // Import ini jika belum
 import 'package:serenypals_frontend/views/view/konselingpage.dart';
 import 'package:serenypals_frontend/views/view/onboarding.dart';
 import 'package:serenypals_frontend/views/view/profile_page.dart';
-import 'package:serenypals_frontend/views/view/sharingforum.dart';
+import 'package:serenypals_frontend/views/view/sharingforumscreen.dart';
 import 'package:serenypals_frontend/views/view/splashscreen.dart';
 import 'views/view/chatpsikologpage.dart';
 import 'views/view/dashboardpage.dart';
@@ -81,22 +83,6 @@ GoRouter router(String initialLocation) {
         builder: (context, state) => const DiamondTopUpPage(),
       ),
       GoRoute(
-        path: '/sharingforum',
-        builder: (context, state) => SharingForumScreen(),
-        routes: [
-          GoRoute(
-            path: 'add',
-            builder: (context, state) => AddForumScreen(),
-          ),
-          GoRoute(
-            path: 'verify',
-            builder: (context, state) {
-              return AddForumVerificationScreen();
-            },
-          ),
-        ],
-      ),
-      GoRoute(
         path: '/create-diary',
         builder: (context, state) => CreateDiaryScreen(),
       ),
@@ -108,12 +94,22 @@ GoRouter router(String initialLocation) {
           return ChatPsikolog(name: name);
         },
       ),
+      GoRoute(
+        path: '/forum/add',
+        builder: (context, state) => AddForumScreen(),
+      ),
+      GoRoute(
+        path: '/forum/verify', // <<< Perbaikan di sini
+        builder: (context, state) {
+          // final postId =
+          //     state.pathParameters['postId']!; // Ambil postId
+          return AddForumVerificationScreen(); // Teruskan postId
+        },
+      ),
       ShellRoute(
         builder: (context, state, child) {
-          // Dapatkan path saat ini
           final location = state.uri.path;
 
-          // Daftar tab (harus sama urutan dan isi seperti di MainTabScaffold)
           final tabPaths = [
             '/dashboard',
             '/forum',
@@ -123,7 +119,6 @@ GoRouter router(String initialLocation) {
             '/psikiater',
           ];
 
-          // Cari index tab sekarang
           final currentTab = tabPaths.indexWhere(
             (path) => location.startsWith(path),
           );
@@ -141,8 +136,7 @@ GoRouter router(String initialLocation) {
           ),
           GoRoute(
             path: '/forum',
-            name: 'forum',
-            builder: (context, state) => ForumScreen(),
+            builder: (context, state) => SharingForumScreen(),
           ),
           GoRoute(
             path: '/ai',

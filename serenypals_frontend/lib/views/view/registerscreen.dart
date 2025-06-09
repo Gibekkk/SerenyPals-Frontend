@@ -52,16 +52,14 @@ class _RegisterPageState extends State<RegisterPage> {
               headerBackgroundColor: color1,
               headerForegroundColor: Colors.black,
               dayForegroundColor: WidgetStateColor.resolveWith(
-                (states) =>
-                    states.contains(WidgetState.selected)
-                        ? color2
-                        : Colors.black,
+                (states) => states.contains(WidgetState.selected)
+                    ? color2
+                    : Colors.black,
               ),
               dayBackgroundColor: WidgetStateColor.resolveWith(
-                (states) =>
-                    states.contains(WidgetState.selected)
-                        ? color2
-                        : Colors.transparent,
+                (states) => states.contains(WidgetState.selected)
+                    ? color2
+                    : Colors.transparent,
               ),
             ),
             textTheme: const TextTheme(
@@ -107,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
         if (state is AuthRegisterSuccess) {
           // Kirim email sebagai extra ke halaman OTP
-          context.go('/OTP', extra: _emailController.text);
+          context.go('/otp', extra: _emailController.text);
         }
 
         if (state is AuthFailure) {
@@ -163,11 +161,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _nameController,
                       icon: Icons.person,
                       obscureText: false,
-                      validator:
-                          (value) =>
-                              value == null || value.isEmpty
-                                  ? 'Nama wajib diisi'
-                                  : null,
+                      validator: (value) => value == null || value.isEmpty
+                          ? 'Nama wajib diisi'
+                          : null,
                     ),
 
                     const SizedBox(height: 16),
@@ -183,11 +179,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           controller: _birthDateController,
                           icon: Icons.calendar_today,
                           obscureText: false,
-                          validator:
-                              (value) =>
-                                  value == null || value.isEmpty
-                                      ? 'Tanggal Lahir wajib diisi'
-                                      : null,
+                          validator: (value) => value == null || value.isEmpty
+                              ? 'Tanggal Lahir wajib diisi'
+                              : null,
                         ),
                       ),
                     ),
@@ -246,11 +240,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _passwordController,
                       icon: Icons.lock,
                       obscureText: _obscurePassword,
-                      validator:
-                          (value) =>
-                              value == null || value.isEmpty
-                                  ? 'Password wajib diisi'
-                                  : null,
+                      validator: (value) => value == null || value.isEmpty
+                          ? 'Password wajib diisi'
+                          : null,
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword
@@ -258,10 +250,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               : Icons.visibility,
                           color: Colors.grey,
                         ),
-                        onPressed:
-                            () => setState(
-                              () => _obscurePassword = !_obscurePassword,
-                            ),
+                        onPressed: () => setState(
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
                       ),
                     ),
 
@@ -271,8 +262,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     NewsletterCheckbox(
                       key: const Key('newsletter_checkbox'),
                       value: _newsletterValue,
-                      onChanged:
-                          (val) => setState(() => _newsletterValue = val),
+                      onChanged: (val) =>
+                          setState(() => _newsletterValue = val),
                     ),
 
                     const SizedBox(height: 25),
@@ -286,15 +277,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             context.read<AuthBloc>().add(
-                              RegisterUser(
-                                name: _nameController.text,
-                                birthDate: _birthDateController.text,
-                                phone: _phoneController.text,
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                                subscribeNewsletter: _newsletterValue,
-                              ),
-                            );
+                                  RegisterUser(
+                                    name: _nameController.text,
+                                    birthDate: _birthDateController.text,
+                                    phone: _phoneController.text,
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                    subscribeNewsletter: _newsletterValue,
+                                  ),
+                                );
                           }
                         },
                         padding: const EdgeInsets.symmetric(
@@ -353,8 +344,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
-              recognizer:
-                  TapGestureRecognizer()..onTap = () => context.go('/login'),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => context.go('/login'),
             ),
             const TextSpan(
               text: ' di sini',

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AddForumVerificationScreen extends StatelessWidget {
-  final String postId;
+  // final String postId; // postId tidak lagi diperlukan jika ini halaman generik
+  // const AddForumVerificationScreen({super.key, required this.postId}); // Hapus parameter postId
 
-  const AddForumVerificationScreen({super.key, required this.postId});
+  const AddForumVerificationScreen({super.key}); // Buat constructor generik
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Verifikasi Post ID: $postId'),
+        title: const Text('Verifikasi Post'), // Judul lebih generik
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.popUntil(context, (route) => route.isFirst);
+            context.go('/forum'); // Kembali ke halaman forum utama
           },
         ),
       ),
@@ -25,35 +27,35 @@ class AddForumVerificationScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Terima kasih atas sharing\nyang kamu lakukan ^_^',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 40),
-                // Pastikan 'assets/capybara.png' ada di pubspec.yaml
+                const SizedBox(height: 40),
+                // Pastikan 'assets/img/capybara.png' ada di pubspec.yaml
                 Image.asset(
-                  'assets/img/capybara.png',
+                  'assets/img/capybara.png', // Pastikan path asset ini benar
                   width: 200,
                   height: 200,
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.popUntil(context, (route) => route.isFirst);
+                      context.go('/forum'); // Kembali ke halaman forum utama
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue.shade100,
                       foregroundColor: Colors.black87,
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       elevation: 0,
                     ),
-                    child: Text('OK', style: TextStyle(fontSize: 18)),
+                    child: const Text('OK', style: TextStyle(fontSize: 18)),
                   ),
                 ),
               ],
