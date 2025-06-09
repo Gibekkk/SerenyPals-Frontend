@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../models/diary.dart';
 import '../../repositories/diary_repository.dart';
 import 'diary_event.dart';
 import 'diary_state.dart';
@@ -10,6 +9,7 @@ class VirtualDiaryBloc extends Bloc<VirtualDiaryEvent, VirtualDiaryState> {
   VirtualDiaryBloc(this._diaryRepository) : super(const VirtualDiaryInitial()) {
     on<LoadDiaryEntries>(_onLoadDiaryEntries);
     on<AddDiaryEntry>(_onAddDiaryEntry);
+    on<UpdateDiaryEntry>(_onUpdateDiaryEntry);
     on<DeleteDiaryEntry>(_onDeleteDiaryEntry);
   }
 
@@ -22,7 +22,11 @@ class VirtualDiaryBloc extends Bloc<VirtualDiaryEvent, VirtualDiaryState> {
       final entries = await _diaryRepository.getDiaryEntries();
       emit(VirtualDiaryLoaded(entries: entries));
     } catch (e) {
-      emit(VirtualDiaryError('Failed to load diary entries: $e'));
+      emit(VirtualDiaryError('Gagal memuat diary: $e'));
+      // Kembalikan ke state loaded dengan data sebelumnya jika ada
+      if (state is VirtualDiaryLoaded) {
+        emit(state as VirtualDiaryLoaded);
+      }
     }
   }
 
@@ -30,24 +34,40 @@ class VirtualDiaryBloc extends Bloc<VirtualDiaryEvent, VirtualDiaryState> {
     AddDiaryEntry event,
     Emitter<VirtualDiaryState> emit,
   ) async {
-    try {
-      // Dapatkan state saat ini untuk memperbarui daftar entries
-      final currentState = state;
-      List<DiaryEntry> currentEntries = [];
-      if (currentState is VirtualDiaryLoaded) {
-        currentEntries = List.from(currentState.entries);
-      } else {
-        // Jika belum loaded, load dulu (opsional, tergantung alur aplikasi)
-        emit(const VirtualDiaryLoading());
-        currentEntries = await _diaryRepository.getDiaryEntries();
+    if (state is VirtualDiaryLoaded) {
+      try {
+        final newEntry = await _diaryRepository.addDiaryEntry(event.entry);
+        final currentEntries = (state as VirtualDiaryLoaded).entries;
+        emit(VirtualDiaryLoaded(
+          entries: [newEntry, ...currentEntries],
+        ));
+      } catch (e) {
+        emit(VirtualDiaryError('Gagal menambahkan diary: $e'));
+        emit(state as VirtualDiaryLoaded); // Kembalikan ke state sebelumnya
       }
+    }
+  }
 
-      final newEntry = await _diaryRepository.addDiaryEntry(event.entry);
-      final updatedEntries = List<DiaryEntry>.from(currentEntries)
-        ..insert(0, newEntry);
-      emit(VirtualDiaryLoaded(entries: updatedEntries));
-    } catch (e) {
-      emit(VirtualDiaryError('Failed to add diary entry: $e'));
+  Future<void> _onUpdateDiaryEntry(
+    UpdateDiaryEntry event,
+    Emitter<VirtualDiaryState> emit,
+  ) async {
+    if (state is VirtualDiaryLoaded) {
+      try {
+        final updatedEntry =
+            await _diaryRepository.updateDiaryEntry(event.entry);
+        final currentEntries = (state as VirtualDiaryLoaded).entries;
+
+        final updatedEntries = currentEntries.map((entry) {
+          return entry.id == updatedEntry.id ? updatedEntry : entry;
+        }).toList()
+          ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+        emit(VirtualDiaryLoaded(entries: updatedEntries));
+      } catch (e) {
+        emit(VirtualDiaryError('Gagal mengupdate diary: $e'));
+        emit(state as VirtualDiaryLoaded); // Kembalikan ke state sebelumnya
+      }
     }
   }
 
@@ -55,16 +75,17 @@ class VirtualDiaryBloc extends Bloc<VirtualDiaryEvent, VirtualDiaryState> {
     DeleteDiaryEntry event,
     Emitter<VirtualDiaryState> emit,
   ) async {
-    try {
-      if (state is VirtualDiaryLoaded) {
-        final currentEntries = (state as VirtualDiaryLoaded).entries;
+    if (state is VirtualDiaryLoaded) {
+      try {
         await _diaryRepository.deleteDiaryEntry(event.id);
+        final currentEntries = (state as VirtualDiaryLoaded).entries;
         final updatedEntries =
             currentEntries.where((entry) => entry.id != event.id).toList();
         emit(VirtualDiaryLoaded(entries: updatedEntries));
+      } catch (e) {
+        emit(VirtualDiaryError('Gagal menghapus diary: $e'));
+        emit(state as VirtualDiaryLoaded); // Kembalikan ke state sebelumnya
       }
-    } catch (e) {
-      emit(VirtualDiaryError('Failed to delete diary entry: $e'));
     }
   }
 }

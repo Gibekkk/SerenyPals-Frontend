@@ -4,11 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
-import '../../blocs/diary/diary_bloc.dart'; // Import Bloc
-import '../../blocs/diary/diary_event.dart'; // Import Event
-import '../../blocs/diary/diary_state.dart'; // Import State
+import '../../blocs/diary/diary_bloc.dart';
+import '../../blocs/diary/diary_event.dart';
+import '../../blocs/diary/diary_state.dart';
 import '../../models/diary.dart';
 import '../../widget/custom_button.dart';
+import 'editdiaryscreen.dart';
 
 class MyDiaryPage extends StatefulWidget {
   const MyDiaryPage({super.key});
@@ -21,12 +22,10 @@ class _MyDiaryPageState extends State<MyDiaryPage> {
   @override
   void initState() {
     super.initState();
-    // Kirim event untuk memuat entri diary saat halaman diinisialisasi
     context.read<VirtualDiaryBloc>().add(const LoadDiaryEntries());
   }
 
   void _navigateToCreateDiary() {
-    // Gunakan context.push untuk navigasi
     context.push('/create-diary');
   }
 
@@ -41,10 +40,7 @@ class _MyDiaryPageState extends State<MyDiaryPage> {
         ),
         centerTitle: true,
         backgroundColor: color3,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/dashboard'),
-        ),
+        elevation: 0,
       ),
       body: BlocConsumer<VirtualDiaryBloc, VirtualDiaryState>(
         listener: (context, state) {
@@ -53,7 +49,6 @@ class _MyDiaryPageState extends State<MyDiaryPage> {
               SnackBar(content: Text('Error: ${state.message}')),
             );
           }
-          // Anda bisa menambahkan listener lain untuk VirtualDiaryLoaded jika ada tindakan spesifik
         },
         builder: (context, state) {
           if (state is VirtualDiaryLoading || state is VirtualDiaryInitial) {
@@ -132,8 +127,12 @@ class _MyDiaryPageState extends State<MyDiaryPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
-          // Navigasi ke detail diary atau edit
-          // context.push('/diary-detail', extra: entry);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditDiaryScreen(entry: entry),
+            ),
+          );
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -297,11 +296,8 @@ class _CreateDiaryScreenState extends State<CreateDiaryScreen> {
         timestamp: DateTime.now(),
       );
 
-      // Kirim event untuk menambahkan diary entry melalui Bloc
       context.read<VirtualDiaryBloc>().add(AddDiaryEntry(newEntry));
-
-      // Kembali ke halaman sebelumnya
-      GoRouter.of(context).pop();
+      context.pop();
     }
   }
 

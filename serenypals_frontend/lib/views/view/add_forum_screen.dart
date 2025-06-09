@@ -9,7 +9,7 @@ class AddForumScreen extends StatefulWidget {
   const AddForumScreen({super.key});
 
   @override
-  _AddForumScreenState createState() => _AddForumScreenState();
+  State<AddForumScreen> createState() => _AddForumScreenState();
 }
 
 class _AddForumScreenState extends State<AddForumScreen> {

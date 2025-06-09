@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/meditation.dart';
+import '../models/meditation.dart';
 
 class MeditationTipCard extends StatelessWidget {
   final int index;
