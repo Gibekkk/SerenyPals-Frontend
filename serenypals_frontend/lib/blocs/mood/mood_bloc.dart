@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../models/mood.dart';
 import '../../repositories/mood_repository.dart';
 import 'mood_event.dart';
 import 'mood_state.dart';
@@ -7,65 +6,35 @@ import 'mood_state.dart';
 class MoodJournalingBloc
     extends Bloc<MoodJournalingEvent, MoodJournalingState> {
   final MoodRepository _moodRepository;
-  MoodJournalingBloc(this._moodRepository)
-      : super(const MoodJournalingInitial()) {
-    on<LoadMoodEntries>(_onLoadMoodEntries);
-    on<AddMoodEntry>(_onAddMoodEntry);
-    on<DeleteMoodEntry>(_onDeleteMoodEntry);
+
+  MoodJournalingBloc(this._moodRepository) : super(const SurveyInitial()) {
+    on<CheckSurveyAvailability>(_onCheckSurveyAvailability);
+    on<SubmitSurvey>(_onSubmitSurvey);
   }
 
-  Future<void> _onLoadMoodEntries(
-    LoadMoodEntries event,
+  Future<void> _onCheckSurveyAvailability(
+    CheckSurveyAvailability event,
     Emitter<MoodJournalingState> emit,
   ) async {
+    emit(const SurveyLoading());
     try {
-      emit(const MoodJournalingLoading());
-      final entries = await _moodRepository.getMoodEntries();
-      emit(MoodJournalingLoaded(entries: entries));
+      final shouldShow = await _moodRepository.shouldShowSurvey();
+      emit(SurveyAvailability(shouldShow: shouldShow));
     } catch (e) {
-      emit(MoodJournalingError('Failed to load mood entries: $e'));
+      emit(SurveyError('Gagal memeriksa survei: $e'));
     }
   }
 
-  Future<void> _onAddMoodEntry(
-    AddMoodEntry event,
+  Future<void> _onSubmitSurvey(
+    SubmitSurvey event,
     Emitter<MoodJournalingState> emit,
   ) async {
+    emit(const SurveyLoading());
     try {
-      // Dapatkan state saat ini untuk memperbarui daftar entries
-      final currentState = state;
-      List<MoodEntry> currentEntries = [];
-      if (currentState is MoodJournalingLoaded) {
-        currentEntries = List.from(currentState.entries);
-      } else {
-        // Jika belum loaded, load dulu
-        emit(const MoodJournalingLoading());
-        currentEntries = await _moodRepository.getMoodEntries();
-      }
-
-      final newEntry = await _moodRepository.addMoodEntry(event.entry);
-      final updatedEntries = List<MoodEntry>.from(currentEntries);
-      updatedEntries.insert(0, newEntry);
-      emit(MoodJournalingLoaded(entries: updatedEntries));
+      final entry = await _moodRepository.submitSurvey(event.entry);
+      emit(SurveySubmissionSuccess(entry: entry));
     } catch (e) {
-      emit(MoodJournalingError('Failed to add mood entry: $e'));
-    }
-  }
-
-  Future<void> _onDeleteMoodEntry(
-    DeleteMoodEntry event,
-    Emitter<MoodJournalingState> emit,
-  ) async {
-    try {
-      if (state is MoodJournalingLoaded) {
-        final currentEntries = (state as MoodJournalingLoaded).entries;
-        await _moodRepository.deleteMoodEntry(event.id);
-        final updatedEntries =
-            currentEntries.where((entry) => entry.id != event.id).toList();
-        emit(MoodJournalingLoaded(entries: updatedEntries));
-      }
-    } catch (e) {
-      emit(MoodJournalingError('Failed to delete mood entry: $e'));
+      emit(SurveyError('Gagal mengirim survei: $e'));
     }
   }
 }

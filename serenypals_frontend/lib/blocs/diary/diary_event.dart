@@ -31,9 +31,9 @@ class DeleteDiaryEntry extends VirtualDiaryEvent {
 }
 
 // Anda bisa menambahkan event lain, misalnya:
-// class UpdateDiaryEntry extends VirtualDiaryEvent {
-//   final DiaryEntry entry;
-//   const UpdateDiaryEntry(this.entry);
-//   @override
-//   List<Object> get props => [entry];
-// }
+class UpdateDiaryEntry extends VirtualDiaryEvent {
+  final DiaryEntry entry;
+  const UpdateDiaryEntry(this.entry);
+  @override
+  List<Object> get props => [entry];
+}

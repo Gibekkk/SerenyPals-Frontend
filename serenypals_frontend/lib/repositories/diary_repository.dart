@@ -6,15 +6,19 @@ class DiaryRepository {
 
   DiaryRepository(this._apiService);
 
-  Future<List<DiaryEntry>> getDiaryEntries() {
-    return _apiService.fetchDiaryEntries();
+  Future<List<DiaryEntry>> getDiaryEntries() async {
+    return await _apiService.fetchDiaryEntries();
   }
 
-  Future<void> addDiaryEntry(DiaryEntry entry) {
-    return _apiService.addDiaryEntry(entry);
+  Future<DiaryEntry> addDiaryEntry(DiaryEntry entry) async {
+    return await _apiService.addDiaryEntry(entry);
   }
 
-  Future<void> deleteDiaryEntry(String id) {
-    return _apiService.deleteDiaryEntry(id);
+  Future<DiaryEntry> updateDiaryEntry(DiaryEntry entry) async {
+    return await _apiService.updateDiaryEntry(entry);
+  }
+
+  Future<void> deleteDiaryEntry(String id) async {
+    await _apiService.deleteDiaryEntry(id);
   }
 }

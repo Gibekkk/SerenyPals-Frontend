@@ -3,40 +3,44 @@ import '../../models/mood.dart';
 
 abstract class MoodJournalingState extends Equatable {
   const MoodJournalingState();
+}
+
+class SurveyInitial extends MoodJournalingState {
+  const SurveyInitial();
 
   @override
   List<Object> get props => [];
 }
 
-class MoodJournalingInitial extends MoodJournalingState {
-  const MoodJournalingInitial();
-}
-
-class MoodJournalingLoading extends MoodJournalingState {
-  const MoodJournalingLoading();
-}
-
-class MoodJournalingLoaded extends MoodJournalingState {
-  final List<MoodEntry> entries;
-
-  const MoodJournalingLoaded({this.entries = const []});
-
-  MoodJournalingLoaded copyWith({
-    List<MoodEntry>? entries,
-  }) {
-    return MoodJournalingLoaded(
-      entries: entries ?? this.entries,
-    );
-  }
+class SurveyLoading extends MoodJournalingState {
+  const SurveyLoading();
 
   @override
-  List<Object> get props => [entries];
+  List<Object> get props => [];
 }
 
-class MoodJournalingError extends MoodJournalingState {
+class SurveyAvailability extends MoodJournalingState {
+  final bool shouldShow;
+
+  const SurveyAvailability({required this.shouldShow});
+
+  @override
+  List<Object> get props => [shouldShow];
+}
+
+class SurveySubmissionSuccess extends MoodJournalingState {
+  final MoodEntry entry;
+
+  const SurveySubmissionSuccess({required this.entry});
+
+  @override
+  List<Object> get props => [entry];
+}
+
+class SurveyError extends MoodJournalingState {
   final String message;
 
-  const MoodJournalingError(this.message);
+  const SurveyError(this.message);
 
   @override
   List<Object> get props => [message];

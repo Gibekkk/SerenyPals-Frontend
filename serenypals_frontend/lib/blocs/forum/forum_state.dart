@@ -22,11 +22,10 @@ class ForumInitial extends ForumState {
 
 class ForumLoaded extends ForumState {
   const ForumLoaded({
-    required List<Post> allPosts,
-    required List<Post> myPosts,
-    required List<NotificationItem> notifications,
-  }) : super(
-            allPosts: allPosts, myPosts: myPosts, notifications: notifications);
+    required super.allPosts,
+    required super.myPosts,
+    required super.notifications,
+  });
 
   ForumLoaded copyWith({
     List<Post>? allPosts,
