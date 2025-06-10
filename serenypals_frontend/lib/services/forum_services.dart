@@ -10,7 +10,7 @@ class ForumApiService implements ForumRepository {
       title: 'Selamat datang di Forum!',
       content: 'Mari bagikan pengalaman dan pikiranmu di sini.',
       likes: 10,
-      comments: 2,
+      comments: const [],
       isLiked: false,
     ),
     Post(
@@ -18,7 +18,7 @@ class ForumApiService implements ForumRepository {
       title: 'Tips Produktivitas',
       content: 'Bagaimana cara kamu tetap produktif di tengah kesibukan?',
       likes: 5,
-      comments: 1,
+      comments: const [],
       isLiked: true,
     ),
   ];
@@ -31,7 +31,8 @@ class ForumApiService implements ForumRepository {
 
   @override
   Future<Post> addPost(Post newPost) async {
-    await Future.delayed(const Duration(seconds: 2)); // Simulasikan delay API
+    await Future.delayed(
+        const Duration(milliseconds: 500)); // Simulasikan delay API
     final postWithId = newPost.copyWith(
       id: DateTime.now().millisecondsSinceEpoch.toString(), // Generate ID unik
       timestamp: DateTime.now(), // Tambahkan timestamp

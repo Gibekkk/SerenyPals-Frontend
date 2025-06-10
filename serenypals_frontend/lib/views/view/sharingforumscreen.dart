@@ -21,79 +21,78 @@ class _SharingForumScreenState extends State<SharingForumScreen> {
   String _currentPage =
       'Sharing Forum'; // State untuk mengelola tampilan saat ini
 
-  // Hapus blok initState yang memanggil context.read<ForumBloc>().add(LoadForumData());
-  // Karena event LoadForumData sudah dipicu di ForumScreen (parent).
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // context.read<ForumBloc>().add(LoadForumData()); // BARIS INI DIHAPUS
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // Hapus BlocProvider di sini. BlocProvider sudah ada di ForumScreen (parent).
-    return Scaffold(
-      backgroundColor: color4,
-      appBar: AppBar(
-        title: Text(_currentPage),
-        backgroundColor: color3,
-      ),
-      drawer: Drawer(
+    return BlocListener<ForumBloc, ForumState>(
+      listenWhen: (previous, current) => current is AddPostSuccess,
+      listener: (context, state) {
+        if (state is AddPostSuccess) {
+          context.read<ForumBloc>().add(LoadForumData());
+        }
+      },
+      child: Scaffold(
         backgroundColor: color4,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(color: color7),
-              child: const Text(
-                'Sharing Forum',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.forum),
-              title: const Text('Forum Sharing'),
-              onTap: () {
-                setState(() => _currentPage = 'Sharing Forum');
-                Navigator.pop(context); // Tutup drawer
-                // Panggil event untuk menyegarkan data semua postingan jika dibutuhkan saat pindah tab
-                context.read<ForumBloc>().add(const RefreshForumData());
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.article),
-              title: const Text('Postingan Saya'),
-              onTap: () {
-                setState(() => _currentPage = 'Postingan Saya');
-                Navigator.pop(context); // Tutup drawer
-                // Panggil event untuk menyegarkan data postingan saya jika dibutuhkan saat pindah tab
-                context.read<ForumBloc>().add(
-                    const RefreshForumData()); // Atau event spesifik seperti LoadMyPostsData()
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.notifications),
-              title: const Text('Notifikasi'),
-              onTap: () {
-                setState(() => _currentPage = 'Notifikasi');
-                Navigator.pop(context); // Tutup drawer
-                // Panggil event untuk memuat notifikasi jika ada
-              },
-            ),
-          ],
+        appBar: AppBar(
+          title: Text(_currentPage),
+          backgroundColor: color3,
         ),
-      ),
-      body: _buildBodyContent(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigasi ke halaman tambah forum
-          context.go('/forum/add'); // Pastikan rute ini benar di GoRouter
-        },
-        backgroundColor: Colors.blue.shade200,
-        child: const Icon(Icons.add),
+        drawer: Drawer(
+          backgroundColor: color4,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(color: color7),
+                child: const Text(
+                  'Sharing Forum',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.forum),
+                title: const Text('Forum Sharing'),
+                onTap: () {
+                  setState(() => _currentPage = 'Sharing Forum');
+                  Navigator.pop(context); // Tutup drawer
+                  // Panggil event untuk menyegarkan data semua postingan jika dibutuhkan saat pindah tab
+                  context.read<ForumBloc>().add(RefreshForumData());
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.article),
+                title: const Text('Postingan Saya'),
+                onTap: () {
+                  setState(() => _currentPage = 'Postingan Saya');
+                  Navigator.pop(context); // Tutup drawer
+                  // Panggil event untuk menyegarkan data postingan saya jika dibutuhkan saat pindah tab
+                  context.read<ForumBloc>().add(
+                      RefreshForumData()); // Atau event spesifik seperti LoadMyPostsData()
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.notifications),
+                title: const Text('Notifikasi'),
+                onTap: () {
+                  setState(() => _currentPage = 'Notifikasi');
+                  Navigator.pop(context); // Tutup drawer
+                  // Panggil event untuk memuat notifikasi jika ada
+                },
+              ),
+            ],
+          ),
+        ),
+        body: _buildBodyContent(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Navigasi ke halaman tambah forum
+            context.go('/forum/add'); // Pastikan rute ini benar di GoRouter
+          },
+          backgroundColor: Colors.blue.shade200,
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

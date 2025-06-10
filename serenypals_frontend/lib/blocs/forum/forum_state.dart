@@ -52,12 +52,21 @@ class ForumError extends ForumState {
 
 // State baru untuk penanganan sukses dan gagal posting
 class AddPostSuccess extends ForumLoaded {
+  final Post addedPost;
+
   const AddPostSuccess({
-    required super.allPosts,
-    required super.myPosts,
-    required super.notifications,
-    required Post addedPost,
-  });
+    required this.addedPost,
+    required List<Post> allPosts,
+    required List<Post> myPosts,
+    required List<NotificationItem> notifications,
+  }) : super(
+          allPosts: allPosts,
+          myPosts: myPosts,
+          notifications: notifications,
+        );
+
+  @override
+  List<Object> get props => [addedPost, allPosts, myPosts, notifications];
 }
 
 class AddPostFailure extends ForumLoaded {
@@ -65,11 +74,10 @@ class AddPostFailure extends ForumLoaded {
   final String message;
   const AddPostFailure({
     required this.message,
-    required List<Post> allPosts,
-    required List<Post> myPosts,
-    required List<NotificationItem> notifications,
-  }) : super(
-            allPosts: allPosts, myPosts: myPosts, notifications: notifications);
+    required super.allPosts,
+    required super.myPosts,
+    required super.notifications,
+  });
 
   @override
   List<Object> get props => [message, allPosts, myPosts, notifications];

@@ -1,9 +1,11 @@
+import 'package:serenypals_frontend/models/comment.dart';
+
 class Post {
-  String? id; // Tambahkan ID untuk mengidentifikasi postingan di backend
+  String? id;
   String title;
   String content;
   int likes;
-  int comments;
+  List<Comment> comments;
   bool isLiked;
 
   Post({
@@ -11,31 +13,31 @@ class Post {
     required this.title,
     required this.content,
     this.likes = 0,
-    this.comments = 0,
+    this.comments = const [],
     this.isLiked = false,
   });
 
-  // Method untuk mengubah Post menjadi Map (JSON)
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'title': title,
       'content': content,
       'likes': likes,
-      'comments': comments,
+      'comments': comments.map((c) => c.toJson()).toList(),
       'isLiked': isLiked,
     };
   }
 
-  // Factory method untuk membuat Post dari Map (JSON)
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      content: json['content'] as String,
-      likes: json['likes'] as int,
-      comments: json['comments'] as int,
-      isLiked: json['isLiked'] as bool,
+      id: json['id'],
+      title: json['title'],
+      content: json['content'],
+      likes: json['likes'],
+      comments: (json['comments'] as List<dynamic>)
+          .map((c) => Comment.fromJson(c))
+          .toList(),
+      isLiked: json['isLiked'] ?? false,
     );
   }
 
@@ -44,7 +46,7 @@ class Post {
     String? title,
     String? content,
     int? likes,
-    int? comments,
+    List<Comment>? comments,
     bool? isLiked,
     required DateTime timestamp,
   }) {
@@ -55,6 +57,18 @@ class Post {
       likes: likes ?? this.likes,
       comments: comments ?? this.comments,
       isLiked: isLiked ?? this.isLiked,
+    );
+  }
+
+  Post addComment(Comment newComment) {
+    final updatedComments = List<Comment>.from(comments)..add(newComment);
+    return Post(
+      id: id,
+      title: title,
+      content: content,
+      likes: likes,
+      isLiked: isLiked,
+      comments: updatedComments,
     );
   }
 }

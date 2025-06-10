@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:serenypals_frontend/models/comment.dart';
 import '../../blocs/forum/forum_bloc.dart';
 import '../../blocs/forum/forum_event.dart';
 import '../../blocs/forum/forum_state.dart';
@@ -87,15 +89,18 @@ class _PostCardState extends State<PostCard> {
                           _showCommentInput = !_showCommentInput;
                         });
                       },
-                      child: Icon(
-                        Icons.comment_outlined,
-                        size: 20,
+                      child: IconButton(
+                        icon: Icon(Icons.comment_outlined),
                         color: Colors.grey,
+                        onPressed: () {
+                          context.push('/comments',
+                              extra: currentPost); // Gunakan GoRouter
+                        },
                       ),
                     ),
                     SizedBox(width: 4.0),
                     Text(
-                      '${currentPost.comments >= 1000 ? (currentPost.comments / 1000).toStringAsFixed(0) + 'k' : currentPost.comments}',
+                      '${currentPost.comments.length >= 1000 ? (currentPost.comments.length / 1000).toStringAsFixed(0) + 'k' : currentPost.comments.length}',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -127,7 +132,8 @@ class _PostCardState extends State<PostCard> {
                           onPressed: () {
                             if (_commentController.text.isNotEmpty) {
                               context.read<ForumBloc>().add(AddCommentEvent(
-                                  currentPost, _commentController.text));
+                                  currentPost,
+                                  _commentController.text as Comment));
 
                               _commentController.clear();
                               setState(() {

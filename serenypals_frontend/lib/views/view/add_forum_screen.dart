@@ -46,7 +46,7 @@ class _AddForumScreenState extends State<AddForumScreen> {
       title: _titleController.text,
       content: _contentController.text,
       likes: 0,
-      comments: 0,
+      comments: const [],
       isLiked: false,
     );
 
@@ -57,13 +57,15 @@ class _AddForumScreenState extends State<AddForumScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ForumBloc, ForumState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is AddPostSuccess) {
           setState(() {
-            _isSubmitting = false; // Hentikan loading
+            _isSubmitting = false;
           });
-          // Navigasi kembali ke halaman forum utama setelah berhasil posting
-          // Gunakan context.go('/forum') untuk pergi ke rute /forum (yang menampilkan ForumScreen)
+
+          // Tunggu sebentar agar UI sempat memperbarui state
+          await Future.delayed(const Duration(milliseconds: 300));
+
           context.go('/forum/verify');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(

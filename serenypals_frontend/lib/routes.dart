@@ -1,13 +1,16 @@
 // routes.dart
 import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/views/view/add_forum_screen.dart'; // Import ini jika belum
+import 'package:serenypals_frontend/views/view/forum_screen.dart';
 import 'package:serenypals_frontend/views/view/forum_verification.dart'; // Import ini jika belum
 import 'package:serenypals_frontend/views/view/konselingpage.dart';
 import 'package:serenypals_frontend/views/view/onboarding.dart';
 import 'package:serenypals_frontend/views/view/profile_page.dart';
-import 'package:serenypals_frontend/views/view/sharingforumscreen.dart';
 import 'package:serenypals_frontend/views/view/splashscreen.dart';
+import 'package:serenypals_frontend/views/view/virtualpet.dart';
+import 'models/post.dart';
 import 'views/view/chatpsikologpage.dart';
+import 'views/view/commentscreen.dart';
 import 'views/view/dashboardpage.dart';
 import 'views/view/halamanai.dart';
 import 'views/view/loginscreen.dart';
@@ -63,6 +66,13 @@ GoRouter router(String initialLocation) {
         },
       ),
       GoRoute(
+        path: '/comments',
+        builder: (context, state) {
+          final post = state.extra as Post;
+          return CommentScreen(post: post);
+        },
+      ),
+      GoRoute(
         path: '/OTP',
         name: 'OTP',
         builder: (context, state) => const OtpForm(email: 'email@gmail.com'),
@@ -73,14 +83,19 @@ GoRouter router(String initialLocation) {
         builder: (context, state) => const MoodJournaling(),
       ),
       GoRoute(
-        path: '/topup',
+        path: '/anabul/topup',
         name: 'topup',
+        builder: (context, state) => const DiamondTopUpPage(),
+      ),
+      GoRoute(
+        path: '/premium',
+        name: 'premium',
         builder: (context, state) => const DiamondTopUpPage(),
       ),
       GoRoute(
         path: '/anabul',
         name: 'anabul',
-        builder: (context, state) => const DiamondTopUpPage(),
+        builder: (context, state) => const VirtualPetPage(),
       ),
       GoRoute(
         path: '/create-diary',
@@ -136,7 +151,7 @@ GoRouter router(String initialLocation) {
           ),
           GoRoute(
             path: '/forum',
-            builder: (context, state) => SharingForumScreen(),
+            builder: (context, state) => ForumScreen(),
           ),
           GoRoute(
             path: '/ai',
