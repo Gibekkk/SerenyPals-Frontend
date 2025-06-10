@@ -30,7 +30,7 @@ dependencies:
   # Dependensi dari pubspec Anda (provider dan audioplayers)
   # Menggunakan versi provider yang lebih tinggi jika ada perbedaan
   provider: ^6.0.5 # Menggunakan versi ^6.0.5 dari pubspec tim Anda
-  audioplayers: ^6.0.0 # Menggunakan versi ^6.0.0 (sama di kedua pubspec)
+  just_audio: ^0.10.4
 
 dev_dependencies:
   flutter_test:
@@ -94,3 +94,4 @@ flutter:
     # Aset khusus Anda (gambar capybara_pet dan audio)
     - assets/img/capybara_pet.png # Gambar utama capybara Anda
     - assets/audio/background_music.mp3 
+    - assets/audio/background_music2.mp3 
