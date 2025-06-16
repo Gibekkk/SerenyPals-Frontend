@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+// Diperlukan untuk DiaryApiService jika ada penggunaan langsung di masa depan, tapi tidak di konstruktor ini.
 import '../../repositories/diary_repository.dart';
 import 'diary_event.dart';
 import 'diary_state.dart';
@@ -6,6 +7,7 @@ import 'diary_state.dart';
 class VirtualDiaryBloc extends Bloc<VirtualDiaryEvent, VirtualDiaryState> {
   final DiaryRepository _diaryRepository;
 
+  // Konstruktor telah diperbaiki. Hanya menerima DiaryRepository.
   VirtualDiaryBloc(this._diaryRepository) : super(const VirtualDiaryInitial()) {
     on<LoadDiaryEntries>(_onLoadDiaryEntries);
     on<AddDiaryEntry>(_onAddDiaryEntry);

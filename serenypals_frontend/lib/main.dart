@@ -3,8 +3,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serenypals_frontend/blocs/diary/diary_bloc.dart';
+import 'package:serenypals_frontend/blocs/diary/diary_event.dart';
 import 'package:serenypals_frontend/blocs/forum/forum_event.dart';
-import 'package:serenypals_frontend/repositories/diary_repository.dart';
+import 'package:serenypals_frontend/blocs/profile/profile_bloc.dart';
 
 import 'package:serenypals_frontend/routes.dart';
 import 'package:serenypals_frontend/blocs/auth/auth_bloc.dart';
@@ -13,33 +14,30 @@ import 'package:serenypals_frontend/services/diary_services.dart';
 import 'package:serenypals_frontend/services/forum_services.dart';
 import 'blocs/forum/forum_bloc.dart';
 import 'blocs/virtual_pet/pet_bloc.dart';
+import 'repositories/diary_repository.dart';
 
 void main({String initialRoute = '/'}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Inisialisasi lokal tanggal/waktu untuk bahasa Indonesia
   await initializeDateFormatting('id_ID', null);
 
-  // Inisialisasi repository
   final authRepository = AuthRepository();
-  final diaryRepository = DiaryApiService();
+  final diaryRepository = DiaryRepository(DiaryApiService());
 
   runApp(
     MultiBlocProvider(
       providers: [
-        // Bloc Auth dengan passing authRepository
-        BlocProvider(
-          create: (_) => AuthBloc(authRepository),
-        ),
-        // Bloc Forum dengan passing forumRepository (instance, bukan class)
+        BlocProvider(create: (_) => AuthBloc(authRepository)),
         BlocProvider(
           create: (_) => ForumBloc(forumRepository: ForumApiService())
             ..add(LoadForumData()),
         ),
-        BlocProvider(create: (context) => PetBloc()),
+        BlocProvider(create: (_) => PetBloc()),
         BlocProvider(
-          create: (_) => VirtualDiaryBloc(diaryRepository as DiaryRepository),
+          create: (_) =>
+              VirtualDiaryBloc(diaryRepository)..add(LoadDiaryEntries()),
         ),
+        BlocProvider(create: (_) => ProfileBloc()),
       ],
       child: MyApp(initialRoute: initialRoute),
     ),

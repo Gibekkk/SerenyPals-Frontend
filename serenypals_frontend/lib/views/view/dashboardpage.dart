@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/widget/meditasiwidget.dart';
 import '../../utils/color.dart';
 import '../../widget/petdanmoodbutton.dart';
@@ -54,10 +55,7 @@ class HeaderSection extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PremiumPage()),
-                  );
+                  context.push('/premium'); // Navigasi ke halaman premium
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(

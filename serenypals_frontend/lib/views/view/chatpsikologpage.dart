@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/utils/color.dart';
 
 import '../../widget/chatbubble.dart';
@@ -69,7 +70,12 @@ class _ChatPsikologState extends State<ChatPsikolog> {
       backgroundColor: color4,
       appBar: AppBar(
         backgroundColor: color2,
-        leading: const BackButton(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            context.go('/psikiater'); // pastikan ini adalah nama route-nya
+          },
+        ),
         title: Row(
           children: [
             CircleAvatar(
@@ -96,7 +102,6 @@ class _ChatPsikologState extends State<ChatPsikolog> {
           SizedBox(width: 16),
         ],
       ),
-
       body: Column(
         children: [
           Expanded(

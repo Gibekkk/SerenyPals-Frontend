@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serenypals_frontend/utils/color.dart';
 
 class PackageSelectionScreen extends StatefulWidget {
   const PackageSelectionScreen({super.key});
@@ -8,51 +9,32 @@ class PackageSelectionScreen extends StatefulWidget {
 }
 
 class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
-  // Define the colors as static constants at the class level
-
-  // UPDATED DEFAULT COLOR FOR UNSELECTED PACKAGE (was _selectedPackageColor / color7)
-  static const Color _unselectedPackageColor =
-      Color(0xFFBFACE2); // color7, now for unselected state
-
-  static const Color _buyButtonColor = Color(0xFFAAB8E4);
-  static const Color _backgroundColor =
-      Color(0xFFFFF1D5); // Your specified background color
-
-  static const Color _featureTextColor = Color(0xFF5A3E2B);
-  static const Color _featureIconColor = Color(0xFF5A3E2B);
-
-  // NEW COLOR FOR SELECTED PACKAGE (color6)
-  static const Color _selectedPackageColor =
-      Color(0xFFA084DC); // color6, now for selected state
-
-  // State variable to hold the index of the currently selected package
-  // -1 means no package is selected initially
   int _selectedPackageIndex = -1; // 0 for 1 bulan, 1 for 3 bulan, 2 for 1 tahun
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _backgroundColor,
+      backgroundColor: color4,
       appBar: AppBar(
-        backgroundColor: _backgroundColor,
+        backgroundColor: color4,
         elevation: 0,
         scrolledUnderElevation: 0.0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: _featureTextColor),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             print('Back button pressed');
           },
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Top Image (Bear with Boba)
             Image.asset(
-              'assets/images/bear_boba.png',
-              height: 300,
+              'assets/img/bear_boba.png',
+              height: 250,
               fit: BoxFit.contain,
             ),
             const SizedBox(height: 10),
@@ -63,7 +45,7 @@ class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: _featureTextColor,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 30),
@@ -126,7 +108,7 @@ class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _buyButtonColor,
+                  backgroundColor: color6,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -137,7 +119,7 @@ class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black87,
                   ),
                 ),
               ),
@@ -156,7 +138,7 @@ class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
       children: [
         Icon(
           icon,
-          color: _featureIconColor,
+          color: Colors.black,
           size: 24,
         ),
         const SizedBox(width: 10),
@@ -164,7 +146,7 @@ class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
           text,
           style: const TextStyle(
             fontSize: 18,
-            color: _featureTextColor,
+            color: Colors.black,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -180,8 +162,7 @@ class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
     // --- KEY CHANGE HERE ---
     // Use _selectedPackageColor (new color6) if selected,
     // otherwise use _unselectedPackageColor (new color7).
-    final Color cardBackgroundColor =
-        isSelected ? _selectedPackageColor : _unselectedPackageColor;
+    final Color cardBackgroundColor = isSelected ? color5 : color6;
 
     return GestureDetector(
       onTap: () {
@@ -212,7 +193,7 @@ class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
             Text(
               duration,
               style: const TextStyle(
-                color: Colors.white, // Text color is white for both states
+                color: Colors.black, // Text color is white for both states
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -220,7 +201,7 @@ class _PackageSelectionScreenState extends State<PackageSelectionScreen> {
             Text(
               price,
               style: const TextStyle(
-                color: Colors.white, // Text color is white for both states
+                color: Colors.black, // Text color is white for both states
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
