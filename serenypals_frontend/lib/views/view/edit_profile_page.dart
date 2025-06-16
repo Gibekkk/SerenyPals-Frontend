@@ -1,61 +1,206 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:serenypals_frontend/models/user.dart';
+import '../../blocs/profile/profile_bloc.dart';
+import '../../blocs/profile/profile_event.dart';
+import '../../blocs/profile/profile_state.dart';
+import '../../utils/color.dart';
+import '../../widget/customtextfield.dart';
 
 class EditProfilePage extends StatefulWidget {
-  final String name;
-  final String email;
-
-  const EditProfilePage({
-    super.key,
-    required this.name,
-    required this.email,
-  });
+  const EditProfilePage({super.key});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  late TextEditingController _nameController;
-  late TextEditingController _emailController;
+  final _formKey = GlobalKey<FormState>();
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final birthDateController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController(text: widget.name);
-    _emailController = TextEditingController(text: widget.email);
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    birthDateController.dispose();
+    super.dispose();
+  }
+
+  void _populateControllers(UserModel profile) {
+    nameController.text = profile.name;
+    emailController.text = profile.email;
+    phoneController.text = profile.phone;
+    birthDateController.text = profile.birthDate;
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: color2,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(foregroundColor: color1),
+            ),
+            datePickerTheme: DatePickerThemeData(
+              backgroundColor: color4,
+              headerBackgroundColor: color1,
+              headerForegroundColor: Colors.black,
+              dayForegroundColor: WidgetStateColor.resolveWith(
+                (states) => states.contains(WidgetState.selected)
+                    ? color2
+                    : Colors.black,
+              ),
+              dayBackgroundColor: WidgetStateColor.resolveWith(
+                (states) => states.contains(WidgetState.selected)
+                    ? color2
+                    : Colors.transparent,
+              ),
+            ),
+            textTheme: const TextTheme(
+              titleLarge: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+              bodyLarge: TextStyle(fontSize: 16, color: Colors.black),
+              bodyMedium: TextStyle(fontSize: 14, color: Colors.black),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        birthDateController.text = DateFormat('dd-MM-yyyy').format(picked);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: const Text("My Profile"),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
+          TextButton(
             onPressed: () {
-  Navigator.pop(context, {
-    'name': _nameController.text,
-    'email': _emailController.text,
-  });
-}
+              if (_formKey.currentState!.validate()) {
+                final updated = UserModel(
+                  name: nameController.text,
+                  email: emailController.text,
+                  phone: phoneController.text,
+                  birthDate: birthDateController.text,
+                );
+                context.read<ProfileBloc>().add(UpdateProfile(updated));
+              }
+            },
+            child: const Text("Save", style: TextStyle(color: Colors.blue)),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Nama'),
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-          ],
-        ),
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          if (state is ProfileInitial) {
+            context.read<ProfileBloc>().add(LoadProfile());
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ProfileLoaded) {
+            _populateControllers(state.profile);
+
+            return Form(
+              key: _formKey,
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Column(
+                      children: [
+                        const CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage('assets/avatar.png'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            // TODO: Add upload photo logic here
+                          },
+                          child: const Text("Upload Photo",
+                              style: TextStyle(color: Colors.blue)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  CustomInputField(
+                    label: "Name",
+                    hint: "Enter your name",
+                    controller: nameController,
+                    icon: Icons.person,
+                    obscureText: false,
+                    validator: (val) =>
+                        val == null || val.isEmpty ? "Name is required" : null,
+                  ),
+                  CustomInputField(
+                    label: "Email",
+                    hint: "Enter your email",
+                    controller: emailController,
+                    icon: Icons.email,
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: false,
+                    validator: (val) => val == null || !val.contains('@')
+                        ? "Enter valid email"
+                        : null,
+                  ),
+                  CustomInputField(
+                    label: "Phone",
+                    hint: "Enter phone number",
+                    controller: phoneController,
+                    icon: Icons.phone,
+                    keyboardType: TextInputType.phone,
+                    obscureText: false,
+                    validator: (val) => val == null || val.length < 10
+                        ? "Enter valid phone"
+                        : null,
+                  ),
+                  InkWell(
+                    onTap: () => _selectDate(context),
+                    child: AbsorbPointer(
+                      child: CustomInputField(
+                        label: "Birth Date",
+                        hint: "dd-mm-yyyy",
+                        controller: birthDateController,
+                        icon: Icons.cake,
+                        obscureText: false,
+                        validator: (val) => val == null || val.isEmpty
+                            ? "Birthdate required"
+                            : null,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
+            );
+          } else {
+            return const Center(child: Text("Something went wrong"));
+          }
+        },
       ),
     );
   }

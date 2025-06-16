@@ -63,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditProfilePage(name: name, email: email),
+        builder: (context) => EditProfilePage(),
       ),
     );
 
@@ -91,7 +91,6 @@ class _ProfilePageState extends State<ProfilePage> {
             fontWeight: FontWeight.w700,
           ),
         ),
-
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
@@ -106,18 +105,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       CircleAvatar(
                         radius: 60,
-                        backgroundImage:
-                            _profileImage != null
-                                ? FileImage(_profileImage!)
-                                : null,
-                        child:
-                            _profileImage == null
-                                ? const Icon(
-                                  Icons.person,
-                                  size: 60,
-                                  color: Colors.white,
-                                )
-                                : null,
+                        backgroundImage: _profileImage != null
+                            ? FileImage(_profileImage!)
+                            : null,
+                        child: _profileImage == null
+                            ? const Icon(
+                                Icons.person,
+                                size: 60,
+                                color: Colors.white,
+                              )
+                            : null,
                       ),
                       Positioned(
                         bottom: 0,
@@ -236,13 +233,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     _buildMenuButton(
                       icon: Icons.logout,
                       text: 'Log Out',
-                      onTap:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LogoutPage(),
-                            ),
-                          ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LogoutPage(),
+                        ),
+                      ),
                     ),
                   ],
                 ),

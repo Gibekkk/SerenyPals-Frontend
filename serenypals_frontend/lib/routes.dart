@@ -1,14 +1,19 @@
 // routes.dart
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:serenypals_frontend/views/view/add_forum_screen.dart'; // Import ini jika belum
 import 'package:serenypals_frontend/views/view/forum_screen.dart';
 import 'package:serenypals_frontend/views/view/forum_verification.dart'; // Import ini jika belum
 import 'package:serenypals_frontend/views/view/konselingpage.dart';
+import 'package:serenypals_frontend/views/view/meditasiscreen.dart';
 import 'package:serenypals_frontend/views/view/onboarding.dart';
 import 'package:serenypals_frontend/views/view/paketscreen.dart';
 import 'package:serenypals_frontend/views/view/profile_page.dart';
 import 'package:serenypals_frontend/views/view/splashscreen.dart';
 import 'package:serenypals_frontend/views/view/virtualpet.dart';
+import 'blocs/diary/diary_bloc.dart';
+import 'blocs/diary/diary_state.dart';
+import 'models/diary.dart';
 import 'models/post.dart';
 import 'views/view/chatpsikologpage.dart';
 import 'views/view/commentscreen.dart';
@@ -107,8 +112,26 @@ GoRouter router(String initialLocation) {
         path: '/edit-diary/:id',
         name: 'editDiary',
         builder: (context, state) {
-          // Example: final entry = fetchDiaryEntryById(entryId);
-          final entry = null; // Replace this with actual entry fetching logic
+          final id = state.pathParameters['id'];
+          DiaryEntry? entry = state.extra as DiaryEntry?;
+
+          // Fallback dari bloc jika extra tidak dikirim
+          if (entry == null) {
+            final blocState = context.read<VirtualDiaryBloc>().state;
+            if (blocState is VirtualDiaryLoaded) {
+              entry = blocState.entries.firstWhere(
+                (e) => e.id == id,
+                orElse: () => throw Exception('DiaryEntry not found'),
+              );
+            }
+          }
+
+          if (entry == null) {
+            return const Scaffold(
+              body: Center(child: Text('Diary tidak ditemukan')),
+            );
+          }
+
           return EditDiaryScreen(entry: entry);
         },
       ),
@@ -131,6 +154,11 @@ GoRouter router(String initialLocation) {
           //     state.pathParameters['postId']!; // Ambil postId
           return AddForumVerificationScreen(); // Teruskan postId
         },
+      ),
+      GoRoute(
+        path: '/meditation-tips',
+        name: 'meditationTips',
+        builder: (context, state) => MeditationTipsScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) {
@@ -162,6 +190,7 @@ GoRouter router(String initialLocation) {
           ),
           GoRoute(
             path: '/forum',
+            name: 'forum',
             builder: (context, state) => ForumScreen(),
           ),
           GoRoute(

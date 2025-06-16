@@ -9,7 +9,6 @@ import '../../blocs/diary/diary_event.dart';
 import '../../blocs/diary/diary_state.dart';
 import '../../models/diary.dart';
 import '../../widget/custom_button.dart';
-import 'editdiaryscreen.dart';
 
 class MyDiaryPage extends StatefulWidget {
   const MyDiaryPage({super.key});
@@ -127,11 +126,10 @@ class _MyDiaryPageState extends State<MyDiaryPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EditDiaryScreen(entry: entry),
-            ),
+          context.pushNamed(
+            'editDiary',
+            pathParameters: {'id': entry.id},
+            extra: entry, // ✅ HARUS ADA!
           );
         },
         child: Padding(
