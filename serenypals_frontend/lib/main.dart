@@ -13,8 +13,12 @@ import 'package:serenypals_frontend/repositories/auth_repository.dart';
 import 'package:serenypals_frontend/services/diary_services.dart';
 import 'package:serenypals_frontend/services/forum_services.dart';
 import 'blocs/forum/forum_bloc.dart';
+import 'blocs/meditation/mediation_event.dart';
+import 'blocs/meditation/meditation_bloc.dart';
 import 'blocs/virtual_pet/pet_bloc.dart';
 import 'repositories/diary_repository.dart';
+import 'repositories/meditation_repository.dart';
+import 'services/meditation_service.dart';
 
 void main({String initialRoute = '/'}) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +40,11 @@ void main({String initialRoute = '/'}) async {
         BlocProvider(
           create: (_) =>
               VirtualDiaryBloc(diaryRepository)..add(LoadDiaryEntries()),
+        ),
+        BlocProvider(
+          create: (context) => MeditationTipsBloc(
+            meditationRepository: MeditationRepository(MeditationApiService()),
+          )..add(LoadMeditationTips()),
         ),
         BlocProvider(create: (_) => ProfileBloc()),
       ],

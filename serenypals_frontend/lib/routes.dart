@@ -144,6 +144,11 @@ GoRouter router(String initialLocation) {
         },
       ),
       GoRoute(
+        path: '/meditation-tips',
+        name: 'meditationTips',
+        builder: (context, state) => const MeditationTipsScreen(),
+      ),
+      GoRoute(
         path: '/forum/add',
         builder: (context, state) => AddForumScreen(),
       ),
@@ -154,11 +159,6 @@ GoRouter router(String initialLocation) {
           //     state.pathParameters['postId']!; // Ambil postId
           return AddForumVerificationScreen(); // Teruskan postId
         },
-      ),
-      GoRoute(
-        path: '/meditation-tips',
-        name: 'meditationTips',
-        builder: (context, state) => MeditationTipsScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) {
