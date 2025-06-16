@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart'; // Import GoRouter
 
 import '../utils/color.dart';
 
@@ -21,10 +22,15 @@ class MeditationTipsSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
+          // Menggunakan _TipCard dengan kemampuan navigasi
           _TipCard(
             title: 'Fokus pada Napas',
             imageAsset: 'assets/img/gambarlogin1.png',
+            onTap: () {
+              context.push('/meditation-tips'); // Menambahkan navigasi di sini
+            },
           ),
+          // Anda bisa menambahkan _TipCard lainnya di sini jika ada
         ],
       ),
     );
@@ -34,41 +40,50 @@ class MeditationTipsSection extends StatelessWidget {
 class _TipCard extends StatelessWidget {
   final String title;
   final String imageAsset;
+  final VoidCallback? onTap; // Menambahkan callback onTap
 
-  const _TipCard({required this.title, required this.imageAsset});
+  const _TipCard({
+    required this.title,
+    required this.imageAsset,
+    this.onTap, // onTap sekarang opsional
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color8,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              imageAsset,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontFamily: 'Overlock',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+    return InkWell(
+      onTap: onTap, // Menggunakan onTap yang disediakan
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: color8,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                imageAsset,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          const Icon(Icons.arrow_forward_ios, size: 16),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontFamily: 'Overlock',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, size: 16),
+          ],
+        ),
       ),
     );
   }

@@ -124,6 +124,23 @@ class _OtpFormState extends State<OtpForm> {
                 ),
               ],
             ),
+            const SizedBox(height: 24),
+            TextButton(
+              onPressed: () {
+                // TODO: Tambahkan logika kirim ulang OTP
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Kode OTP telah dikirim ulang')),
+                );
+              },
+              child: const Text(
+                'Belum menerima kode? Kirim ulang',
+                style: TextStyle(
+                  fontSize: 14,
+                  decoration: TextDecoration.underline,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
           ],
         ),
       ),
