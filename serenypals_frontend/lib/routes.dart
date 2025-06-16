@@ -5,6 +5,7 @@ import 'package:serenypals_frontend/views/view/forum_screen.dart';
 import 'package:serenypals_frontend/views/view/forum_verification.dart'; // Import ini jika belum
 import 'package:serenypals_frontend/views/view/konselingpage.dart';
 import 'package:serenypals_frontend/views/view/onboarding.dart';
+import 'package:serenypals_frontend/views/view/paketscreen.dart';
 import 'package:serenypals_frontend/views/view/profile_page.dart';
 import 'package:serenypals_frontend/views/view/splashscreen.dart';
 import 'package:serenypals_frontend/views/view/virtualpet.dart';
@@ -12,6 +13,7 @@ import 'models/post.dart';
 import 'views/view/chatpsikologpage.dart';
 import 'views/view/commentscreen.dart';
 import 'views/view/dashboardpage.dart';
+import 'views/view/editdiaryscreen.dart';
 import 'views/view/halamanai.dart';
 import 'views/view/loginscreen.dart';
 import 'views/view/moodjournaling.dart';
@@ -90,7 +92,7 @@ GoRouter router(String initialLocation) {
       GoRoute(
         path: '/premium',
         name: 'premium',
-        builder: (context, state) => const DiamondTopUpPage(),
+        builder: (context, state) => const PackageSelectionScreen(),
       ),
       GoRoute(
         path: '/anabul',
@@ -100,6 +102,15 @@ GoRouter router(String initialLocation) {
       GoRoute(
         path: '/create-diary',
         builder: (context, state) => CreateDiaryScreen(),
+      ),
+      GoRoute(
+        path: '/edit-diary/:id',
+        name: 'editDiary',
+        builder: (context, state) {
+          // Example: final entry = fetchDiaryEntryById(entryId);
+          final entry = null; // Replace this with actual entry fetching logic
+          return EditDiaryScreen(entry: entry);
+        },
       ),
       GoRoute(
         path: '/psikiater/chat/:name',
