@@ -1,36 +1,54 @@
-class LoginRequest {
+// File: lib/models/register_request_model.dart
+
+class RegisterRequestModel {
+  final String id;
+  final String name;
+  final String birthDate;
+  final String phone;
   final String email;
   final String password;
+  // Anda juga bisa menambahkan fcmToken di sini jika dikirim saat register
 
-  LoginRequest({required this.email, required this.password});
+  RegisterRequestModel({
+    required this.id,
+    required this.name,
+    required this.birthDate,
+    required this.phone,
+    required this.email,
+    required this.password,
+  });
 
+  // Metode untuk mengonversi objek ini ke Map untuk dikirim sebagai JSON
   Map<String, dynamic> toJson() {
-    return {'email': email, 'password': password};
+    return {
+      'id': id,
+      'name': name,
+      'birthDate': birthDate,
+      'phone': phone,
+      'email': email,
+      'password': password,
+    };
   }
 }
 
-class RegisterRequest {
-  final String name;
+// File: lib/models/login_request_model.dart
+
+class LoginRequestModel {
   final String email;
   final String password;
-  final String birthDate;
-  final String phone;
+  final String? fcmToken; // Optional, tergantung API Anda
 
-  RegisterRequest({
-    required this.name,
+  LoginRequestModel({
     required this.email,
     required this.password,
-    required this.birthDate,
-    required this.phone,
+    required this.fcmToken,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
       'email': email,
       'password': password,
-      'birth_date': birthDate,
-      'phone': phone,
+      if (fcmToken != null) 'fcmToken': fcmToken, // Hanya tambahkan jika ada
     };
   }
 }

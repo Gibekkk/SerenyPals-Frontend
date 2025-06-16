@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serenypals_frontend/models/login_request.dart';
 
 import '../../repositories/auth_repository.dart';
 import 'auth_event.dart';
@@ -19,13 +20,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onRegister(RegisterUser event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      await authRepo.register(
+      final registerData = RegisterRequestModel(
+        id: event.id,
         name: event.name,
         birthDate: event.birthDate,
         phone: event.phone,
         email: event.email,
         password: event.password,
       );
+      await authRepo.register(registerData.toJson()); // <-- Inilah cara menggunakannya!
       emit(AuthRegisterSuccess());
     } catch (e) {
       emit(AuthFailure(e.toString()));
@@ -45,7 +48,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogin(LoginUser event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      await authRepo.login(email: event.email, password: event.password);
+      final loginData = LoginRequestModel(email: event.email, password: event.password, fcmToken: event.fcmToken);
+      await authRepo.login(loginData.toJson());
       // final token = AuthToken.fromJson(response);
       emit(LoginSuccess());
     } catch (e) {

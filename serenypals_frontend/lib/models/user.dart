@@ -1,22 +1,45 @@
-class UserModel {
-  final String name;
-  final String birthDate;
-  final String phone;
-  final String email;
+// File: lib/models/user.dart
 
-  UserModel({
+class User {
+  final String id;
+  final String name;
+  final String email;
+  final String token;
+  final String? fcmToken; // fcmToken mungkin null atau tidak selalu ada
+  final DateTime? createdAt; // createdAt juga mungkin null atau opsional
+
+  User({
+    required this.id,
     required this.name,
-    required this.birthDate,
-    required this.phone,
     required this.email,
+    required this.token,
+    this.fcmToken,
+    this.createdAt,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      name: json['name'],
-      birthDate: json['birth_date'],
-      phone: json['phone'],
-      email: json['email'],
+  // Factory constructor untuk membuat objek User dari JSON
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      token: json['token'] as String,
+      fcmToken: json['fcmToken'] as String?, // Cast sebagai String?
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : null,
     );
+  }
+
+  // Metode untuk mengonversi objek User menjadi JSON (untuk dikirim ke API jika diperlukan)
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'token': token,
+      'fcmToken': fcmToken,
+      'createdAt': createdAt?.toIso8601String(),
+    };
   }
 }
