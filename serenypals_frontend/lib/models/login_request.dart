@@ -1,7 +1,6 @@
 // File: lib/models/register_request_model.dart
 
 class RegisterRequestModel {
-  final String id;
   final String name;
   final String birthDate;
   final String phone;
@@ -10,7 +9,6 @@ class RegisterRequestModel {
   // Anda juga bisa menambahkan fcmToken di sini jika dikirim saat register
 
   RegisterRequestModel({
-    required this.id,
     required this.name,
     required this.birthDate,
     required this.phone,
@@ -21,7 +19,6 @@ class RegisterRequestModel {
   // Metode untuk mengonversi objek ini ke Map untuk dikirim sebagai JSON
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'birthDate': birthDate,
       'phone': phone,

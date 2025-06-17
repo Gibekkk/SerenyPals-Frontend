@@ -1,6 +1,7 @@
 // routes.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:serenypals_frontend/services/auth_services.dart';
 import 'package:serenypals_frontend/views/view/add_forum_screen.dart'; // Import ini jika belum
 import 'package:serenypals_frontend/views/view/forum_screen.dart';
 import 'package:serenypals_frontend/views/view/forum_verification.dart'; // Import ini jika belum
@@ -41,7 +42,7 @@ GoRouter router(String initialLocation) {
         name: 'login',
         builder: (context, state) {
           return BlocProvider(
-            create: (_) => AuthBloc(AuthRepository()),
+            create: (_) => AuthBloc(AuthRepository(apiService: AuthService())),
             child: const LoginPage(),
           );
         },
@@ -67,7 +68,7 @@ GoRouter router(String initialLocation) {
         name: 'Register',
         builder: (context, state) {
           return BlocProvider(
-            create: (_) => AuthBloc(AuthRepository()),
+            create: (_) => AuthBloc(AuthRepository(apiService: AuthService())),
             child: const RegisterPage(),
           );
         },

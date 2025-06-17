@@ -32,7 +32,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.dispose();
   }
 
-  void _populateControllers(UserModel profile) {
+  void _populateControllers(User profile) {
     nameController.text = profile.name;
     emailController.text = profile.email;
     phoneController.text = profile.phone;
@@ -102,7 +102,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           TextButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                final updated = UserModel(
+                final updated = (
                   name: nameController.text,
                   email: emailController.text,
                   phone: phoneController.text,

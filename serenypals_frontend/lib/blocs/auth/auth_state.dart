@@ -4,7 +4,18 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
-class AuthRegisterSuccess extends AuthState {} // Navigasi ke OTP Page
+class AuthRegisterSuccess extends AuthState {
+  final String userId;
+  AuthRegisterSuccess({required this.userId});
+
+  List<Object?> get props => [userId];
+} // Navigasi ke OTP Page
+
+class RegisterFailure extends AuthState {
+  final String message;
+  RegisterFailure(this.message);
+  List<Object?> get props => [message];
+}
 
 class OtpVerified extends AuthState {} // Navigasi ke login/home
 
@@ -22,7 +33,8 @@ class LoginSuccess extends AuthState {
 
 class AuthFailure extends AuthState {
   final String message;
-  AuthFailure(this.message);
+  AuthFailure(String error, this.message);
+  List<Object?> get props => [message];
 }
 
 class ForgotOtpSent extends AuthState {}
