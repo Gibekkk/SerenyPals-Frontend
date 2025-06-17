@@ -21,17 +21,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     try {
       final registerData = RegisterRequestModel(
-        id: event.id,
         name: event.name,
         birthDate: event.birthDate,
         phone: event.phone,
         email: event.email,
         password: event.password,
       );
-      await authRepo.register(registerData.toJson()); // <-- Inilah cara menggunakannya!
-      emit(AuthRegisterSuccess());
+
+      // Panggil repository dan dapatkan User object
+      final user = await authRepo.register(registerData.toJson());
+
+      // Simpan userId jika perlu
+      final userId = user.id;
+
+      emit(AuthRegisterSuccess(userId: userId));
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      emit(RegisterFailure("Gagal melakukan pendaftaran")); // ✅
     }
   }
 
@@ -48,7 +53,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogin(LoginUser event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      final loginData = LoginRequestModel(email: event.email, password: event.password, fcmToken: event.fcmToken);
+      final loginData = LoginRequestModel(
+          email: event.email,
+          password: event.password,
+          fcmToken: event.fcmToken);
       await authRepo.login(loginData.toJson());
       // final token = AuthToken.fromJson(response);
       emit(LoginSuccess());
