@@ -97,18 +97,18 @@ class _RegisterPageState extends State<RegisterPage> {
           ).then((_) => _isDialogShowing = false);
         }
 
-        if ((state is AuthRegisterSuccess || state is AuthFailure) &&
+        if ((state is RegisterSuccess || state is RegisterFailure) &&
             _isDialogShowing &&
             Navigator.canPop(context)) {
           Navigator.pop(context);
         }
 
-        if (state is AuthRegisterSuccess) {
+        if (state is RegisterSuccess) {
           // Kirim email sebagai extra ke halaman OTP
           context.go('/otp', extra: _emailController.text);
         }
 
-        if (state is AuthFailure) {
+        if (state is RegisterFailure) {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));

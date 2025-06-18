@@ -1,13 +1,15 @@
-class AuthToken {
-  final String accessToken;
-  final String refreshToken;
+import 'package:serenypals_frontend/models/user.dart';
 
-  AuthToken({required this.accessToken, required this.refreshToken});
+class AuthResponse {
+  final String token;
+  final User user;
 
-  factory AuthToken.fromJson(Map<String, dynamic> json) {
-    return AuthToken(
-      accessToken: json['access_token'],
-      refreshToken: json['refresh_token'],
+  AuthResponse({required this.token, required this.user});
+
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    return AuthResponse(
+      token: json['token'] as String,
+      user: User.fromJson(json['user']),
     );
   }
 }

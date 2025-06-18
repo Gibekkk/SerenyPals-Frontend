@@ -1,11 +1,12 @@
-import '../../models/user.dart';
-
 abstract class ProfileEvent {}
 
-class LoadProfile extends ProfileEvent {}
+class FetchProfile extends ProfileEvent {
+  final String token;
+  FetchProfile(this.token);
+}
 
 class UpdateProfile extends ProfileEvent {
-  final UserModel updatedProfile;
-
-  UpdateProfile(this.updatedProfile);
+  final String token;
+  final Map<String, dynamic> updatedData;
+  UpdateProfile({required this.token, required this.updatedData});
 }

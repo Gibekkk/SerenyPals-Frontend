@@ -4,6 +4,10 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
+class RegisterSuccess extends AuthState {
+  final String userId;
+
+  RegisterSuccess({required this.userId});
 class AuthRegisterSuccess extends AuthState {
   final String userId;
   AuthRegisterSuccess({required this.userId});
@@ -24,15 +28,19 @@ class OtpSent extends AuthState {}
 class OtpFailure extends AuthState {
   final String message;
   OtpFailure(this.message);
+
+  List<Object?> get props => [message];
 }
 
 class LoginSuccess extends AuthState {
-  // final AuthToken token;
-  // LoginSuccess(this.token);
+  final String token;
+  LoginSuccess(this.token);
 } // Home page
 
-class AuthFailure extends AuthState {
+class LoginFailure extends AuthState {
   final String message;
+  LoginFailure(this.message);
+
   AuthFailure(String error, this.message);
   List<Object?> get props => [message];
 }
@@ -47,6 +55,8 @@ class PasswordResetSuccess extends AuthState {
 
   List<Object?> get props => [message];
 }
+
+class OtpResent extends AuthState {}
 
 class ForgotPasswordFailure extends AuthState {
   final String message;
