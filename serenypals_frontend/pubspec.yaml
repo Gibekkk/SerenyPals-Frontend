@@ -28,10 +28,6 @@ dependencies:
   cupertino_icons: ^1.0.8 # Ikon Cupertino
   firebase_core: ^2.28.0 # Versi terbaru saat ini
   firebase_messaging: 14.7.10 # Versi terbaru saat ini
-
-  # Dependensi dari pubspec Anda (provider dan audioplayers)
-  # Menggunakan versi provider yang lebih tinggi jika ada perbedaan
-  provider: ^6.0.5 # Menggunakan versi ^6.0.5 dari pubspec tim Anda
   just_audio: ^0.10.4
 
 dev_dependencies:

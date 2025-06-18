@@ -158,16 +158,11 @@ class _LoginPageState extends State<LoginPage> {
                     text: 'Masuk',
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        String? fcmToken =
-                            await FirebaseMessaging.instance.getToken();
-
                         context.read<AuthBloc>().add(
                               LoginUser(
                                 email: _emailController.text,
                                 password: _passwordController.text,
                                 fcmToken: _fcmtoken,
-                                fcmToken: fcmToken, // kirimkan ke event
-
                               ),
                             );
                       }
