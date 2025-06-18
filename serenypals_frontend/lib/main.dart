@@ -21,6 +21,7 @@ import 'blocs/profile/profile_event.dart';
 import 'blocs/virtual_pet/pet_bloc.dart';
 import 'repositories/diary_repository.dart';
 import 'repositories/meditation_repository.dart';
+import 'services/auth_services.dart';
 import 'services/meditation_service.dart';
 
 void main({String initialRoute = '/'}) async {
@@ -30,6 +31,9 @@ void main({String initialRoute = '/'}) async {
   await initializeDateFormatting('id_ID', null);
 
   final authRepository = AuthRepository(apiService: AuthService());
+  final authRepository = AuthRepository(
+    apiService: AuthService(),
+  );
   final diaryRepository = DiaryRepository(DiaryApiService());
 
   runApp(

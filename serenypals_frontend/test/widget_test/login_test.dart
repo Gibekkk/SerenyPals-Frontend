@@ -75,7 +75,8 @@ void main() {
 
     verify(
       mockAuthBloc.add(
-        LoginUser(email: 'user@gmail.com', password: 'password123'),
+        LoginUser(
+            email: 'user@gmail.com', password: 'password123', fcmToken: null),
       ),
     ).called(1);
 

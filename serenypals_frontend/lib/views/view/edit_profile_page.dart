@@ -35,6 +35,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.dispose();
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -56,6 +57,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
     }
   }
+
 
   void _populateControllers(User profile) {
     nameController.text = profile.name;
@@ -133,7 +135,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
         'phone': phoneController.text,
         'birthDate': birthDateController.text,
       };
-
       context.read<ProfileBloc>().add(UpdateProfile(
             updatedData: updatedData,
             token: _authToken!,
@@ -150,7 +151,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: const Text("My Profile"),
         actions: [
           TextButton(
+
             onPressed: _onSavePressed,
+
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                final updated = (
+                  name: nameController.text,
+                  email: emailController.text,
+                  phone: phoneController.text,
+                  birthDate: birthDateController.text,
+                );
+                context.read<ProfileBloc>().add(UpdateProfile(updated));
+              }
+            },
             child: const Text("Save", style: TextStyle(color: Colors.blue)),
           ),
         ],

@@ -8,6 +8,9 @@ class RegisterSuccess extends AuthState {
   final String userId;
 
   RegisterSuccess({required this.userId});
+class AuthRegisterSuccess extends AuthState {
+  final String userId;
+  AuthRegisterSuccess({required this.userId});
 
   List<Object?> get props => [userId];
 } // Navigasi ke OTP Page
@@ -15,7 +18,6 @@ class RegisterSuccess extends AuthState {
 class RegisterFailure extends AuthState {
   final String message;
   RegisterFailure(this.message);
-
   List<Object?> get props => [message];
 }
 
@@ -39,6 +41,7 @@ class LoginFailure extends AuthState {
   final String message;
   LoginFailure(this.message);
 
+  AuthFailure(String error, this.message);
   List<Object?> get props => [message];
 }
 
