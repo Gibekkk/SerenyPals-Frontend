@@ -30,7 +30,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await authRepo.register(registerData.toJson());
 
       // Panggil repository dan dapatkan User object
-      final user = await authRepo.register(registerData.toJson());
 
       // Simpan userId jika perlu
       final userId = user.id;
@@ -38,14 +37,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthRegisterSuccess(userId: userId));
     } catch (e) {
       emit(RegisterFailure("Gagal melakukan pendaftaran")); // ✅
-    }
-  }
-
-      // Simpan userId jika perlu
-      final userId = user.id;
-      emit(RegisterSuccess(userId: userId)); // 🔴 Error di sini
-    } catch (e) {
-      emit(RegisterFailure(e.toString()));
     }
   }
 
@@ -70,10 +61,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final loginResponse = await authRepo.login(loginData.toJson());
       // final token = AuthToken.fromJson(loginResponse);
       emit(LoginSuccess(loginResponse as String));
-          fcmToken: event.fcmToken);
-      await authRepo.login(loginData.toJson());
-      // final token = AuthToken.fromJson(response);
-      emit(LoginSuccess());
     } catch (e) {
       emit(LoginFailure(" atau password salah"));
     }

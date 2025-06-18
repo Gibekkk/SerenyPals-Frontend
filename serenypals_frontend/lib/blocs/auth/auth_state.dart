@@ -8,6 +8,9 @@ class RegisterSuccess extends AuthState {
   final String userId;
 
   RegisterSuccess({required this.userId});
+  List<Object?> get props => [userId];
+}
+
 class AuthRegisterSuccess extends AuthState {
   final String userId;
   AuthRegisterSuccess({required this.userId});
@@ -41,7 +44,6 @@ class LoginFailure extends AuthState {
   final String message;
   LoginFailure(this.message);
 
-  AuthFailure(String error, this.message);
   List<Object?> get props => [message];
 }
 
