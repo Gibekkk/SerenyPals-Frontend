@@ -10,7 +10,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this.authRepo) : super(AuthInitial()) {
     on<RegisterUser>(_onRegister);
-    on<VerifyOtp>(_onVerifyOtp);
+    // on<VerifyOtp>(_onVerifyOtp);
     on<LoginUser>(_onLogin);
     on<RequestForgotPassword>(_onRequestForgotPassword);
     on<VerifyForgotOtp>(_onVerifyForgotOtp);
@@ -21,39 +21,45 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     try {
       final registerData = RegisterRequestModel(
-        id: event.id,
         name: event.name,
         birthDate: event.birthDate,
         phone: event.phone,
         email: event.email,
         password: event.password,
       );
-      await authRepo.register(registerData.toJson()); // <-- Inilah cara menggunakannya!
-      emit(AuthRegisterSuccess());
+      final user = await authRepo.register(registerData.toJson());
+
+      // Simpan userId jika perlu
+      final userId = user.id;
+      emit(RegisterSuccess(userId: userId)); // 🔴 Error di sini
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      emit(RegisterFailure(e.toString()));
     }
   }
 
-  Future<void> _onVerifyOtp(VerifyOtp event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-    try {
-      await authRepo.verifyOtp(event.email, event.otp);
-      emit(OtpVerified());
-    } catch (e) {
-      emit(AuthFailure("OTP tidak valid atau expired"));
-    }
-  }
+  // Future<void> _onVerifyOtp(VerifyOtp event, Emitter<AuthState> emit) async {
+  //   emit(AuthLoading());
+  //   try {
+  //     await authRepo.verifyOtp(event.email, event.otp);
+  //     emit(OtpVerified());
+  //   } catch (e) {
+  //     emit(OtpFailure("OTP tidak valid atau expired"));
+  //   }
+  // }
 
   Future<void> _onLogin(LoginUser event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      final loginData = LoginRequestModel(email: event.email, password: event.password, fcmToken: event.fcmToken);
-      await authRepo.login(loginData.toJson());
-      // final token = AuthToken.fromJson(response);
-      emit(LoginSuccess());
+      final loginData = LoginRequestModel(
+          email: event.email,
+          password: event.password,
+          fcmToken: event.fcmToken,
+          token: event.token);
+      final loginResponse = await authRepo.login(loginData.toJson());
+      // final token = AuthToken.fromJson(loginResponse);
+      emit(LoginSuccess(loginResponse as String));
     } catch (e) {
-      emit(AuthFailure("Email atau password salah"));
+      emit(LoginFailure(" atau password salah"));
     }
   }
 

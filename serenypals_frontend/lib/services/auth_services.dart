@@ -8,7 +8,8 @@ class AuthService {
 
   // Metode POST umum yang bisa digunakan oleh semua fungsi lainnya
   Future<http.Response> post(String endpoint, Map<String, dynamic> data) async {
-    final url = Uri.parse('$baseUrl$endpoint'); // <-- Perhatikan: pakai '$baseUrl'
+    final url =
+        Uri.parse('$baseUrl$endpoint'); // <-- Perhatikan: pakai '$baseUrl'
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode(data);
 
@@ -35,7 +36,8 @@ class AuthService {
   }
 
   Future<void> sendForgotOtp(String email) async {
-    final response = await post('/send-otp', {'email': email}); // Memanggil metode 'post' di atas
+    final response = await post(
+        '/send-otp', {'email': email}); // Memanggil metode 'post' di atas
 
     if (response.statusCode != 200) {
       throw Exception('OTP gagal dikirim');
@@ -51,10 +53,45 @@ class AuthService {
   }
 
   Future<void> resetPassword(String email, String newPassword) async {
-    final response = await post('/reset-password', {'email': email, 'password': newPassword}); // Memanggil metode 'post' di atas
+    final response = await post('/reset-password', {
+      'email': email,
+      'password': newPassword
+    }); // Memanggil metode 'post' di atas
 
     if (response.statusCode != 200) {
       throw Exception('Reset password gagal');
+    }
+  }
+
+  Future<http.Response> getProfile(String token) async {
+    final url = Uri.parse('$baseUrl/profile');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token', // kalau pakai token
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      return response;
+    } catch (e) {
+      throw Exception('Failed to fetch profile: $e');
+    }
+  }
+
+  Future<http.Response> updateProfile(
+      String token, Map<String, dynamic> data) async {
+    final url = Uri.parse('$baseUrl/profile');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token', // kalau pakai token
+    };
+    final body = jsonEncode(data);
+
+    try {
+      final response = await http.put(url, headers: headers, body: body);
+      return response;
+    } catch (e) {
+      throw Exception('Failed to update profile: $e');
     }
   }
 }

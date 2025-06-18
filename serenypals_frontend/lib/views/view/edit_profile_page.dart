@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:serenypals_frontend/models/user.dart';
 import '../../blocs/profile/profile_bloc.dart';
 import '../../blocs/profile/profile_event.dart';
@@ -23,6 +24,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final phoneController = TextEditingController();
   final birthDateController = TextEditingController();
 
+  String? _authToken;
+
   @override
   void dispose() {
     nameController.dispose();
@@ -32,7 +35,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.dispose();
   }
 
-  void _populateControllers(UserModel profile) {
+  @override
+  void initState() {
+    super.initState();
+    _loadTokenAndFetchProfile();
+  }
+
+  Future<void> _loadTokenAndFetchProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('authToken');
+
+    if (token != null) {
+      setState(() {
+        _authToken = token;
+      });
+      context.read<ProfileBloc>().add(FetchProfile(token));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Token not found')),
+      );
+    }
+  }
+
+  void _populateControllers(User profile) {
     nameController.text = profile.name;
     emailController.text = profile.email;
     phoneController.text = profile.phone;
@@ -93,6 +118,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
+  void _onSavePressed() {
+    if (_formKey.currentState!.validate()) {
+      if (_authToken == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Auth token is missing')),
+        );
+        return;
+      }
+
+      final updatedData = {
+        'name': nameController.text,
+        'email': emailController.text,
+        'phone': phoneController.text,
+        'birthDate': birthDateController.text,
+      };
+
+      context.read<ProfileBloc>().add(UpdateProfile(
+            updatedData: updatedData,
+            token: _authToken!,
+          ));
+
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,17 +150,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: const Text("My Profile"),
         actions: [
           TextButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                final updated = UserModel(
-                  name: nameController.text,
-                  email: emailController.text,
-                  phone: phoneController.text,
-                  birthDate: birthDateController.text,
-                );
-                context.read<ProfileBloc>().add(UpdateProfile(updated));
-              }
-            },
+            onPressed: _onSavePressed,
             child: const Text("Save", style: TextStyle(color: Colors.blue)),
           ),
         ],
@@ -118,7 +158,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state is ProfileInitial) {
-            context.read<ProfileBloc>().add(LoadProfile());
             return const Center(child: CircularProgressIndicator());
           } else if (state is ProfileLoaded) {
             _populateControllers(state.profile);
@@ -138,7 +177,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            // TODO: Add upload photo logic here
+                            // TODO: Implement Upload Photo
                           },
                           child: const Text("Upload Photo",
                               style: TextStyle(color: Colors.blue)),
@@ -197,6 +236,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ],
               ),
             );
+          } else if (state is ProfileError) {
+            return Center(child: Text("Error: ${state.message}"));
           } else {
             return const Center(child: Text("Something went wrong"));
           }
