@@ -7,16 +7,16 @@ ADR Repo:
 https://github.com/Gibekkk/SerenyPals-ADR
 
 ---
-<h1 align="center">SERENYPALS-FRONTEND</h1>
-<p align="center"><em>Empowering Mental Wellness Through Beautiful Mobile Experiences</em></p>
+<h1 align="left">SERENYPALS-FRONTEND</h1>
+<p align="left"><em>Empowering Mental Wellness Through Beautiful Mobile Experiences</em></p>
 
-<div align="center">
+<div align="left">
 <img alt="last-commit" src="https://img.shields.io/github/last-commit/Gibekkk/SerenyPals-Frontend?style=flat&logo=git&logoColor=white&color=0080ff">
 <img alt="repo-top-language" src="https://img.shields.io/github/languages/top/Gibekkk/SerenyPals-Frontend?style=flat&color=0080ff">
 <img alt="repo-language-count" src="https://img.shields.io/github/languages/count/Gibekkk/SerenyPals-Frontend?style=flat&color=0080ff">
 </div>
 
-<p align="center"><em>Built with Flutter and integrated technologies:</em></p>
+<p align="left"><em>Built with Flutter and integrated technologies:</em></p>
 <div align="center">
 <img alt="Flutter" src="https://img.shields.io/badge/Flutter-02569B?style=flat&logo=flutter&logoColor=white">
 <img alt="Dart" src="https://img.shields.io/badge/Dart-0175C2?style=flat&logo=dart&logoColor=white">
